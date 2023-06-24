@@ -1,4 +1,3 @@
-/Users/tarau/miniconda3/bin/python -i /Users/tarau/sit/gpt4agi/gpt4agi/refiners.py 
 !!! ADVICE for: Lack of diverse data True.
 !!! ADVICE for: Insufficient funding for data collection True.
 !!! ADVICE for: Budget constraints False.

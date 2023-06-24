@@ -16,3 +16,13 @@ causal_prompter = dict(
         Your answer should not contain ":" .
         Your answer should avoid the word "Causes" and "causes" ."""
 )
+
+decision_prompter = dict(
+    name='oracle',
+    decider_p="""
+    You play the role of an oracle that decides if "$g" is similar to "$context". This means that someone 
+    who is familiar with "$context"  might be also be interested in "$g".
+    Your answer should de "True" or "False" expressing strong agreement or some disagreement with the relevance of "$g".
+    No explanations or comments are needed, just one of the two words "True" or "False"
+    """
+)
