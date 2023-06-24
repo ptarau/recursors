@@ -1,0 +1,159 @@
+!!! ADVICE for: The Shawshank Redemption True.
+!!! ADVICE for: The Dark Knight False.
+!!! ADVICE for: Pulp Fiction True.
+!!! ADVICE for: Reservoir Dogs False.
+!!! ADVICE for: Kill Bill: Vol. 1 False.
+!!! ADVICE for: Inglourious Basterds False.
+!!! ADVICE for: Fight Club False.
+!!! ADVICE for: Pulp Fiction True.
+!!! ADVICE for: Reservoir Dogs False.
+!!! ADVICE for: Kill Bill: Vol. 1 False.
+!!! ADVICE for: Inglourious Basterds False.
+!!! ADVICE for: The Dark Knight False.
+!!! ADVICE for: Fight Club False.
+!!! ADVICE for: The Silence of the Lambs False.
+!!! ADVICE for: Pulp Fiction True.
+!!! ADVICE for: Reservoir Dogs False.
+!!! ADVICE for: Goodfellas True.
+
+TRACE:
+The Godfather
+The Shawshank Redemption
+The Departed
+Pulp Fiction
+Goodfellas
+
+!!! ADVICE for: Fight Club False.
+!!! ADVICE for: Goodfellas True.
+!!! ADVICE for: The Irishman True.
+
+TRACE:
+The Godfather
+The Shawshank Redemption
+The Departed
+Goodfellas
+The Irishman
+
+!!! ADVICE for: Scarface True.
+
+TRACE:
+The Godfather
+The Shawshank Redemption
+The Departed
+Goodfellas
+Scarface
+
+!!! ADVICE for: Pulp Fiction True.
+!!! ADVICE for: The Departed True.
+!!! ADVICE for: The Irishman True.
+
+TRACE:
+The Godfather
+Pulp Fiction
+Goodfellas
+The Departed
+The Irishman
+
+!!! ADVICE for: The Untouchables True.
+
+TRACE:
+The Godfather
+Pulp Fiction
+Goodfellas
+The Departed
+The Untouchables
+
+!!! ADVICE for: The Sopranos (TV series) True.
+
+TRACE:
+The Godfather
+Pulp Fiction
+Goodfellas
+The Departed
+The Sopranos (TV series)
+
+
+retrying:  0
+!!! ADVICE for: The Shawshank Redemption True.
+!!! ADVICE for: The Departed True.
+
+TRACE:
+The Godfather
+Pulp Fiction
+Goodfellas
+The Shawshank Redemption
+The Departed
+
+!!! ADVICE for: The Silence of the Lambs False.
+!!! ADVICE for: The Green Mile False.
+!!! ADVICE for: The Silence of the Lambs False.
+!!! ADVICE for: The Silence of the Lambs False.
+!!! ADVICE for: Goodfellas True.
+!!! ADVICE for: The Irishman True.
+
+TRACE:
+The Godfather
+Pulp Fiction
+The Departed
+Goodfellas
+The Irishman
+
+!!! ADVICE for: Scarface True.
+
+TRACE:
+The Godfather
+Pulp Fiction
+The Departed
+Goodfellas
+Scarface
+
+!!! ADVICE for: The Shawshank Redemption True.
+!!! ADVICE for: The Green Mile False.
+!!! ADVICE for: Goodfellas True.
+
+TRACE:
+The Godfather
+Pulp Fiction
+The Departed
+The Shawshank Redemption
+Goodfellas
+
+!!! ADVICE for: The Silence of the Lambs False.
+!!! ADVICE for: Kill Bill False.
+!!! ADVICE for: Goodfellas True.
+!!! ADVICE for: The Departed True.
+
+TRACE:
+The Godfather
+Pulp Fiction
+Reservoir Dogs
+Goodfellas
+The Departed
+
+!!! ADVICE for: Scarface True.
+
+TRACE:
+The Godfather
+Pulp Fiction
+Reservoir Dogs
+Goodfellas
+Scarface
+
+!!! ADVICE for: Fight Club False.
+!!! ADVICE for: The Dark Knight False.
+
+MODEL: 11 facts 
+
+Goodfellas
+Pulp Fiction
+Reservoir Dogs
+Scarface
+The Departed
+The Godfather
+The Godfather: Part II
+The Irishman
+The Shawshank Redemption
+The Sopranos (TV series)
+The Untouchables
+
+COSTS in $: {'and': 0.0034865, 'or': 0.0012275, 'oracle': 0.0028720000000000004}

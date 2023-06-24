@@ -1,0 +1,18 @@
+goal='biased AI'
+
+causal_prompter = dict(
+    name='causal',
+    and_p="""We need causal explanations in this context: "$context"
+        Generate 3-5 explanations of 2-4 words each for the causes of "$g".
+        Itemize your answer, one reason for "$g" per line.
+        No explanations needed, just the 2-4 words noun phrase, nothing else.
+        Your answer should not contain ":" or "Cause".
+        """,
+    or_p="""We need causal explanation in this context: "$context"
+        Generate 2-3 alternative explanations citing facts that might cause "$g".
+        Itemize your answer, one noun phrase per line.
+        No explanations needed, just the noun phrase, nothing else.
+        Avoid starting your sentence with the word "Alternative".
+        Your answer should not contain ":" .
+        Your answer should avoid the word "Causes" and "causes" ."""
+)

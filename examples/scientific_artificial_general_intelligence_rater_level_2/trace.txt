@@ -1,0 +1,1559 @@
+(base) gpt4agi$ python3 refiners.py
+RATING of "Cognitive abilities of AGI" w.r.t "Artificial general intelligence" is 0.6612 --> True
+RATING of "Logical deduction abilities" w.r.t "Artificial general intelligence" is 0.4743 --> True
+RATING of "Propositional reasoning skills" w.r.t "Artificial general intelligence" is 0.4381 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Reasoning skills
+Logical deduction abilities
+Propositional reasoning skills
+
+RATING of "Syllogistic reasoning abilities" w.r.t "Artificial general intelligence" is 0.4972 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Reasoning skills
+Logical deduction abilities
+Syllogistic reasoning abilities
+
+RATING of "Deductive inference capacity" w.r.t "Artificial general intelligence" is 0.4463 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Reasoning skills
+Logical deduction abilities
+Deductive inference capacity
+
+RATING of "Logical deduction aptitude" w.r.t "Artificial general intelligence" is 0.4846 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Reasoning skills
+Logical deduction abilities
+Logical deduction aptitude
+
+RATING of "Reasoning with uncertainty" w.r.t "Artificial general intelligence" is 0.4059 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Reasoning skills
+Logical deduction abilities
+Reasoning with uncertainty
+
+RATING of "Pattern recognition skills" w.r.t "Artificial general intelligence" is 0.4122 --> True
+RATING of "Visual pattern recognition" w.r.t "Artificial general intelligence" is 0.3047 --> False
+RATING of "Speech pattern analysis" w.r.t "Artificial general intelligence" is 0.3056 --> False
+RATING of "Object recognition abilities" w.r.t "Artificial general intelligence" is 0.5251 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Reasoning skills
+Pattern recognition skills
+Object recognition abilities
+
+RATING of "Facial recognition skills" w.r.t "Artificial general intelligence" is 0.3449 --> False
+RATING of "Pattern matching algorithms" w.r.t "Artificial general intelligence" is 0.2921 --> False
+RATING of "Decision-making capabilities" w.r.t "Artificial general intelligence" is 0.5294 --> True
+RATING of "Adaptive decision-making" w.r.t "Artificial general intelligence" is 0.4029 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Reasoning skills
+Decision-making capabilities
+Adaptive decision-making
+
+RATING of "Probabilistic reasoning" w.r.t "Artificial general intelligence" is 0.3971 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Reasoning skills
+Decision-making capabilities
+Probabilistic reasoning
+
+RATING of "Cognitive flexibility" w.r.t "Artificial general intelligence" is 0.5166 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Reasoning skills
+Decision-making capabilities
+Cognitive flexibility
+
+RATING of "Multi-criteria decision-making" w.r.t "Artificial general intelligence" is 0.337 --> False
+RATING of "Heuristic decision-making" w.r.t "Artificial general intelligence" is 0.4018 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Reasoning skills
+Decision-making capabilities
+Heuristic decision-making
+
+RATING of "Memory retention and recall" w.r.t "Artificial general intelligence" is 0.3559 --> True
+RATING of "Long-term memory consolidation" w.r.t "Artificial general intelligence" is 0.3953 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Learning capacity
+Memory retention and recall
+Long-term memory consolidation
+
+RATING of "Retrieval-induced forgetting" w.r.t "Artificial general intelligence" is 0.4077 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Learning capacity
+Memory retention and recall
+Retrieval-induced forgetting
+
+RATING of "Episodic memory encoding" w.r.t "Artificial general intelligence" is 0.4959 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Learning capacity
+Memory retention and recall
+Episodic memory encoding
+
+RATING of "Memory reconsolidation" w.r.t "Artificial general intelligence" is 0.4266 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Learning capacity
+Memory retention and recall
+Memory reconsolidation
+
+RATING of "Working memory capacity" w.r.t "Artificial general intelligence" is 0.4237 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Learning capacity
+Memory retention and recall
+Working memory capacity
+
+RATING of "Conceptual abstraction and generalization" w.r.t "Artificial general intelligence" is 0.4578 --> True
+RATING of "Conceptual hierarchy" w.r.t "Artificial general intelligence" is 0.4254 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Learning capacity
+Conceptual abstraction and generalization
+Conceptual hierarchy
+
+RATING of "Generalization ability" w.r.t "Artificial general intelligence" is 0.5986 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Learning capacity
+Conceptual abstraction and generalization
+Generalization ability
+
+RATING of "Abstract reasoning" w.r.t "Artificial general intelligence" is 0.4294 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Learning capacity
+Conceptual abstraction and generalization
+Abstract reasoning
+
+RATING of "Cognitive flexibility" w.r.t "Artificial general intelligence" is 0.5166 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Learning capacity
+Conceptual abstraction and generalization
+Cognitive flexibility
+
+RATING of "Knowledge transfer" w.r.t "Artificial general intelligence" is 0.322 --> False
+RATING of "Adaptive learning and self-improvement" w.r.t "Artificial general intelligence" is 0.4112 --> True
+RATING of "Meta-learning algorithms" w.r.t "Artificial general intelligence" is 0.3817 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Learning capacity
+Adaptive learning and self-improvement
+Meta-learning algorithms
+
+RATING of "Reinforcement learning strategies" w.r.t "Artificial general intelligence" is 0.3444 --> False
+RATING of "Self-optimizing systems" w.r.t "Artificial general intelligence" is 0.4883 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Learning capacity
+Adaptive learning and self-improvement
+Self-optimizing systems
+
+RATING of "Continuous learning models" w.r.t "Artificial general intelligence" is 0.4301 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Learning capacity
+Adaptive learning and self-improvement
+Continuous learning models
+
+RATING of "Adaptive decision-making frameworks" w.r.t "Artificial general intelligence" is 0.3953 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Learning capacity
+Adaptive learning and self-improvement
+Adaptive decision-making frameworks
+
+RATING of "Logical reasoning skills" w.r.t "Artificial general intelligence" is 0.5227 --> True
+RATING of "Deductive reasoning ability" w.r.t "Artificial general intelligence" is 0.5341 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Problem-solving ability
+Logical reasoning skills
+Deductive reasoning ability
+
+RATING of "Logical inference skills" w.r.t "Artificial general intelligence" is 0.471 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Problem-solving ability
+Logical reasoning skills
+Logical inference skills
+
+RATING of "Reasoning capacity" w.r.t "Artificial general intelligence" is 0.6003 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Problem-solving ability
+Logical reasoning skills
+Reasoning capacity
+
+RATING of "Rational thinking aptitude" w.r.t "Artificial general intelligence" is 0.5546 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Problem-solving ability
+Logical reasoning skills
+Rational thinking aptitude
+
+RATING of "Analytical reasoning proficiency" w.r.t "Artificial general intelligence" is 0.4945 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Problem-solving ability
+Logical reasoning skills
+Analytical reasoning proficiency
+
+RATING of "Pattern recognition abilities" w.r.t "Artificial general intelligence" is 0.5024 --> True
+RATING of "Object recognition accuracy" w.r.t "Artificial general intelligence" is 0.3954 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Problem-solving ability
+Pattern recognition abilities
+Object recognition accuracy
+
+RATING of "Feature extraction techniques" w.r.t "Artificial general intelligence" is 0.2962 --> False
+RATING of "Image classification performance" w.r.t "Artificial general intelligence" is 0.3356 --> False
+RATING of "Pattern matching algorithms" w.r.t "Artificial general intelligence" is 0.2921 --> False
+RATING of "Visual perception abilities" w.r.t "Artificial general intelligence" is 0.5925 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Problem-solving ability
+Pattern recognition abilities
+Visual perception abilities
+
+RATING of "Decision-making capabilities" w.r.t "Artificial general intelligence" is 0.5294 --> True
+RATING of "Rational decision-making" w.r.t "Artificial general intelligence" is 0.3633 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Problem-solving ability
+Decision-making capabilities
+Rational decision-making
+
+RATING of "Adaptive decision-making" w.r.t "Artificial general intelligence" is 0.4029 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Problem-solving ability
+Decision-making capabilities
+Adaptive decision-making
+
+RATING of "Multi-criteria decision-making" w.r.t "Artificial general intelligence" is 0.337 --> False
+RATING of "Heuristic decision-making" w.r.t "Artificial general intelligence" is 0.4018 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Problem-solving ability
+Decision-making capabilities
+Heuristic decision-making
+
+RATING of "Ethical decision-making" w.r.t "Artificial general intelligence" is 0.4384 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Problem-solving ability
+Decision-making capabilities
+Ethical decision-making
+
+RATING of "Task-switching ability" w.r.t "Artificial general intelligence" is 0.4319 --> True
+RATING of "Task-set reconfiguration" w.r.t "Artificial general intelligence" is 0.254 --> False
+RATING of "Cognitive control" w.r.t "Artificial general intelligence" is 0.5503 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Cognitive flexibility
+Task-switching ability
+Cognitive control
+
+RATING of "Switch cost" w.r.t "Artificial general intelligence" is 0.1907 --> False
+RATING of "Task-switching performance" w.r.t "Artificial general intelligence" is 0.3693 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Cognitive flexibility
+Task-switching ability
+Task-switching performance
+
+RATING of "Executive function" w.r.t "Artificial general intelligence" is 0.4951 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Cognitive flexibility
+Task-switching ability
+Executive function
+
+RATING of "Creative problem-solving skills" w.r.t "Artificial general intelligence" is 0.5659 --> True
+RATING of "Divergent thinking ability" w.r.t "Artificial general intelligence" is 0.5461 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Cognitive flexibility
+Creative problem-solving skills
+Divergent thinking ability
+
+RATING of "Metacognitive skills" w.r.t "Artificial general intelligence" is 0.4694 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Cognitive flexibility
+Creative problem-solving skills
+Metacognitive skills
+
+RATING of "Analogical reasoning capacity" w.r.t "Artificial general intelligence" is 0.526 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Cognitive flexibility
+Creative problem-solving skills
+Analogical reasoning capacity
+
+RATING of "Innovation aptitude" w.r.t "Artificial general intelligence" is 0.4791 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Cognitive flexibility
+Creative problem-solving skills
+Innovation aptitude
+
+RATING of "Adaptive problem-solving proficiency" w.r.t "Artificial general intelligence" is 0.5422 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Cognitive flexibility
+Creative problem-solving skills
+Adaptive problem-solving proficiency
+
+RATING of "Adaptability to new situations" w.r.t "Artificial general intelligence" is 0.4287 --> True
+RATING of "Situational Adaptability" w.r.t "Artificial general intelligence" is 0.4582 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Cognitive flexibility
+Adaptability to new situations
+Situational Adaptability
+
+RATING of "Novelty Response Mechanisms" w.r.t "Artificial general intelligence" is 0.3642 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Cognitive flexibility
+Adaptability to new situations
+Novelty Response Mechanisms
+
+RATING of "Cognitive Flexibility Strategies" w.r.t "Artificial general intelligence" is 0.4383 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Cognitive flexibility
+Adaptability to new situations
+Cognitive Flexibility Strategies
+
+RATING of "Adaptive Learning Techniques" w.r.t "Artificial general intelligence" is 0.4053 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Cognitive flexibility
+Adaptability to new situations
+Adaptive Learning Techniques
+
+RATING of "Contextual Intelligence" w.r.t "Artificial general intelligence" is 0.4163 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Cognitive flexibility
+Adaptability to new situations
+Contextual Intelligence
+
+RATING of "Probabilistic reasoning" w.r.t "Artificial general intelligence" is 0.3971 --> True
+RATING of "Bayesian networks" w.r.t "Artificial general intelligence" is 0.3642 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Decision-making process
+Probabilistic reasoning
+Bayesian networks
+
+RATING of "Markov decision processes" w.r.t "Artificial general intelligence" is 0.3441 --> False
+RATING of "Probabilistic inference" w.r.t "Artificial general intelligence" is 0.3122 --> False
+RATING of "Uncertainty quantification" w.r.t "Artificial general intelligence" is 0.2751 --> False
+RATING of "Graphical models" w.r.t "Artificial general intelligence" is 0.4087 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Decision-making process
+Probabilistic reasoning
+Graphical models
+
+RATING of "Utility maximization" w.r.t "Artificial general intelligence" is 0.3655 --> True
+RATING of "Risk aversion model" w.r.t "Artificial general intelligence" is 0.2951 --> False
+RATING of "Expected utility theory" w.r.t "Artificial general intelligence" is 0.31 --> False
+RATING of "Stochastic optimization" w.r.t "Artificial general intelligence" is 0.3608 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Decision-making process
+Utility maximization
+Stochastic optimization
+
+RATING of "Multi-objective optimization" w.r.t "Artificial general intelligence" is 0.3815 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Decision-making process
+Utility maximization
+Multi-objective optimization
+
+RATING of "Pareto efficiency" w.r.t "Artificial general intelligence" is 0.2554 --> False
+RATING of "Cognitive flexibility" w.r.t "Artificial general intelligence" is 0.5166 --> True
+RATING of "Executive function" w.r.t "Artificial general intelligence" is 0.4951 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Decision-making process
+Cognitive flexibility
+Executive function
+
+RATING of "Working memory capacity" w.r.t "Artificial general intelligence" is 0.4237 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Decision-making process
+Cognitive flexibility
+Working memory capacity
+
+RATING of "Task switching ability" w.r.t "Artificial general intelligence" is 0.3672 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Decision-making process
+Cognitive flexibility
+Task switching ability
+
+RATING of "Cognitive control" w.r.t "Artificial general intelligence" is 0.5503 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Decision-making process
+Cognitive flexibility
+Cognitive control
+
+RATING of "Attentional flexibility" w.r.t "Artificial general intelligence" is 0.4553 --> True
+
+TRACE:
+Artificial general intelligence
+Cognitive abilities of AGI
+Decision-making process
+Cognitive flexibility
+Attentional flexibility
+
+RATING of "Learning algorithms of AGI" w.r.t "Artificial general intelligence" is 0.6683 --> True
+RATING of "Policy optimization" w.r.t "Artificial general intelligence" is 0.4085 --> True
+RATING of "Gradient-based optimization" w.r.t "Artificial general intelligence" is 0.4193 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Reinforcement learning
+Policy optimization
+Gradient-based optimization
+
+RATING of "Stochastic policy optimization" w.r.t "Artificial general intelligence" is 0.3089 --> False
+RATING of "Trust region optimization" w.r.t "Artificial general intelligence" is 0.3398 --> False
+RATING of "Actor-critic optimization" w.r.t "Artificial general intelligence" is 0.3848 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Reinforcement learning
+Policy optimization
+Actor-critic optimization
+
+RATING of "Proximal policy optimization" w.r.t "Artificial general intelligence" is 0.2851 --> False
+RATING of "Reward function" w.r.t "Artificial general intelligence" is 0.3606 --> True
+RATING of "Intrinsic motivation" w.r.t "Artificial general intelligence" is 0.4621 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Reinforcement learning
+Reward function
+Intrinsic motivation
+
+RATING of "Utility function" w.r.t "Artificial general intelligence" is 0.2947 --> False
+RATING of "Reward shaping" w.r.t "Artificial general intelligence" is 0.3998 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Reinforcement learning
+Reward function
+Reward shaping
+
+RATING of "Goal-oriented behavior" w.r.t "Artificial general intelligence" is 0.6616 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Reinforcement learning
+Reward function
+Goal-oriented behavior
+
+RATING of "Reinforcement signal" w.r.t "Artificial general intelligence" is 0.3248 --> False
+RATING of "Exploration-exploitation tradeoff" w.r.t "Artificial general intelligence" is 0.3524 --> True
+RATING of "Optimal exploration-exploitation tradeoff" w.r.t "Artificial general intelligence" is 0.3339 --> False
+RATING of "Multi-armed bandit problem" w.r.t "Artificial general intelligence" is 0.3315 --> False
+RATING of "Bayesian optimization" w.r.t "Artificial general intelligence" is 0.4398 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Reinforcement learning
+Exploration-exploitation tradeoff
+Bayesian optimization
+
+RATING of "Thompson sampling" w.r.t "Artificial general intelligence" is 0.2853 --> False
+RATING of "Information gain maximization" w.r.t "Artificial general intelligence" is 0.3837 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Reinforcement learning
+Exploration-exploitation tradeoff
+Information gain maximization
+
+RATING of "Convolutional layers" w.r.t "Artificial general intelligence" is 0.3954 --> True
+RATING of "Feature maps" w.r.t "Artificial general intelligence" is 0.2693 --> False
+RATING of "Convolutional filters" w.r.t "Artificial general intelligence" is 0.3343 --> False
+RATING of "Pooling layers" w.r.t "Artificial general intelligence" is 0.2556 --> False
+RATING of "Stride length" w.r.t "Artificial general intelligence" is 0.1499 --> False
+RATING of "Receptive fields" w.r.t "Artificial general intelligence" is 0.4437 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Deep neural networks
+Convolutional layers
+Receptive fields
+
+RATING of "Backpropagation algorithm" w.r.t "Artificial general intelligence" is 0.5126 --> True
+RATING of "Gradient descent" w.r.t "Artificial general intelligence" is 0.3849 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Deep neural networks
+Backpropagation algorithm
+Gradient descent
+
+RATING of "Weight updates" w.r.t "Artificial general intelligence" is 0.192 --> False
+RATING of "Error backpropagation" w.r.t "Artificial general intelligence" is 0.4666 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Deep neural networks
+Backpropagation algorithm
+Error backpropagation
+
+RATING of "Neural network training" w.r.t "Artificial general intelligence" is 0.4405 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Deep neural networks
+Backpropagation algorithm
+Neural network training
+
+RATING of "Backpropagation convergence" w.r.t "Artificial general intelligence" is 0.351 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Deep neural networks
+Backpropagation algorithm
+Backpropagation convergence
+
+RATING of "Activation functions" w.r.t "Artificial general intelligence" is 0.532 --> True
+RATING of "Sigmoid function" w.r.t "Artificial general intelligence" is 0.3506 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Deep neural networks
+Activation functions
+Sigmoid function
+
+RATING of "Rectified linear unit" w.r.t "Artificial general intelligence" is 0.186 --> False
+RATING of "Hyperbolic tangent" w.r.t "Artificial general intelligence" is 0.1249 --> False
+RATING of "Exponential linear unit" w.r.t "Artificial general intelligence" is 0.3 --> False
+RATING of "Softmax activation" w.r.t "Artificial general intelligence" is 0.4845 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Deep neural networks
+Activation functions
+Softmax activation
+
+RATING of "Neural networks" w.r.t "Artificial general intelligence" is 0.5492 --> True
+RATING of "Deep learning models" w.r.t "Artificial general intelligence" is 0.5156 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Cognitive architecture
+Neural networks
+Deep learning models
+
+RATING of "Convolutional neural networks" w.r.t "Artificial general intelligence" is 0.42 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Cognitive architecture
+Neural networks
+Convolutional neural networks
+
+RATING of "Recurrent neural networks" w.r.t "Artificial general intelligence" is 0.4981 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Cognitive architecture
+Neural networks
+Recurrent neural networks
+
+RATING of "Autoencoder architectures" w.r.t "Artificial general intelligence" is 0.4591 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Cognitive architecture
+Neural networks
+Autoencoder architectures
+
+RATING of "Generative adversarial networks" w.r.t "Artificial general intelligence" is 0.3834 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Cognitive architecture
+Neural networks
+Generative adversarial networks
+
+RATING of "Working memory" w.r.t "Artificial general intelligence" is 0.5236 --> True
+RATING of "Executive control" w.r.t "Artificial general intelligence" is 0.4488 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Cognitive architecture
+Working memory
+Executive control
+
+RATING of "Maintenance rehearsal" w.r.t "Artificial general intelligence" is 0.3015 --> False
+RATING of "Visuospatial sketchpad" w.r.t "Artificial general intelligence" is 0.3124 --> False
+RATING of "Phonological loop" w.r.t "Artificial general intelligence" is 0.1963 --> False
+RATING of "Central executive" w.r.t "Artificial general intelligence" is 0.3094 --> False
+RATING of "Attentional control" w.r.t "Artificial general intelligence" is 0.4789 --> True
+RATING of "Executive attention" w.r.t "Artificial general intelligence" is 0.4241 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Cognitive architecture
+Attentional control
+Executive attention
+
+RATING of "Attentional bias modification" w.r.t "Artificial general intelligence" is 0.3499 --> False
+RATING of "Attentional networks" w.r.t "Artificial general intelligence" is 0.4566 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Cognitive architecture
+Attentional control
+Attentional networks
+
+RATING of "Attentional capture" w.r.t "Artificial general intelligence" is 0.3326 --> False
+RATING of "Attentional blink" w.r.t "Artificial general intelligence" is 0.3358 --> False
+RATING of "Domain adaptation" w.r.t "Artificial general intelligence" is 0.3777 --> True
+RATING of "Unsupervised Domain Adaptation" w.r.t "Artificial general intelligence" is 0.2856 --> False
+RATING of "Multi-Source Domain Adaptation" w.r.t "Artificial general intelligence" is 0.2894 --> False
+RATING of "Domain-Invariant Representation Learning" w.r.t "Artificial general intelligence" is 0.3388 --> False
+RATING of "Cross-Domain Transfer Learning" w.r.t "Artificial general intelligence" is 0.2631 --> False
+RATING of "Domain Shift Detection" w.r.t "Artificial general intelligence" is 0.2589 --> False
+RATING of "Knowledge transfer" w.r.t "Artificial general intelligence" is 0.322 --> False
+RATING of "Multitask learning" w.r.t "Artificial general intelligence" is 0.3872 --> True
+RATING of "Task Similarity Matrix" w.r.t "Artificial general intelligence" is 0.3104 --> False
+RATING of "Shared Representation Learning" w.r.t "Artificial general intelligence" is 0.2886 --> False
+RATING of "Multi-Task Neural Networks" w.r.t "Artificial general intelligence" is 0.4525 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Transfer learning
+Multitask learning
+Multi-Task Neural Networks
+
+RATING of "Transfer Learning Framework" w.r.t "Artificial general intelligence" is 0.3281 --> False
+RATING of "Joint Learning Approach" w.r.t "Artificial general intelligence" is 0.3546 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Transfer learning
+Multitask learning
+Joint Learning Approach
+
+RATING of "Transfer learning" w.r.t "Artificial general intelligence" is 0.3556 --> True
+RATING of "Domain adaptation" w.r.t "Artificial general intelligence" is 0.3777 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Meta-learning
+Transfer learning
+Domain adaptation
+
+RATING of "Unsupervised transfer" w.r.t "Artificial general intelligence" is 0.2788 --> False
+RATING of "Multi-task learning" w.r.t "Artificial general intelligence" is 0.3726 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Meta-learning
+Transfer learning
+Multi-task learning
+
+RATING of "Knowledge transfer" w.r.t "Artificial general intelligence" is 0.322 --> False
+RATING of "Cross-lingual transfer" w.r.t "Artificial general intelligence" is 0.3828 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Meta-learning
+Transfer learning
+Cross-lingual transfer
+
+RATING of "Model-agnostic meta-learning" w.r.t "Artificial general intelligence" is 0.3394 --> False
+RATING of "Hyperparameter optimization" w.r.t "Artificial general intelligence" is 0.3584 --> True
+RATING of "Bayesian optimization" w.r.t "Artificial general intelligence" is 0.4398 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Meta-learning
+Hyperparameter optimization
+Bayesian optimization
+
+RATING of "Random search" w.r.t "Artificial general intelligence" is 0.3221 --> False
+RATING of "Grid search" w.r.t "Artificial general intelligence" is 0.2516 --> False
+RATING of "Evolutionary algorithms" w.r.t "Artificial general intelligence" is 0.4306 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Meta-learning
+Hyperparameter optimization
+Evolutionary algorithms
+
+RATING of "Multi-objective optimization" w.r.t "Artificial general intelligence" is 0.3815 --> True
+
+TRACE:
+Artificial general intelligence
+Learning algorithms of AGI
+Meta-learning
+Hyperparameter optimization
+Multi-objective optimization
+
+RATING of "Problem-solving capabilities of AGI" w.r.t "Artificial general intelligence" is 0.7082 --> True
+RATING of "Adaptive decision-making" w.r.t "Artificial general intelligence" is 0.4029 --> True
+RATING of "Dynamic decision-making" w.r.t "Artificial general intelligence" is 0.4356 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Adaptive decision-making
+Dynamic decision-making
+
+RATING of "Contextual adaptation" w.r.t "Artificial general intelligence" is 0.3745 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Adaptive decision-making
+Contextual adaptation
+
+RATING of "Learning strategies" w.r.t "Artificial general intelligence" is 0.4015 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Adaptive decision-making
+Learning strategies
+
+RATING of "Behavioral flexibility" w.r.t "Artificial general intelligence" is 0.4919 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Adaptive decision-making
+Behavioral flexibility
+
+RATING of "Uncertainty management" w.r.t "Artificial general intelligence" is 0.4305 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Adaptive decision-making
+Uncertainty management
+
+RATING of "Creative problem-solving" w.r.t "Artificial general intelligence" is 0.4908 --> True
+RATING of "Divergent thinking" w.r.t "Artificial general intelligence" is 0.3926 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Creative problem-solving
+Divergent thinking
+
+RATING of "Analogical reasoning" w.r.t "Artificial general intelligence" is 0.441 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Creative problem-solving
+Analogical reasoning
+
+RATING of "Incubation period" w.r.t "Artificial general intelligence" is 0.2015 --> False
+RATING of "Cognitive restructuring" w.r.t "Artificial general intelligence" is 0.5133 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Creative problem-solving
+Cognitive restructuring
+
+RATING of "Insight problem-solving" w.r.t "Artificial general intelligence" is 0.5094 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Creative problem-solving
+Insight problem-solving
+
+RATING of "Rapid learning abilities" w.r.t "Artificial general intelligence" is 0.463 --> True
+RATING of "Adaptive decision-making" w.r.t "Artificial general intelligence" is 0.4029 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Rapid learning abilities
+Adaptive decision-making
+
+RATING of "Rapid skill acquisition" w.r.t "Artificial general intelligence" is 0.4309 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Rapid learning abilities
+Rapid skill acquisition
+
+RATING of "Cognitive plasticity" w.r.t "Artificial general intelligence" is 0.5758 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Rapid learning abilities
+Cognitive plasticity
+
+RATING of "Learning efficiency" w.r.t "Artificial general intelligence" is 0.4167 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Rapid learning abilities
+Learning efficiency
+
+RATING of "Knowledge transferability" w.r.t "Artificial general intelligence" is 0.3661 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Cognitive flexibility
+Rapid learning abilities
+Knowledge transferability
+
+RATING of "Learning from experience" w.r.t "Artificial general intelligence" is 0.4471 --> True
+RATING of "Reinforcement learning" w.r.t "Artificial general intelligence" is 0.4049 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Adaptive reasoning
+Learning from experience
+Reinforcement learning
+
+RATING of "Experience replay" w.r.t "Artificial general intelligence" is 0.3739 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Adaptive reasoning
+Learning from experience
+Experience replay
+
+RATING of "Transfer learning" w.r.t "Artificial general intelligence" is 0.3556 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Adaptive reasoning
+Learning from experience
+Transfer learning
+
+RATING of "Model-based learning" w.r.t "Artificial general intelligence" is 0.3975 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Adaptive reasoning
+Learning from experience
+Model-based learning
+
+RATING of "Active learning" w.r.t "Artificial general intelligence" is 0.4043 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Adaptive reasoning
+Learning from experience
+Active learning
+
+RATING of "Cognitive flexibility" w.r.t "Artificial general intelligence" is 0.5166 --> True
+RATING of "Executive function" w.r.t "Artificial general intelligence" is 0.4951 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Adaptive reasoning
+Cognitive flexibility
+Executive function
+
+RATING of "Cognitive control" w.r.t "Artificial general intelligence" is 0.5503 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Adaptive reasoning
+Cognitive flexibility
+Cognitive control
+
+RATING of "Task switching" w.r.t "Artificial general intelligence" is 0.3257 --> False
+RATING of "Working memory" w.r.t "Artificial general intelligence" is 0.5236 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Adaptive reasoning
+Cognitive flexibility
+Working memory
+
+RATING of "Attentional flexibility" w.r.t "Artificial general intelligence" is 0.4553 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Adaptive reasoning
+Cognitive flexibility
+Attentional flexibility
+
+RATING of "Decision-making under uncertainty" w.r.t "Artificial general intelligence" is 0.3988 --> True
+RATING of "Bayesian networks" w.r.t "Artificial general intelligence" is 0.3642 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Adaptive reasoning
+Decision-making under uncertainty
+Bayesian networks
+
+RATING of "Markov decision processes" w.r.t "Artificial general intelligence" is 0.3441 --> False
+RATING of "Monte Carlo simulation" w.r.t "Artificial general intelligence" is 0.4625 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Adaptive reasoning
+Decision-making under uncertainty
+Monte Carlo simulation
+
+RATING of "Decision trees" w.r.t "Artificial general intelligence" is 0.3465 --> False
+RATING of "Stochastic optimization" w.r.t "Artificial general intelligence" is 0.3608 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Adaptive reasoning
+Decision-making under uncertainty
+Stochastic optimization
+
+RATING of "Novel solution generation" w.r.t "Artificial general intelligence" is 0.3923 --> True
+RATING of "Adaptive search strategies" w.r.t "Artificial general intelligence" is 0.4087 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Creative problem-solving
+Novel solution generation
+Adaptive search strategies
+
+RATING of "Heuristic optimization techniques" w.r.t "Artificial general intelligence" is 0.4089 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Creative problem-solving
+Novel solution generation
+Heuristic optimization techniques
+
+RATING of "Evolutionary algorithms" w.r.t "Artificial general intelligence" is 0.4306 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Creative problem-solving
+Novel solution generation
+Evolutionary algorithms
+
+RATING of "Creative ideation methods" w.r.t "Artificial general intelligence" is 0.4264 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Creative problem-solving
+Novel solution generation
+Creative ideation methods
+
+RATING of "Novelty search approach" w.r.t "Artificial general intelligence" is 0.3147 --> False
+RATING of "Adaptive reasoning strategies" w.r.t "Artificial general intelligence" is 0.4757 --> True
+RATING of "Cognitive flexibility" w.r.t "Artificial general intelligence" is 0.5166 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Creative problem-solving
+Adaptive reasoning strategies
+Cognitive flexibility
+
+RATING of "Heuristic decision-making" w.r.t "Artificial general intelligence" is 0.4018 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Creative problem-solving
+Adaptive reasoning strategies
+Heuristic decision-making
+
+RATING of "Metacognitive monitoring" w.r.t "Artificial general intelligence" is 0.4347 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Creative problem-solving
+Adaptive reasoning strategies
+Metacognitive monitoring
+
+RATING of "Dynamic problem-solving" w.r.t "Artificial general intelligence" is 0.4748 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Creative problem-solving
+Adaptive reasoning strategies
+Dynamic problem-solving
+
+RATING of "Adaptive reasoning processes" w.r.t "Artificial general intelligence" is 0.503 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Creative problem-solving
+Adaptive reasoning strategies
+Adaptive reasoning processes
+
+RATING of "Non-linear problem-solving approaches" w.r.t "Artificial general intelligence" is 0.4204 --> True
+RATING of "Heuristic optimization algorithms" w.r.t "Artificial general intelligence" is 0.4043 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Creative problem-solving
+Non-linear problem-solving approaches
+Heuristic optimization algorithms
+
+RATING of "Nonlinear programming techniques" w.r.t "Artificial general intelligence" is 0.3776 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Creative problem-solving
+Non-linear problem-solving approaches
+Nonlinear programming techniques
+
+RATING of "Evolutionary computation methods" w.r.t "Artificial general intelligence" is 0.4821 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Creative problem-solving
+Non-linear problem-solving approaches
+Evolutionary computation methods
+
+RATING of "Swarm intelligence strategies" w.r.t "Artificial general intelligence" is 0.3759 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Creative problem-solving
+Non-linear problem-solving approaches
+Swarm intelligence strategies
+
+RATING of "Chaotic dynamics models" w.r.t "Artificial general intelligence" is 0.345 --> False
+RATING of "Ethical decision-making" w.r.t "Artificial general intelligence" is 0.4384 --> True
+RATING of "Moral reasoning algorithms" w.r.t "Artificial general intelligence" is 0.5899 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Autonomous decision-making
+Ethical decision-making
+Moral reasoning algorithms
+
+RATING of "Ethical dilemma resolution" w.r.t "Artificial general intelligence" is 0.3504 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Autonomous decision-making
+Ethical decision-making
+Ethical dilemma resolution
+
+RATING of "Value-based decision-making" w.r.t "Artificial general intelligence" is 0.3293 --> False
+RATING of "Cognitive moral development" w.r.t "Artificial general intelligence" is 0.4706 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Autonomous decision-making
+Ethical decision-making
+Cognitive moral development
+
+RATING of "Ethical decision frameworks" w.r.t "Artificial general intelligence" is 0.4392 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Autonomous decision-making
+Ethical decision-making
+Ethical decision frameworks
+
+RATING of "Cognitive flexibility" w.r.t "Artificial general intelligence" is 0.5166 --> True
+RATING of "Executive function" w.r.t "Artificial general intelligence" is 0.4951 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Autonomous decision-making
+Cognitive flexibility
+Executive function
+
+RATING of "Cognitive control" w.r.t "Artificial general intelligence" is 0.5503 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Autonomous decision-making
+Cognitive flexibility
+Cognitive control
+
+RATING of "Task switching" w.r.t "Artificial general intelligence" is 0.3257 --> False
+RATING of "Mental flexibility" w.r.t "Artificial general intelligence" is 0.498 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Autonomous decision-making
+Cognitive flexibility
+Mental flexibility
+
+RATING of "Attentional shifting" w.r.t "Artificial general intelligence" is 0.3533 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Autonomous decision-making
+Cognitive flexibility
+Attentional shifting
+
+RATING of "Adaptive reasoning" w.r.t "Artificial general intelligence" is 0.4693 --> True
+RATING of "Cognitive flexibility" w.r.t "Artificial general intelligence" is 0.5166 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Autonomous decision-making
+Adaptive reasoning
+Cognitive flexibility
+
+RATING of "Reasoning strategies" w.r.t "Artificial general intelligence" is 0.4842 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Autonomous decision-making
+Adaptive reasoning
+Reasoning strategies
+
+RATING of "Learning heuristics" w.r.t "Artificial general intelligence" is 0.4339 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Autonomous decision-making
+Adaptive reasoning
+Learning heuristics
+
+RATING of "Problem adaptation" w.r.t "Artificial general intelligence" is 0.4125 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Autonomous decision-making
+Adaptive reasoning
+Problem adaptation
+
+RATING of "Decision optimization" w.r.t "Artificial general intelligence" is 0.3832 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Autonomous decision-making
+Adaptive reasoning
+Decision optimization
+
+RATING of "Adaptive learning strategies" w.r.t "Artificial general intelligence" is 0.3845 --> True
+RATING of "Dynamic curriculum learning" w.r.t "Artificial general intelligence" is 0.3997 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Meta-learning abilities
+Adaptive learning strategies
+Dynamic curriculum learning
+
+RATING of "Transfer learning techniques" w.r.t "Artificial general intelligence" is 0.3441 --> False
+RATING of "Self-paced learning" w.r.t "Artificial general intelligence" is 0.3975 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Meta-learning abilities
+Adaptive learning strategies
+Self-paced learning
+
+RATING of "Incremental learning methods" w.r.t "Artificial general intelligence" is 0.35 --> False
+RATING of "Curriculum adaptation strategies" w.r.t "Artificial general intelligence" is 0.3248 --> False
+RATING of "Transfer learning techniques" w.r.t "Artificial general intelligence" is 0.3441 --> False
+RATING of "Self-improvement mechanisms" w.r.t "Artificial general intelligence" is 0.4584 --> True
+RATING of "Reinforcement learning algorithms" w.r.t "Artificial general intelligence" is 0.4505 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Meta-learning abilities
+Self-improvement mechanisms
+Reinforcement learning algorithms
+
+RATING of "Evolutionary optimization techniques" w.r.t "Artificial general intelligence" is 0.3478 --> False
+RATING of "Neural network architectures" w.r.t "Artificial general intelligence" is 0.5756 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Meta-learning abilities
+Self-improvement mechanisms
+Neural network architectures
+
+RATING of "Bayesian optimization methods" w.r.t "Artificial general intelligence" is 0.3989 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Meta-learning abilities
+Self-improvement mechanisms
+Bayesian optimization methods
+
+RATING of "Multi-objective optimization strategies" w.r.t "Artificial general intelligence" is 0.3896 --> True
+
+TRACE:
+Artificial general intelligence
+Problem-solving capabilities of AGI
+Meta-learning abilities
+Self-improvement mechanisms
+Multi-objective optimization strategies
+
+
+MODEL: 144 facts 
+
+Abstract reasoning
+Active learning
+Actor-critic optimization
+Adaptability to new situations
+Adaptive Learning Techniques
+Adaptive decision-making
+Adaptive decision-making frameworks
+Adaptive problem-solving proficiency
+Adaptive reasoning
+Adaptive reasoning processes
+Adaptive reasoning strategies
+Adaptive search strategies
+Analogical reasoning
+Analogical reasoning capacity
+Analytical reasoning proficiency
+Artificial general intelligence
+Attentional flexibility
+Attentional networks
+Attentional shifting
+Autoencoder architectures
+Autonomous decision-making
+Backpropagation convergence
+Bayesian networks
+Bayesian optimization
+Bayesian optimization methods
+Behavioral flexibility
+Cognitive Flexibility Strategies
+Cognitive abilities of AGI
+Cognitive architecture
+Cognitive control
+Cognitive flexibility
+Cognitive moral development
+Cognitive plasticity
+Cognitive restructuring
+Conceptual hierarchy
+Contextual Intelligence
+Contextual adaptation
+Continuous learning models
+Convolutional neural networks
+Creative ideation methods
+Creative problem-solving
+Creative problem-solving skills
+Cross-lingual transfer
+Decision optimization
+Decision-making process
+Deductive inference capacity
+Deductive reasoning ability
+Deep learning models
+Divergent thinking
+Divergent thinking ability
+Domain adaptation
+Dynamic curriculum learning
+Dynamic decision-making
+Dynamic problem-solving
+Episodic memory encoding
+Error backpropagation
+Ethical decision frameworks
+Ethical decision-making
+Ethical dilemma resolution
+Evolutionary algorithms
+Evolutionary computation methods
+Executive attention
+Executive control
+Executive function
+Experience replay
+Generalization ability
+Generative adversarial networks
+Goal-oriented behavior
+Gradient descent
+Gradient-based optimization
+Graphical models
+Heuristic decision-making
+Heuristic optimization algorithms
+Heuristic optimization techniques
+Information gain maximization
+Innovation aptitude
+Insight problem-solving
+Intrinsic motivation
+Joint Learning Approach
+Knowledge transferability
+Learning capacity
+Learning efficiency
+Learning from experience
+Learning heuristics
+Learning strategies
+Logical deduction abilities
+Logical deduction aptitude
+Logical inference skills
+Logical reasoning skills
+Long-term memory consolidation
+Memory reconsolidation
+Memory retention and recall
+Mental flexibility
+Meta-learning
+Meta-learning algorithms
+Metacognitive monitoring
+Metacognitive skills
+Model-based learning
+Monte Carlo simulation
+Moral reasoning algorithms
+Multi-Task Neural Networks
+Multi-objective optimization
+Multi-objective optimization strategies
+Multi-task learning
+Neural network architectures
+Neural network training
+Neural networks
+Nonlinear programming techniques
+Novelty Response Mechanisms
+Object recognition abilities
+Object recognition accuracy
+Probabilistic reasoning
+Problem adaptation
+Problem-solving ability
+Propositional reasoning skills
+Rapid learning abilities
+Rapid skill acquisition
+Rational decision-making
+Rational thinking aptitude
+Reasoning capacity
+Reasoning skills
+Reasoning strategies
+Reasoning with uncertainty
+Receptive fields
+Recurrent neural networks
+Reinforcement learning
+Reinforcement learning algorithms
+Retrieval-induced forgetting
+Reward shaping
+Self-optimizing systems
+Self-paced learning
+Sigmoid function
+Situational Adaptability
+Softmax activation
+Stochastic optimization
+Swarm intelligence strategies
+Syllogistic reasoning abilities
+Task switching ability
+Task-switching performance
+Transfer learning
+Uncertainty management
+Visual perception abilities
+Working memory
+Working memory capacity
+(base) gpt4agi$ 

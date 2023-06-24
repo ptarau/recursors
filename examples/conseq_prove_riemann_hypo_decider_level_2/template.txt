@@ -1,0 +1,18 @@
+goal = "Proof of the Remann hypothesis"
+
+conseq_prompter = dict(
+    name='conseq',
+    and_p="""We need to predict consequences this context: "$context"
+        Generate 3-5 noun phrases of 2-4 words each detailing consequences of "$g".
+        Itemize your answer, one consequence of "$g" per line.
+        No explanations needed, just the noun phrase, nothing else.
+        Avoid using the words "Noun phrases" in your answer.
+        Your answer should not contain ":".""",
+    or_p="""We need to predict consequences of "$g" inthis context: "$context"
+        Generate 2-3 alternative predictions citing facts that are likely to be consequences of "$g".
+        Itemize your answer, one noun phrase per line.
+         No explanations are needed, just the noun phrase, nothing else.
+        Avoid starting your sentence with the word "Alternative".
+        Your answer should not contain ":"."""
+)
+

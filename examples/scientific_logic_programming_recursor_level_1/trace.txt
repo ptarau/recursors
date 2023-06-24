@@ -1,0 +1,113 @@
+TRACE:
+Logic Programming
+Symbolic reasoning
+Symbolic representation learning
+
+
+TRACE:
+Logic Programming
+Symbolic reasoning
+Knowledge-based systems
+
+
+TRACE:
+Logic Programming
+Symbolic reasoning
+Automated theorem proving
+
+
+TRACE:
+Logic Programming
+Symbolic reasoning
+First-order logic inference
+
+
+TRACE:
+Logic Programming
+Symbolic reasoning
+Semantic networks
+
+
+TRACE:
+Logic Programming
+Rule-based systems
+Knowledge representation formalisms
+
+
+TRACE:
+Logic Programming
+Rule-based systems
+Inference engine mechanisms
+
+
+TRACE:
+Logic Programming
+Rule-based systems
+Production rule systems
+
+
+TRACE:
+Logic Programming
+Rule-based systems
+Expert system development
+
+
+TRACE:
+Logic Programming
+Rule-based systems
+Semantic reasoning algorithms
+
+
+TRACE:
+Logic Programming
+Predicate calculus
+Quantifier elimination
+
+
+TRACE:
+Logic Programming
+Predicate calculus
+First-order logic
+
+
+TRACE:
+Logic Programming
+Predicate calculus
+Skolemization process
+
+
+TRACE:
+Logic Programming
+Predicate calculus
+Resolution principle
+
+
+TRACE:
+Logic Programming
+Predicate calculus
+Herbrand universe
+
+
+MODEL: 19 facts 
+
+Automated theorem proving
+Expert system development
+First-order logic
+First-order logic inference
+Herbrand universe
+Inference engine mechanisms
+Knowledge representation formalisms
+Knowledge-based systems
+Logic Programming
+Predicate calculus
+Production rule systems
+Quantifier elimination
+Resolution principle
+Rule-based systems
+Semantic networks
+Semantic reasoning algorithms
+Skolemization process
+Symbolic reasoning
+Symbolic representation learning
+COSTS in $: {'and': 0.00294, 'or': 0.01284, 'total': 0.015780000000000002}
+

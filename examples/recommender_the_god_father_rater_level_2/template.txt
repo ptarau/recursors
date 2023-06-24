@@ -1,0 +1,24 @@
+goal='The Godfather'
+
+recommendation_prompter = dict(
+    name='rec',
+    and_p="""The recommandations so far are: "$context".
+     In this context I really liked "$g." 
+     Suggest me 2-3 related ones that go well together.
+     Itemize your answer, one recommendation per line.
+     Just give me each title on its line, no comments or summaries.""",
+    or_p="""""The recommandations so far are: "$context".
+     In this context I am considering "$g".
+     Suggest 2-3 distinct alternative recommandations insted of "$g".
+     Just give each title on its line, no comments or summaries.
+     Avoid starting your sentence with the word "Sure" and avoid having commas in your answer.
+     """
+)
+
+ratings_prompter = dict(
+    name='oracle',
+    rater_p="""
+    On a scale from 0 to 100, rate how relevant and semantically close "$g" is to "$context".
+    Return your answer in the form: rating | explanation.
+    """
+)

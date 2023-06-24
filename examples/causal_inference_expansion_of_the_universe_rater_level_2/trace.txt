@@ -1,0 +1,1374 @@
+RATING of "Dark energy" w.r.t "Expansion of the universe" is 0.593 --> True
+RATING of "Accelerating universe" w.r.t "Expansion of the universe" is 0.7293 --> True
+RATING of "Dark energy" w.r.t "Expansion of the universe" is 0.593 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Vacuum energy
+Accelerating universe
+Dark energy
+
+RATING of "Vacuum energy" w.r.t "Expansion of the universe" is 0.5524 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Vacuum energy
+Accelerating universe
+Vacuum energy
+
+RATING of "Cosmological constant" w.r.t "Expansion of the universe" is 0.7014 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Vacuum energy
+Accelerating universe
+Cosmological constant
+
+RATING of "Repulsive gravity" w.r.t "Expansion of the universe" is 0.5958 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Vacuum energy
+Accelerating universe
+Repulsive gravity
+
+RATING of "Inflationary epoch" w.r.t "Expansion of the universe" is 0.6258 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Vacuum energy
+Accelerating universe
+Inflationary epoch
+
+RATING of "Cosmological constant" w.r.t "Expansion of the universe" is 0.7014 --> True
+RATING of "Vacuum fluctuations" w.r.t "Expansion of the universe" is 0.463 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Vacuum energy
+Cosmological constant
+Vacuum fluctuations
+
+RATING of "Energy density" w.r.t "Expansion of the universe" is 0.3581 --> False
+RATING of "Quantum fields" w.r.t "Expansion of the universe" is 0.5799 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Vacuum energy
+Cosmological constant
+Quantum fields
+
+RATING of "Zero-point energy" w.r.t "Expansion of the universe" is 0.3579 --> False
+RATING of "Accelerating universe" w.r.t "Expansion of the universe" is 0.7293 --> True
+RATING of "Dark energy" w.r.t "Expansion of the universe" is 0.593 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Cosmological constant
+Accelerating universe
+Dark energy
+
+RATING of "Negative pressure" w.r.t "Expansion of the universe" is 0.2419 --> False
+RATING of "Repulsive force" w.r.t "Expansion of the universe" is 0.5538 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Cosmological constant
+Accelerating universe
+Repulsive force
+
+RATING of "Cosmological constant" w.r.t "Expansion of the universe" is 0.7014 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Cosmological constant
+Accelerating universe
+Cosmological constant
+
+RATING of "Vacuum energy" w.r.t "Expansion of the universe" is 0.5524 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Cosmological constant
+Accelerating universe
+Vacuum energy
+
+RATING of "Vacuum energy" w.r.t "Expansion of the universe" is 0.5524 --> True
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Cosmological constant
+Vacuum energy
+Quantum fluctuations
+
+RATING of "Zero-point energy" w.r.t "Expansion of the universe" is 0.3579 --> False
+RATING of "Virtual particles" w.r.t "Expansion of the universe" is 0.4282 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Cosmological constant
+Vacuum energy
+Virtual particles
+
+RATING of "Spacetime curvature" w.r.t "Expansion of the universe" is 0.6969 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Cosmological constant
+Vacuum energy
+Spacetime curvature
+
+RATING of "Higgs field" w.r.t "Expansion of the universe" is 0.4385 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Cosmological constant
+Vacuum energy
+Higgs field
+
+RATING of "Einstein s field equations" w.r.t "Expansion of the universe" is 0.5421 --> True
+RATING of "Causes of Einstein s Field Equations:" w.r.t "Expansion of the universe" is 0.5385 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Cosmological constant
+Einstein s field equations
+Causes of Einstein s Field Equations:
+
+RATING of "General Relativity" w.r.t "Expansion of the universe" is 0.5758 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Cosmological constant
+Einstein s field equations
+General Relativity
+
+RATING of "Curved Spacetime" w.r.t "Expansion of the universe" is 0.5816 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Cosmological constant
+Einstein s field equations
+Curved Spacetime
+
+RATING of "Gravitational Force" w.r.t "Expansion of the universe" is 0.5076 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Cosmological constant
+Einstein s field equations
+Gravitational Force
+
+RATING of "Energy-Momentum Tensor" w.r.t "Expansion of the universe" is 0.3749 --> False
+RATING of "Geodesic Deviation" w.r.t "Expansion of the universe" is 0.6111 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Cosmological constant
+Einstein s field equations
+Geodesic Deviation
+
+RATING of "Inflationary period of the universe" w.r.t "Expansion of the universe" is 0.6518 --> True
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Scalar field fluctuations
+Inflationary period of the universe
+Quantum fluctuations
+
+RATING of "Grand Unified Theory" w.r.t "Expansion of the universe" is 0.4982 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Scalar field fluctuations
+Inflationary period of the universe
+Grand Unified Theory
+
+RATING of "False vacuum" w.r.t "Expansion of the universe" is 0.5425 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Scalar field fluctuations
+Inflationary period of the universe
+False vacuum
+
+RATING of "Higgs field" w.r.t "Expansion of the universe" is 0.4385 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Scalar field fluctuations
+Inflationary period of the universe
+Higgs field
+
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+RATING of "Uncertainty principle" w.r.t "Expansion of the universe" is 0.4474 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Scalar field fluctuations
+Quantum fluctuations
+Uncertainty principle
+
+RATING of "Vacuum energy" w.r.t "Expansion of the universe" is 0.5524 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Scalar field fluctuations
+Quantum fluctuations
+Vacuum energy
+
+RATING of "Particle interactions" w.r.t "Expansion of the universe" is 0.4262 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Scalar field fluctuations
+Quantum fluctuations
+Particle interactions
+
+RATING of "Quantum mechanics" w.r.t "Expansion of the universe" is 0.4661 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Scalar field fluctuations
+Quantum fluctuations
+Quantum mechanics
+
+RATING of "Zero-point energy" w.r.t "Expansion of the universe" is 0.3579 --> False
+RATING of "Gravitational waves" w.r.t "Expansion of the universe" is 0.4362 --> True
+RATING of "Black hole mergers" w.r.t "Expansion of the universe" is 0.4807 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Scalar field fluctuations
+Gravitational waves
+Black hole mergers
+
+RATING of "Neutron star collisions" w.r.t "Expansion of the universe" is 0.3511 --> False
+RATING of "Cosmic inflation" w.r.t "Expansion of the universe" is 0.773 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Scalar field fluctuations
+Gravitational waves
+Cosmic inflation
+
+RATING of "Accelerating universe" w.r.t "Expansion of the universe" is 0.7293 --> True
+RATING of "Dark Energy" w.r.t "Expansion of the universe" is 0.593 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Quintessence
+Accelerating universe
+Dark Energy
+
+RATING of "Negative Pressure" w.r.t "Expansion of the universe" is 0.2419 --> False
+RATING of "Quintessence" w.r.t "Expansion of the universe" is 0.2195 --> False
+RATING of "Vacuum Energy" w.r.t "Expansion of the universe" is 0.5524 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Quintessence
+Accelerating universe
+Vacuum Energy
+
+RATING of "Cosmological Constant" w.r.t "Expansion of the universe" is 0.7014 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Quintessence
+Accelerating universe
+Cosmological Constant
+
+RATING of "Scalar field" w.r.t "Expansion of the universe" is 0.6383 --> True
+RATING of "Inflationary universe" w.r.t "Expansion of the universe" is 0.7664 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Quintessence
+Scalar field
+Inflationary universe
+
+RATING of "Particle physics" w.r.t "Expansion of the universe" is 0.5365 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Quintessence
+Scalar field
+Particle physics
+
+RATING of "String theory" w.r.t "Expansion of the universe" is 0.4889 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Quintessence
+Scalar field
+String theory
+
+RATING of "Cosmological constant" w.r.t "Expansion of the universe" is 0.7014 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Quintessence
+Scalar field
+Cosmological constant
+
+RATING of "Quantum mechanics" w.r.t "Expansion of the universe" is 0.4661 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Quintessence
+Scalar field
+Quantum mechanics
+
+RATING of "Cosmic inflation" w.r.t "Expansion of the universe" is 0.773 --> True
+RATING of "Rapid Expansion" w.r.t "Expansion of the universe" is 0.6216 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Quintessence
+Cosmic inflation
+Rapid Expansion
+
+RATING of "Inflaton Field" w.r.t "Expansion of the universe" is 0.7397 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Quintessence
+Cosmic inflation
+Inflaton Field
+
+RATING of "Quantum Fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Quintessence
+Cosmic inflation
+Quantum Fluctuations
+
+RATING of "Cosmic Vacuum Energy" w.r.t "Expansion of the universe" is 0.5922 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Quintessence
+Cosmic inflation
+Cosmic Vacuum Energy
+
+RATING of "Grand Unified Theory" w.r.t "Expansion of the universe" is 0.4982 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Quintessence
+Cosmic inflation
+Grand Unified Theory
+
+RATING of "Gravitational waves" w.r.t "Expansion of the universe" is 0.4362 --> True
+RATING of "Binary black holes" w.r.t "Expansion of the universe" is 0.3636 --> False
+RATING of "Neutron star collisions" w.r.t "Expansion of the universe" is 0.3511 --> False
+RATING of "Cosmic inflation" w.r.t "Expansion of the universe" is 0.773 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Modified gravity
+Gravitational waves
+Cosmic inflation
+
+RATING of "Quantum gravity" w.r.t "Expansion of the universe" is 0.4322 --> True
+RATING of "Particle interactions" w.r.t "Expansion of the universe" is 0.4262 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Modified gravity
+Quantum gravity
+Particle interactions
+
+RATING of "Space-time curvature" w.r.t "Expansion of the universe" is 0.6974 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Modified gravity
+Quantum gravity
+Space-time curvature
+
+RATING of "Quantum mechanics" w.r.t "Expansion of the universe" is 0.4661 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Modified gravity
+Quantum gravity
+Quantum mechanics
+
+RATING of "Gravitational waves" w.r.t "Expansion of the universe" is 0.4362 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Modified gravity
+Quantum gravity
+Gravitational waves
+
+RATING of "Black holes" w.r.t "Expansion of the universe" is 0.4258 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Modified gravity
+Quantum gravity
+Black holes
+
+RATING of "Extra dimensions" w.r.t "Expansion of the universe" is 0.4662 --> True
+RATING of "String theory" w.r.t "Expansion of the universe" is 0.4889 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Modified gravity
+Extra dimensions
+String theory
+
+RATING of "Kaluza-Klein theory" w.r.t "Expansion of the universe" is 0.3525 --> False
+RATING of "Brane cosmology" w.r.t "Expansion of the universe" is 0.5933 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Modified gravity
+Extra dimensions
+Brane cosmology
+
+RATING of "Quantum gravity" w.r.t "Expansion of the universe" is 0.4322 --> True
+
+TRACE:
+Expansion of the universe
+Dark energy
+Modified gravity
+Extra dimensions
+Quantum gravity
+
+RATING of "Inflationary period" w.r.t "Expansion of the universe" is 0.5674 --> True
+RATING of "Quantum vacuum fluctuations" w.r.t "Expansion of the universe" is 0.406 --> False
+RATING of "Spontaneous symmetry breaking" w.r.t "Expansion of the universe" is 0.339 --> False
+RATING of "Scalar field fluctuations" w.r.t "Expansion of the universe" is 0.4419 --> True
+RATING of "Quantum mechanics" w.r.t "Expansion of the universe" is 0.4661 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Quantum fluctuations
+Scalar field fluctuations
+Quantum mechanics
+
+RATING of "Energy fluctuations" w.r.t "Expansion of the universe" is 0.4046 --> False
+RATING of "Inflationary universe" w.r.t "Expansion of the universe" is 0.7664 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Quantum fluctuations
+Scalar field fluctuations
+Inflationary universe
+
+RATING of "Scalar field dynamics" w.r.t "Expansion of the universe" is 0.5336 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Quantum fluctuations
+Scalar field fluctuations
+Scalar field dynamics
+
+RATING of "Vacuum instability" w.r.t "Expansion of the universe" is 0.4564 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Quantum fluctuations
+Scalar field fluctuations
+Vacuum instability
+
+RATING of "Dark energy" w.r.t "Expansion of the universe" is 0.593 --> True
+RATING of "Vacuum energy" w.r.t "Expansion of the universe" is 0.5524 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Rapid expansion
+Dark energy
+Vacuum energy
+
+RATING of "Cosmological constant" w.r.t "Expansion of the universe" is 0.7014 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Rapid expansion
+Dark energy
+Cosmological constant
+
+RATING of "Scalar field dynamics" w.r.t "Expansion of the universe" is 0.5336 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Rapid expansion
+Dark energy
+Scalar field dynamics
+
+RATING of "Modified gravity theories" w.r.t "Expansion of the universe" is 0.4797 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Rapid expansion
+Dark energy
+Modified gravity theories
+
+RATING of "Cosmic microwave background radiation" w.r.t "Expansion of the universe" is 0.5977 --> True
+RATING of "Big Bang" w.r.t "Expansion of the universe" is 0.6911 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Rapid expansion
+Cosmic microwave background radiation
+Big Bang
+
+RATING of "Thermalization" w.r.t "Expansion of the universe" is 0.2941 --> False
+RATING of "Recombination" w.r.t "Expansion of the universe" is 0.2465 --> False
+RATING of "Photon decoupling" w.r.t "Expansion of the universe" is 0.2987 --> False
+RATING of "Expansion cooling" w.r.t "Expansion of the universe" is 0.361 --> False
+RATING of "Gravitational waves" w.r.t "Expansion of the universe" is 0.4362 --> True
+RATING of "Causes of Gravitational Waves:" w.r.t "Expansion of the universe" is 0.4864 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Rapid expansion
+Gravitational waves
+Causes of Gravitational Waves:
+
+RATING of "Binary Black Holes" w.r.t "Expansion of the universe" is 0.3636 --> False
+RATING of "Neutron Star Collisions" w.r.t "Expansion of the universe" is 0.3511 --> False
+RATING of "Cosmic Inflation" w.r.t "Expansion of the universe" is 0.773 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Rapid expansion
+Gravitational waves
+Cosmic Inflation
+
+RATING of "Dark energy" w.r.t "Expansion of the universe" is 0.593 --> True
+RATING of "Vacuum energy" w.r.t "Expansion of the universe" is 0.5524 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+High energy density
+Dark energy
+Vacuum energy
+
+RATING of "Cosmological constant" w.r.t "Expansion of the universe" is 0.7014 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+High energy density
+Dark energy
+Cosmological constant
+
+RATING of "Scalar field dynamics" w.r.t "Expansion of the universe" is 0.5336 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+High energy density
+Dark energy
+Scalar field dynamics
+
+RATING of "Modified gravity theories" w.r.t "Expansion of the universe" is 0.4797 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+High energy density
+Dark energy
+Modified gravity theories
+
+RATING of "Cosmic microwave background radiation" w.r.t "Expansion of the universe" is 0.5977 --> True
+RATING of "Big Bang" w.r.t "Expansion of the universe" is 0.6911 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+High energy density
+Cosmic microwave background radiation
+Big Bang
+
+RATING of "Thermalization" w.r.t "Expansion of the universe" is 0.2941 --> False
+RATING of "Recombination" w.r.t "Expansion of the universe" is 0.2465 --> False
+RATING of "Photon decoupling" w.r.t "Expansion of the universe" is 0.2987 --> False
+RATING of "Cosmic evolution" w.r.t "Expansion of the universe" is 0.6292 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+High energy density
+Cosmic microwave background radiation
+Cosmic evolution
+
+RATING of "Gravitational waves" w.r.t "Expansion of the universe" is 0.4362 --> True
+RATING of "Binary black holes" w.r.t "Expansion of the universe" is 0.3636 --> False
+RATING of "Neutron star collisions" w.r.t "Expansion of the universe" is 0.3511 --> False
+RATING of "Cosmic inflation" w.r.t "Expansion of the universe" is 0.773 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+High energy density
+Gravitational waves
+Cosmic inflation
+
+RATING of "Supernova explosions" w.r.t "Expansion of the universe" is 0.561 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+High energy density
+Gravitational waves
+Supernova explosions
+
+RATING of "Early universe turbulence" w.r.t "Expansion of the universe" is 0.5298 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+High energy density
+Gravitational waves
+Early universe turbulence
+
+RATING of "Dark energy" w.r.t "Expansion of the universe" is 0.593 --> True
+RATING of "Accelerating expansion" w.r.t "Expansion of the universe" is 0.6688 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Scalar field
+Dark energy
+Accelerating expansion
+
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Scalar field
+Dark energy
+Quantum fluctuations
+
+RATING of "Vacuum energy" w.r.t "Expansion of the universe" is 0.5524 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Scalar field
+Dark energy
+Vacuum energy
+
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+RATING of "Causes of Quantum Fluctuations:" w.r.t "Expansion of the universe" is 0.4139 --> False
+RATING of "Uncertainty Principle" w.r.t "Expansion of the universe" is 0.4474 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Scalar field
+Quantum fluctuations
+Uncertainty Principle
+
+RATING of "Vacuum Energy" w.r.t "Expansion of the universe" is 0.5524 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Scalar field
+Quantum fluctuations
+Vacuum Energy
+
+RATING of "Quantum Entanglement" w.r.t "Expansion of the universe" is 0.3337 --> False
+RATING of "Particle Interactions" w.r.t "Expansion of the universe" is 0.4262 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Scalar field
+Quantum fluctuations
+Particle Interactions
+
+RATING of "Quantum Tunneling" w.r.t "Expansion of the universe" is 0.3119 --> False
+RATING of "Cosmic strings" w.r.t "Expansion of the universe" is 0.4251 --> True
+RATING of "Phase transitions" w.r.t "Expansion of the universe" is 0.3574 --> False
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Scalar field
+Cosmic strings
+Quantum fluctuations
+
+RATING of "Topological defects" w.r.t "Expansion of the universe" is 0.3364 --> False
+RATING of "Grand unified theories" w.r.t "Expansion of the universe" is 0.4877 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Scalar field
+Cosmic strings
+Grand unified theories
+
+RATING of "Cosmic inflation" w.r.t "Expansion of the universe" is 0.773 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Scalar field
+Cosmic strings
+Cosmic inflation
+
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+RATING of "Causes of Quantum Fluctuations:" w.r.t "Expansion of the universe" is 0.4139 --> False
+RATING of "Vacuum Energy" w.r.t "Expansion of the universe" is 0.5524 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Grand Unified Theory
+Quantum fluctuations
+Vacuum Energy
+
+RATING of "Heisenberg Uncertainty Principle" w.r.t "Expansion of the universe" is 0.4029 --> False
+RATING of "Particle Interactions" w.r.t "Expansion of the universe" is 0.4262 --> True
+
+TRACE:
+Expansion of the universe
+Inflationary period
+Grand Unified Theory
+Quantum fluctuations
+Particle Interactions
+
+RATING of "Quantum Entanglement" w.r.t "Expansion of the universe" is 0.3337 --> False
+RATING of "Strong nuclear force" w.r.t "Expansion of the universe" is 0.3874 --> False
+RATING of "Electroweak force" w.r.t "Expansion of the universe" is 0.3354 --> False
+RATING of "Cosmic microwave background radiation" w.r.t "Expansion of the universe" is 0.5977 --> True
+RATING of "Inflationary period" w.r.t "Expansion of the universe" is 0.5674 --> True
+RATING of "High-energy vacuum fluctuations" w.r.t "Expansion of the universe" is 0.4653 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Big Bang
+Inflationary period
+High-energy vacuum fluctuations
+
+RATING of "Rapid expansion" w.r.t "Expansion of the universe" is 0.6216 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Big Bang
+Inflationary period
+Rapid expansion
+
+RATING of "Scalar field dynamics" w.r.t "Expansion of the universe" is 0.5336 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Big Bang
+Inflationary period
+Scalar field dynamics
+
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Big Bang
+Inflationary period
+Quantum fluctuations
+
+RATING of "Grand Unified Theory" w.r.t "Expansion of the universe" is 0.4982 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Big Bang
+Inflationary period
+Grand Unified Theory
+
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+RATING of "Vacuum energy" w.r.t "Expansion of the universe" is 0.5524 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Big Bang
+Quantum fluctuations
+Vacuum energy
+
+RATING of "Uncertainty principle" w.r.t "Expansion of the universe" is 0.4474 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Big Bang
+Quantum fluctuations
+Uncertainty principle
+
+RATING of "Particle interactions" w.r.t "Expansion of the universe" is 0.4262 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Big Bang
+Quantum fluctuations
+Particle interactions
+
+RATING of "Quantum field theory" w.r.t "Expansion of the universe" is 0.5871 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Big Bang
+Quantum fluctuations
+Quantum field theory
+
+RATING of "Inflationary period" w.r.t "Expansion of the universe" is 0.5674 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Big Bang
+Quantum fluctuations
+Inflationary period
+
+RATING of "Gravitational waves" w.r.t "Expansion of the universe" is 0.4362 --> True
+RATING of "Colliding black holes" w.r.t "Expansion of the universe" is 0.3749 --> False
+RATING of "Neutron star mergers" w.r.t "Expansion of the universe" is 0.4318 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Big Bang
+Gravitational waves
+Neutron star mergers
+
+RATING of "Cosmic inflation" w.r.t "Expansion of the universe" is 0.773 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Big Bang
+Gravitational waves
+Cosmic inflation
+
+RATING of "Inflationary period" w.r.t "Expansion of the universe" is 0.5674 --> True
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Early universe
+Inflationary period
+Quantum fluctuations
+
+RATING of "Rapid expansion" w.r.t "Expansion of the universe" is 0.6216 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Early universe
+Inflationary period
+Rapid expansion
+
+RATING of "High energy density" w.r.t "Expansion of the universe" is 0.3821 --> False
+RATING of "Scalar field dynamics" w.r.t "Expansion of the universe" is 0.5336 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Early universe
+Inflationary period
+Scalar field dynamics
+
+RATING of "Big Bang" w.r.t "Expansion of the universe" is 0.6911 --> True
+RATING of "Inflationary period" w.r.t "Expansion of the universe" is 0.5674 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Early universe
+Big Bang
+Inflationary period
+
+RATING of "High energy density" w.r.t "Expansion of the universe" is 0.3821 --> False
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Early universe
+Big Bang
+Quantum fluctuations
+
+RATING of "Singularity" w.r.t "Expansion of the universe" is 0.3543 --> False
+RATING of "Rapid expansion" w.r.t "Expansion of the universe" is 0.6216 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Early universe
+Big Bang
+Rapid expansion
+
+RATING of "Dark matter" w.r.t "Expansion of the universe" is 0.5165 --> True
+RATING of "Weakly Interacting Particles" w.r.t "Expansion of the universe" is 0.3406 --> False
+RATING of "Gravitational Effects" w.r.t "Expansion of the universe" is 0.4962 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Early universe
+Dark matter
+Gravitational Effects
+
+RATING of "Non-Luminous Matter" w.r.t "Expansion of the universe" is 0.4045 --> False
+RATING of "Cold Dark Matter" w.r.t "Expansion of the universe" is 0.4842 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Early universe
+Dark matter
+Cold Dark Matter
+
+RATING of "Exotic Particles" w.r.t "Expansion of the universe" is 0.5372 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Early universe
+Dark matter
+Exotic Particles
+
+RATING of "Expansion of space-time" w.r.t "Expansion of the universe" is 0.8079 --> True
+RATING of "Dark energy" w.r.t "Expansion of the universe" is 0.593 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Thermal equilibrium
+Expansion of space-time
+Dark energy
+
+RATING of "Inflationary period" w.r.t "Expansion of the universe" is 0.5674 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Thermal equilibrium
+Expansion of space-time
+Inflationary period
+
+RATING of "Big Bang" w.r.t "Expansion of the universe" is 0.6911 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Thermal equilibrium
+Expansion of space-time
+Big Bang
+
+RATING of "Redshift of light" w.r.t "Expansion of the universe" is 0.7217 --> True
+RATING of "Doppler effect" w.r.t "Expansion of the universe" is 0.5635 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Thermal equilibrium
+Redshift of light
+Doppler effect
+
+RATING of "Relative motion" w.r.t "Expansion of the universe" is 0.3796 --> False
+RATING of "Gravitational redshift" w.r.t "Expansion of the universe" is 0.662 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Thermal equilibrium
+Redshift of light
+Gravitational redshift
+
+RATING of "Cosmological expansion" w.r.t "Expansion of the universe" is 0.7608 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Thermal equilibrium
+Redshift of light
+Cosmological expansion
+
+RATING of "Big Bang theory" w.r.t "Expansion of the universe" is 0.6527 --> True
+RATING of "Cosmic inflation" w.r.t "Expansion of the universe" is 0.773 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Thermal equilibrium
+Big Bang theory
+Cosmic inflation
+
+RATING of "High energy density" w.r.t "Expansion of the universe" is 0.3821 --> False
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Thermal equilibrium
+Big Bang theory
+Quantum fluctuations
+
+RATING of "Grand unification" w.r.t "Expansion of the universe" is 0.431 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Thermal equilibrium
+Big Bang theory
+Grand unification
+
+RATING of "Singularity" w.r.t "Expansion of the universe" is 0.3543 --> False
+RATING of "Inflationary period" w.r.t "Expansion of the universe" is 0.5674 --> True
+RATING of "Rapid expansion" w.r.t "Expansion of the universe" is 0.6216 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Photon decoupling
+Inflationary period
+Rapid expansion
+
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Photon decoupling
+Inflationary period
+Quantum fluctuations
+
+RATING of "Scalar field dynamics" w.r.t "Expansion of the universe" is 0.5336 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Photon decoupling
+Inflationary period
+Scalar field dynamics
+
+RATING of "Exponential growth" w.r.t "Expansion of the universe" is 0.419 --> False
+RATING of "High energy density" w.r.t "Expansion of the universe" is 0.3821 --> False
+RATING of "Dark matter" w.r.t "Expansion of the universe" is 0.5165 --> True
+RATING of "Causes of Dark Matter:" w.r.t "Expansion of the universe" is 0.5288 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Photon decoupling
+Dark matter
+Causes of Dark Matter:
+
+RATING of "Gravitational effects" w.r.t "Expansion of the universe" is 0.4962 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Photon decoupling
+Dark matter
+Gravitational effects
+
+RATING of "Weakly interacting particles" w.r.t "Expansion of the universe" is 0.3406 --> False
+RATING of "Non-luminous matter" w.r.t "Expansion of the universe" is 0.4045 --> False
+RATING of "Cold dark matter" w.r.t "Expansion of the universe" is 0.4842 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Photon decoupling
+Dark matter
+Cold dark matter
+
+RATING of "Exotic particles" w.r.t "Expansion of the universe" is 0.5372 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Photon decoupling
+Dark matter
+Exotic particles
+
+RATING of "Gravitational waves" w.r.t "Expansion of the universe" is 0.4362 --> True
+RATING of "Binary black holes" w.r.t "Expansion of the universe" is 0.3636 --> False
+RATING of "Neutron star collisions" w.r.t "Expansion of the universe" is 0.3511 --> False
+RATING of "Cosmic inflation" w.r.t "Expansion of the universe" is 0.773 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Photon decoupling
+Gravitational waves
+Cosmic inflation
+
+RATING of "Dark energy" w.r.t "Expansion of the universe" is 0.593 --> True
+RATING of "Accelerating expansion" w.r.t "Expansion of the universe" is 0.6688 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Cosmic evolution
+Dark energy
+Accelerating expansion
+
+RATING of "Vacuum energy" w.r.t "Expansion of the universe" is 0.5524 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Cosmic evolution
+Dark energy
+Vacuum energy
+
+RATING of "Repulsive gravity" w.r.t "Expansion of the universe" is 0.5958 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Cosmic evolution
+Dark energy
+Repulsive gravity
+
+RATING of "Cosmological constant" w.r.t "Expansion of the universe" is 0.7014 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Cosmic evolution
+Dark energy
+Cosmological constant
+
+RATING of "Unknown force" w.r.t "Expansion of the universe" is 0.4842 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Cosmic evolution
+Dark energy
+Unknown force
+
+RATING of "Inflationary period" w.r.t "Expansion of the universe" is 0.5674 --> True
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Cosmic evolution
+Inflationary period
+Quantum fluctuations
+
+RATING of "Rapid expansion" w.r.t "Expansion of the universe" is 0.6216 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Cosmic evolution
+Inflationary period
+Rapid expansion
+
+RATING of "High energy density" w.r.t "Expansion of the universe" is 0.3821 --> False
+RATING of "Scalar field dynamics" w.r.t "Expansion of the universe" is 0.5336 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Cosmic evolution
+Inflationary period
+Scalar field dynamics
+
+RATING of "Big Bang theory" w.r.t "Expansion of the universe" is 0.6527 --> True
+RATING of "Inflationary universe model" w.r.t "Expansion of the universe" is 0.7351 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Cosmic evolution
+Big Bang theory
+Inflationary universe model
+
+RATING of "High energy density" w.r.t "Expansion of the universe" is 0.3821 --> False
+RATING of "Quantum fluctuations" w.r.t "Expansion of the universe" is 0.4343 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Cosmic evolution
+Big Bang theory
+Quantum fluctuations
+
+RATING of "Singularity" w.r.t "Expansion of the universe" is 0.3543 --> False
+RATING of "Cosmic expansion" w.r.t "Expansion of the universe" is 0.7244 --> True
+
+TRACE:
+Expansion of the universe
+Cosmic microwave background radiation
+Cosmic evolution
+Big Bang theory
+Cosmic expansion
+
+
+MODEL: 84 facts 
+
+Accelerating expansion
+Accelerating universe
+Big Bang
+Black hole mergers
+Black holes
+Brane cosmology
+Causes of Dark Matter:
+Causes of Einstein s Field Equations:
+Causes of Gravitational Waves:
+Cold Dark Matter
+Cold dark matter
+Cosmic Inflation
+Cosmic Vacuum Energy
+Cosmic evolution
+Cosmic expansion
+Cosmic inflation
+Cosmic microwave background radiation
+Cosmological Constant
+Cosmological constant
+Cosmological expansion
+Curved Spacetime
+Dark Energy
+Dark energy
+Doppler effect
+Early universe
+Early universe turbulence
+Exotic Particles
+Exotic particles
+Expansion of space-time
+Expansion of the universe
+False vacuum
+General Relativity
+Geodesic Deviation
+Grand Unified Theory
+Grand unification
+Grand unified theories
+Gravitational Effects
+Gravitational Force
+Gravitational effects
+Gravitational redshift
+Gravitational waves
+Higgs field
+High energy density
+High-energy vacuum fluctuations
+Inflationary epoch
+Inflationary period
+Inflationary period of the universe
+Inflationary universe
+Inflationary universe model
+Inflaton Field
+Modified gravity
+Modified gravity theories
+Neutron star mergers
+Particle Interactions
+Particle interactions
+Particle physics
+Photon decoupling
+Quantum Fluctuations
+Quantum field theory
+Quantum fields
+Quantum fluctuations
+Quantum gravity
+Quantum mechanics
+Quintessence
+Rapid Expansion
+Rapid expansion
+Repulsive force
+Repulsive gravity
+Scalar field
+Scalar field dynamics
+Scalar field fluctuations
+Space-time curvature
+Spacetime curvature
+String theory
+Supernova explosions
+Thermal equilibrium
+Uncertainty Principle
+Uncertainty principle
+Unknown force
+Vacuum Energy
+Vacuum energy
+Vacuum fluctuations
+Vacuum instability
+Virtual particles
+COSTS in $: {'and': 0.010101500000000001, 'or': 0.0031335}
+(base) gpt4agi$ 

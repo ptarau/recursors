@@ -1,0 +1,1375 @@
+/Users/tarau/miniconda3/bin/python -i /Users/tarau/sit/gpt4agi/gpt4agi/refiners.py 
+!!! ADVICE for: Lack of diverse data True.
+!!! ADVICE for: Insufficient funding for data collection True.
+!!! ADVICE for: Budget constraints False.
+!!! ADVICE for: Resource scarcity False.
+!!! ADVICE for: Financial limitations False.
+!!! ADVICE for: Inadequate funding False.
+!!! ADVICE for: Limited access to certain populations for data gathering False.
+!!! ADVICE for: Lack of incentives for companies to share data True.
+!!! ADVICE for: Competitive Advantage False.
+!!! ADVICE for: Intellectual Property False.
+!!! ADVICE for: Privacy Concerns True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Limited data sources
+Lack of incentives for companies to share data
+Privacy Concerns
+
+!!! ADVICE for: Cost of Sharing False.
+!!! ADVICE for: Lack of Trust False.
+!!! ADVICE for: Limited data sources True.
+!!! ADVICE for: Small sample size True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Homogeneous training data
+Limited data sources
+Small sample size
+
+!!! ADVICE for: Data scarcity False.
+!!! ADVICE for: Limited resources False.
+!!! ADVICE for: Incomplete records False.
+!!! ADVICE for: Narrow scope False.
+!!! ADVICE for: Unrepresentative sample True.
+!!! ADVICE for: Limited demographics True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Homogeneous training data
+Unrepresentative sample
+Limited demographics
+
+!!! ADVICE for: Sampling bias True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Homogeneous training data
+Unrepresentative sample
+Sampling bias
+
+!!! ADVICE for: Incomplete data False.
+!!! ADVICE for: Non-random selection True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Homogeneous training data
+Unrepresentative sample
+Non-random selection
+
+!!! ADVICE for: Skewed population True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Homogeneous training data
+Unrepresentative sample
+Skewed population
+
+!!! ADVICE for: Narrow data collection methods True.
+!!! ADVICE for: Limited sampling pool True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Homogeneous training data
+Narrow data collection methods
+Limited sampling pool
+
+!!! ADVICE for: Incomplete data sources True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Homogeneous training data
+Narrow data collection methods
+Incomplete data sources
+
+!!! ADVICE for: Biased data selection True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Homogeneous training data
+Narrow data collection methods
+Biased data selection
+
+!!! ADVICE for: Narrow research scope False.
+!!! ADVICE for: Limited sample size False.
+!!! ADVICE for: Incomplete data sets True.
+!!! ADVICE for: Limited data sources True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Insufficient data collection
+Incomplete data sets
+Limited data sources
+
+!!! ADVICE for: Data silos True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Insufficient data collection
+Incomplete data sets
+Data silos
+
+!!! ADVICE for: Inadequate sampling True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Insufficient data collection
+Incomplete data sets
+Inadequate sampling
+
+!!! ADVICE for: Data gaps True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Insufficient data collection
+Incomplete data sets
+Data gaps
+
+!!! ADVICE for: Incomplete records False.
+!!! ADVICE for: Narrow data collection methods True.
+!!! ADVICE for: Limited resources False.
+!!! ADVICE for: Inadequate planning False.
+!!! ADVICE for: Narrow focus False.
+!!! ADVICE for: Limited expertise False.
+!!! ADVICE for: Insufficient funding False.
+!!! ADVICE for: Limited data sources True.
+!!! ADVICE for: Small sample size True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Narrow data selection
+Limited data sources
+Small sample size
+
+!!! ADVICE for: Limited data collection False.
+!!! ADVICE for: Incomplete data sets True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Narrow data selection
+Limited data sources
+Incomplete data sets
+
+!!! ADVICE for: Data silos True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Narrow data selection
+Limited data sources
+Data silos
+
+!!! ADVICE for: Data exclusivity False.
+!!! ADVICE for: Incomplete data collection False.
+!!! ADVICE for: Unrepresentative data samples True.
+!!! ADVICE for: Limited data sources True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Narrow data selection
+Unrepresentative data samples
+Limited data sources
+
+!!! ADVICE for: Sampling bias True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Narrow data selection
+Unrepresentative data samples
+Sampling bias
+
+!!! ADVICE for: Incomplete data collection False.
+!!! ADVICE for: Non-random sampling True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Narrow data selection
+Unrepresentative data samples
+Non-random sampling
+
+!!! ADVICE for: Skewed data distribution True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Narrow data selection
+Unrepresentative data samples
+Skewed data distribution
+
+!!! ADVICE for: Limited data sources True.
+!!! ADVICE for: Small sample size True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Biased data sampling
+Limited data sources
+Small sample size
+
+!!! ADVICE for: Limited data collection False.
+!!! ADVICE for: Data privacy restrictions False.
+!!! ADVICE for: Incomplete data collection False.
+!!! ADVICE for: Unrepresentative sample size True.
+!!! ADVICE for: Small sample size True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Biased data sampling
+Unrepresentative sample size
+Small sample size
+
+!!! ADVICE for: Non-random sampling True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Biased data sampling
+Unrepresentative sample size
+Non-random sampling
+
+!!! ADVICE for: Self-selection bias True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Biased data sampling
+Unrepresentative sample size
+Self-selection bias
+
+!!! ADVICE for: Sampling frame error False.
+!!! ADVICE for: Volunteer bias True.
+
+TRACE:
+Biased AI
+Lack of diverse data
+Biased data sampling
+Unrepresentative sample size
+Volunteer bias
+
+!!! ADVICE for: Human bias in data collection True.
+!!! ADVICE for: Lack of diversity in data sources True.
+!!! ADVICE for: Limited Sampling False.
+!!! ADVICE for: Homogeneous Teams True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Stereotyping
+Lack of diversity in data sources
+Homogeneous Teams
+
+!!! ADVICE for: Unrepresentative Demographics True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Stereotyping
+Lack of diversity in data sources
+Unrepresentative Demographics
+
+!!! ADVICE for: Narrow Perspectives True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Stereotyping
+Lack of diversity in data sources
+Narrow Perspectives
+
+!!! ADVICE for: Incomplete Data Collection True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Stereotyping
+Lack of diversity in data sources
+Incomplete Data Collection
+
+!!! ADVICE for: Unconscious bias in algorithm design True.
+!!! ADVICE for: Lack of diversity True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Stereotyping
+Unconscious bias in algorithm design
+Lack of diversity
+
+!!! ADVICE for: Limited data sources True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Stereotyping
+Unconscious bias in algorithm design
+Limited data sources
+
+!!! ADVICE for: Cultural assumptions True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Stereotyping
+Unconscious bias in algorithm design
+Cultural assumptions
+
+!!! ADVICE for: Unconscious assumptions True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Stereotyping
+Unconscious bias in algorithm design
+Unconscious assumptions
+
+!!! ADVICE for: Incomplete data False.
+!!! ADVICE for: Limited representation of minority groups in training data True.
+!!! ADVICE for: Lack of diversity True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Stereotyping
+Limited representation of minority groups in training data
+Lack of diversity
+
+!!! ADVICE for: Sampling bias True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Stereotyping
+Limited representation of minority groups in training data
+Sampling bias
+
+!!! ADVICE for: Data imbalance True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Stereotyping
+Limited representation of minority groups in training data
+Data imbalance
+
+!!! ADVICE for: Underrepresented groups True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Stereotyping
+Limited representation of minority groups in training data
+Underrepresented groups
+
+!!! ADVICE for: Incomplete datasets False.
+!!! ADVICE for: Incomplete data sampling True.
+!!! ADVICE for: Insufficient data sources True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Limited perspective
+Incomplete data sampling
+Insufficient data sources
+
+!!! ADVICE for: Sampling errors True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Limited perspective
+Incomplete data sampling
+Sampling errors
+
+!!! ADVICE for: Data selection bias True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Limited perspective
+Incomplete data sampling
+Data selection bias
+
+!!! ADVICE for: Inadequate data collection True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Limited perspective
+Incomplete data sampling
+Inadequate data collection
+
+!!! ADVICE for: Limited data availability False.
+!!! ADVICE for: Lack of diversity in data sources True.
+!!! ADVICE for: Sampling bias True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Limited perspective
+Lack of diversity in data sources
+Sampling bias
+
+!!! ADVICE for: Data silos True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Limited perspective
+Lack of diversity in data sources
+Data silos
+
+!!! ADVICE for: Homogeneous teams False.
+!!! ADVICE for: Limited access False.
+!!! ADVICE for: Historical bias True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Limited perspective
+Lack of diversity in data sources
+Historical bias
+
+!!! ADVICE for: Limited access to certain data sets False.
+!!! ADVICE for: Personal experiences False.
+!!! ADVICE for: Cultural upbringing False.
+!!! ADVICE for: Social conditioning True.
+!!! ADVICE for: Cultural norms True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Personal beliefs
+Social conditioning
+Cultural norms
+
+!!! ADVICE for: Parental influence False.
+!!! ADVICE for: Media messages True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Personal beliefs
+Social conditioning
+Media messages
+
+!!! ADVICE for: Peer pressure False.
+!!! ADVICE for: Education system True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Personal beliefs
+Social conditioning
+Education system
+
+!!! ADVICE for: Societal norms True.
+!!! ADVICE for: Social conditioning True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Cultural influence
+Societal norms
+Social conditioning
+
+!!! ADVICE for: Groupthink True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Cultural influence
+Societal norms
+Groupthink
+
+!!! ADVICE for: Media influence True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Cultural influence
+Societal norms
+Media influence
+
+!!! ADVICE for: Historical traditions False.
+!!! ADVICE for: Power dynamics True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Cultural influence
+Societal norms
+Power dynamics
+
+!!! ADVICE for: Historical context True.
+!!! ADVICE for: Past events False.
+!!! ADVICE for: Time period False.
+!!! ADVICE for: Ancestral legacy False.
+!!! ADVICE for: Preceding circumstances True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Cultural influence
+Historical context
+Preceding circumstances
+
+!!! ADVICE for: Historical background True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Cultural influence
+Historical context
+Historical background
+
+!!! ADVICE for: Cultural values True.
+!!! ADVICE for: Social norms True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Cultural influence
+Cultural values
+Social norms
+
+!!! ADVICE for: Historical context True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Cultural influence
+Cultural values
+Historical context
+
+!!! ADVICE for: Religious beliefs False.
+!!! ADVICE for: Ethnic identity False.
+!!! ADVICE for: Geographical location False.
+!!! ADVICE for: Preconceived notions True.
+!!! ADVICE for: Social conditioning True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Unconscious bias
+Preconceived notions
+Social conditioning
+
+!!! ADVICE for: Stereotyping True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Unconscious bias
+Preconceived notions
+Stereotyping
+
+!!! ADVICE for: Personal experiences False.
+!!! ADVICE for: Cultural influences True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Unconscious bias
+Preconceived notions
+Cultural influences
+
+!!! ADVICE for: Cognitive shortcuts True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Unconscious bias
+Preconceived notions
+Cognitive shortcuts
+
+!!! ADVICE for: Stereotypes True.
+!!! ADVICE for: Cultural conditioning True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Unconscious bias
+Stereotypes
+Cultural conditioning
+
+!!! ADVICE for: Limited exposure False.
+retrying:  0
+!!! ADVICE for: Confirmation bias True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Unconscious bias
+Stereotypes
+Confirmation bias
+
+!!! ADVICE for: Social categorization True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Unconscious bias
+Stereotypes
+Social categorization
+
+!!! ADVICE for: Prejudice and discrimination True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Unconscious bias
+Stereotypes
+Prejudice and discrimination
+
+!!! ADVICE for: Cultural conditioning True.
+!!! ADVICE for: Upbringing and education True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Unconscious bias
+Cultural conditioning
+Upbringing and education
+
+!!! ADVICE for: Social norms and values True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Unconscious bias
+Cultural conditioning
+Social norms and values
+
+!!! ADVICE for: Historical context True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Unconscious bias
+Cultural conditioning
+Historical context
+
+!!! ADVICE for: Media influence True.
+
+TRACE:
+Biased AI
+Human bias in data collection
+Unconscious bias
+Cultural conditioning
+Media influence
+
+!!! ADVICE for: Peer pressure False.
+!!! ADVICE for: Limited representation of certain groups in data True.
+!!! ADVICE for: Insufficient data collection True.
+!!! ADVICE for: Inadequate Sampling True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data imbalance
+Insufficient data collection
+Inadequate Sampling
+
+!!! ADVICE for: Data Scarcity True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data imbalance
+Insufficient data collection
+Data Scarcity
+
+!!! ADVICE for: Poor Data Quality True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data imbalance
+Insufficient data collection
+Poor Data Quality
+
+!!! ADVICE for: Limited Scope False.
+!!! ADVICE for: Incomplete Records False.
+!!! ADVICE for: Sampling bias True.
+!!! ADVICE for: Unrepresentative sample True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data imbalance
+Sampling bias
+Unrepresentative sample
+
+!!! ADVICE for: Selection bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data imbalance
+Sampling bias
+Selection bias
+
+!!! ADVICE for: Non-random sampling True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data imbalance
+Sampling bias
+Non-random sampling
+
+!!! ADVICE for: Sampling error True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data imbalance
+Sampling bias
+Sampling error
+
+!!! ADVICE for: Undercoverage bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data imbalance
+Sampling bias
+Undercoverage bias
+
+!!! ADVICE for: Historical discrimination and exclusion True.
+!!! ADVICE for: Systemic oppression True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data imbalance
+Historical discrimination and exclusion
+Systemic oppression
+
+!!! ADVICE for: Prejudice and bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data imbalance
+Historical discrimination and exclusion
+Prejudice and bias
+
+!!! ADVICE for: Structural inequality True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data imbalance
+Historical discrimination and exclusion
+Structural inequality
+
+!!! ADVICE for: Marginalization and exclusion True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data imbalance
+Historical discrimination and exclusion
+Marginalization and exclusion
+
+!!! ADVICE for: Racial segregation True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data imbalance
+Historical discrimination and exclusion
+Racial segregation
+
+!!! ADVICE for: Incomplete data collection False.
+!!! ADVICE for: Non-random sampling True.
+!!! ADVICE for: Incomplete data collection False.
+!!! ADVICE for: Self-selection bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Sampling bias
+Non-random sampling
+Self-selection bias
+
+!!! ADVICE for: Convenience sampling False.
+!!! ADVICE for: Volunteer bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Sampling bias
+Non-random sampling
+Volunteer bias
+
+!!! ADVICE for: Systematic exclusion True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Sampling bias
+Non-random sampling
+Systematic exclusion
+
+!!! ADVICE for: Exclusion of certain demographics from data collection True.
+!!! ADVICE for: Lack of Diversity True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Sampling bias
+Exclusion of certain demographics from data collection
+Lack of Diversity
+
+!!! ADVICE for: Inadequate Sampling True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Sampling bias
+Exclusion of certain demographics from data collection
+Inadequate Sampling
+
+!!! ADVICE for: Selection Bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Sampling bias
+Exclusion of certain demographics from data collection
+Selection Bias
+
+!!! ADVICE for: Demographic Blindness True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Sampling bias
+Exclusion of certain demographics from data collection
+Demographic Blindness
+
+!!! ADVICE for: Underrepresented Groups True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Sampling bias
+Exclusion of certain demographics from data collection
+Underrepresented Groups
+
+!!! ADVICE for: Lack of diversity in tech industry True.
+!!! ADVICE for: Unconscious bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Lack of diversity in tech industry
+Unconscious bias
+
+!!! ADVICE for: Hiring practices True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Lack of diversity in tech industry
+Hiring practices
+
+!!! ADVICE for: Education system True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Lack of diversity in tech industry
+Education system
+
+!!! ADVICE for: Workplace culture True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Lack of diversity in tech industry
+Workplace culture
+
+!!! ADVICE for: Stereotypes True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Lack of diversity in tech industry
+Stereotypes
+
+!!! ADVICE for: Historical discrimination and marginalization True.
+!!! ADVICE for: Systemic oppression True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Historical discrimination and marginalization
+Systemic oppression
+
+!!! ADVICE for: Prejudice and bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Historical discrimination and marginalization
+Prejudice and bias
+
+!!! ADVICE for: Power imbalances True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Historical discrimination and marginalization
+Power imbalances
+
+!!! ADVICE for: Colonialism and imperialism True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Historical discrimination and marginalization
+Colonialism and imperialism
+
+!!! ADVICE for: Structural inequality True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Historical discrimination and marginalization
+Structural inequality
+
+!!! ADVICE for: Inadequate data collection methods True.
+!!! ADVICE for: Poor Sampling Techniques True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Inadequate data collection methods
+Poor Sampling Techniques
+
+!!! ADVICE for: Incomplete Data Sets True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Inadequate data collection methods
+Incomplete Data Sets
+
+!!! ADVICE for: Data Gaps True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Inadequate data collection methods
+Data Gaps
+
+!!! ADVICE for: Insufficient Data Sources True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Inadequate data collection methods
+Insufficient Data Sources
+
+!!! ADVICE for: Sampling Bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Underrepresented groups
+Inadequate data collection methods
+Sampling Bias
+
+!!! ADVICE for: Insufficient data collection methods True.
+!!! ADVICE for: Inadequate Sampling Techniques True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Insufficient data collection methods
+Inadequate Sampling Techniques
+
+!!! ADVICE for: Data Collection Bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Insufficient data collection methods
+Data Collection Bias
+
+!!! ADVICE for: Insufficient Data Sources True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Insufficient data collection methods
+Insufficient Data Sources
+
+!!! ADVICE for: Poor Data Management True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Insufficient data collection methods
+Poor Data Management
+
+!!! ADVICE for: Sampling Errors True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Insufficient data collection methods
+Sampling Errors
+
+!!! ADVICE for: Unrepresentative sample sizes True.
+!!! ADVICE for: Small sample size True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Unrepresentative sample sizes
+Small sample size
+
+!!! ADVICE for: Sampling bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Unrepresentative sample sizes
+Sampling bias
+
+!!! ADVICE for: Non-random sampling True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Unrepresentative sample sizes
+Non-random sampling
+
+!!! ADVICE for: Self-selection bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Unrepresentative sample sizes
+Self-selection bias
+
+!!! ADVICE for: Volunteer bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Unrepresentative sample sizes
+Volunteer bias
+
+!!! ADVICE for: Lack of diversity in data sources True.
+!!! ADVICE for: Sampling bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Lack of diversity in data sources
+Sampling bias
+
+!!! ADVICE for: Data homogeneity True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Lack of diversity in data sources
+Data homogeneity
+
+!!! ADVICE for: Underrepresented groups True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Lack of diversity in data sources
+Underrepresented groups
+
+!!! ADVICE for: Data silos True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Data exclusion
+Lack of diversity in data sources
+Data silos
+
+!!! ADVICE for: Limited perspectives False.
+!!! ADVICE for: Insufficient data collection from underrepresented groups True.
+!!! ADVICE for: Lack of outreach True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Minority undercounting
+Insufficient data collection from underrepresented groups
+Lack of outreach
+
+!!! ADVICE for: Sampling bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Minority undercounting
+Insufficient data collection from underrepresented groups
+Sampling bias
+
+!!! ADVICE for: Data silos True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Minority undercounting
+Insufficient data collection from underrepresented groups
+Data silos
+
+!!! ADVICE for: Privacy concerns True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Minority undercounting
+Insufficient data collection from underrepresented groups
+Privacy concerns
+
+!!! ADVICE for: Limited resources False.
+!!! ADVICE for: Lack of diversity in the development team True.
+!!! ADVICE for: Homogeneous hiring practices True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Minority undercounting
+Lack of diversity in the development team
+Homogeneous hiring practices
+
+!!! ADVICE for: Unconscious bias True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Minority undercounting
+Lack of diversity in the development team
+Unconscious bias
+
+!!! ADVICE for: Lack of outreach True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Minority undercounting
+Lack of diversity in the development team
+Lack of outreach
+
+!!! ADVICE for: Inclusive culture deficit True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Minority undercounting
+Lack of diversity in the development team
+Inclusive culture deficit
+
+!!! ADVICE for: Limited perspectives False.
+!!! ADVICE for: Incomplete or inaccurate data labeling True.
+!!! ADVICE for: Human error True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Minority undercounting
+Incomplete or inaccurate data labeling
+Human error
+
+!!! ADVICE for: Insufficient training True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Minority undercounting
+Incomplete or inaccurate data labeling
+Insufficient training
+
+!!! ADVICE for: Ambiguous criteria False.
+!!! ADVICE for: Inconsistent standards True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Minority undercounting
+Incomplete or inaccurate data labeling
+Inconsistent standards
+
+!!! ADVICE for: Lack of oversight True.
+
+TRACE:
+Biased AI
+Limited representation of certain groups in data
+Minority undercounting
+Incomplete or inaccurate data labeling
+Lack of oversight
+
+
+MODEL: 109 facts 
+
+Biased AI
+Biased data sampling
+Biased data selection
+Cognitive shortcuts
+Colonialism and imperialism
+Confirmation bias
+Cultural assumptions
+Cultural conditioning
+Cultural influence
+Cultural influences
+Cultural norms
+Data Collection Bias
+Data Gaps
+Data Scarcity
+Data exclusion
+Data gaps
+Data homogeneity
+Data imbalance
+Data selection bias
+Data silos
+Demographic Blindness
+Education system
+Exclusion of certain demographics from data collection
+Groupthink
+Hiring practices
+Historical background
+Historical bias
+Historical context
+Historical discrimination and exclusion
+Historical discrimination and marginalization
+Homogeneous Teams
+Homogeneous hiring practices
+Homogeneous training data
+Human error
+Inadequate Sampling
+Inadequate Sampling Techniques
+Inadequate data collection
+Inadequate data collection methods
+Inadequate sampling
+Inclusive culture deficit
+Incomplete Data Collection
+Incomplete Data Sets
+Incomplete data sets
+Incomplete data sources
+Inconsistent standards
+Insufficient Data Sources
+Insufficient data collection
+Insufficient data collection methods
+Insufficient data sources
+Insufficient training
+Lack of Diversity
+Lack of diverse data
+Lack of diversity
+Lack of diversity in tech industry
+Lack of outreach
+Lack of oversight
+Limited data sources
+Limited demographics
+Limited sampling pool
+Marginalization and exclusion
+Media influence
+Media messages
+Narrow Perspectives
+Narrow data selection
+Non-random sampling
+Non-random selection
+Personal beliefs
+Poor Data Management
+Poor Data Quality
+Poor Sampling Techniques
+Power dynamics
+Power imbalances
+Preceding circumstances
+Prejudice and bias
+Prejudice and discrimination
+Privacy Concerns
+Privacy concerns
+Racial segregation
+Sampling Bias
+Sampling Errors
+Sampling bias
+Sampling error
+Sampling errors
+Selection Bias
+Selection bias
+Self-selection bias
+Skewed data distribution
+Skewed population
+Small sample size
+Social categorization
+Social conditioning
+Social norms
+Social norms and values
+Stereotypes
+Stereotyping
+Structural inequality
+Systematic exclusion
+Systemic oppression
+Unconscious assumptions
+Unconscious bias
+Undercoverage bias
+Underrepresented Groups
+Underrepresented groups
+Unrepresentative Demographics
+Unrepresentative sample
+Unrepresentative sample sizes
+Upbringing and education
+Volunteer bias
+Workplace culture

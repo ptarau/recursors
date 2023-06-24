@@ -1,0 +1,14 @@
+goal = "Repair a flat tire"
+
+goal_prompter = dict(
+    name='goal',
+    and_p="""The plan so far is: "$context".
+     In this context my goal is "$g." 
+     Advise me how to achieve "$g", step by step, while ensuring each step is consistent with each other.
+     Itemize your answer, one sentence per line.""",
+    or_p="""The plan so far is: "$context".
+    In this context my goal is "$g." 
+    Suggest 2-3 mutually exclusive alternative ways to achieve "$g".
+    Avoid starting your sentence with the word "Alternative"."""
+
+)

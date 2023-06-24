@@ -1,0 +1,24 @@
+goal='Artificial general intelligence'
+
+sci_prompter = dict(
+    name='sci',
+    and_p="""The task we are exploring is: "$context"
+        Generate 3-5 noun phrases of 2-4 words each that occur as keyphrases only
+        in scientific papers bout "$g".
+        Itemize your answer, one noun phrase per line.
+        No explanations needed, just the noun phrase, nothing else.
+        """,
+    or_p="""The topic we are exploring is: "$context"
+        Generate 2-3 noun phrases describing details of "$g".
+        Itemize your answer, one noun phrase per line.
+        No explanations needed, just the noun phrase, nothing else.
+        """
+)
+
+ratings_prompter = dict(
+    name='oracle',
+    rater_p="""
+    On a scale from 0 to 100, rate how relevant and semantically close "$g" is to "$context".
+    Return your answer in the form: rating | explanation.
+    """
+)
