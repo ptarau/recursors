@@ -76,7 +76,6 @@ class AndOrExplorer:
         self.unf = Unfolder(name, prompter, lim)
         self.clauses = defaultdict(list)
         self.facts = dict()
-        self.resume()
         PARAMS()(self)
 
     def new_clause(self, g, trace, topgoal):
@@ -109,6 +108,8 @@ class AndOrExplorer:
     # end overrides
 
     def solve(self, topgoal):
+
+        self.resume()
 
         def step(g, gs, d):
             self.persist()

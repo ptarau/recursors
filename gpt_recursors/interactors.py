@@ -24,33 +24,50 @@ def dict_trim(d):
 
 # basic building blocks
 
-class Tuner:
+def clean_pattern(p):
+    ps = p.split('\n')
+    ps = [p.strip() for p in ps]
+    return ' '.join(ps)  # +"\n\n"
+
+
+class Agent:
     """
-    superclass of GPT parameter tuners
+    manages all aspects of the interaction with LLMs
+
     """
 
-    def __init__(self,
-                 model="gpt-3.5-turbo",
-                 temperature=0.2,
-                 n=1,
-                 max_toks=4000, **kwargs):
+    def __init__(self, name):
+        self.prompter()
+        self.tracker()
+        self.cacher()
+        self.tuner()
+        self.talker()
+        self.name = name
+        PARAMS()(self)
+        # print('AGENT !!!!',self.__dict__)
+
+    def tuner(self,
+              model="gpt-3.5-turbo",
+              temperature=0.2,
+              n=1,
+              max_toks=4000):
+        """
+          GPT parameter tuners
+        """
         self.model = model
         self.temperature = temperature
         self.n = n
         self.max_toks = max_toks
 
+    def cacher(self):
+        """
+           caching mechanisms for
+           interaction state, including all inherited attributed
 
-class Cacher:
-    """
-    superclass of caching mechanisms for
-    interaction state, including all inherited attributed
-
-    we are saving things to readable .json files but
-    overriders might pickle, compress or persist to a database
-    """
-
-    def __init__(self, name=None, **kwargs):
-        self.name = name
+           we are saving things to readable .json files but
+           overriders might pickle, compress or persist to a database
+        """
+        pass
 
     def cache(self):
         return self.CACHES + self.name + ".json"
@@ -93,16 +110,13 @@ class Cacher:
         if exists_file(self.cache()):
             remove_file(self.cache())
 
-
-class Tracker:
-    """
-    manages the API's parameters, collects an cleans-up answers
-    remembers past interactions in short and long-term emmory and
-    avoids calling the API twice on the same quary that it retrives
-    from its memory
-    """
-
-    def __init__(self, **kwargs):
+    def tracker(self):
+        """
+           manages the API's parameters, collects an cleans-up answers
+           remembers past interactions in short and long-term emmory and
+           avoids calling the API twice on the same quary that it retrives
+           from its memory
+           """
         self.short_mem = dict()
         self.long_mem = dict()
         self.prompt_toks = 0
@@ -161,24 +175,13 @@ class Tracker:
         self.short_mem = dict()
         return self
 
-
-def clean_pattern(p):
-    ps = p.split('\n')
-    ps = [p.strip() for p in ps]
-    return ' '.join(ps)  # +"\n\n"
-
-
-class Prompter:
-    """
-    base class for prompt generators
-    a prompt can be either the actual question
-    or the result of substituting in a template values from a dict
-
-    """
-
-    def __init__(self, pattern=None, **kwargs):
-        if pattern is not None:
-            self.set_pattern(pattern)
+    def prompter(self):
+        """
+           prompt generators:
+           a prompt can be either the actual question
+           or the result of substituting in a template values from a dict
+        """
+        pass
 
     def set_pattern(self, pattern):
         """
@@ -200,36 +203,12 @@ class Prompter:
         template = Template(self.pattern)
         return template.substitute(dict(quest))
 
-
-# flavors
-
-class FineTuner(Tuner):
-    """
-    specializes a Tuner for gpt-4
-    """
-
-    def __init__(self, **kwds):
-        super().__init__(model='gpt-4', **kwds)
-
-
-class FunTuner(Tuner):
-    """
-    specializes a Tuner for gpt-3.5-turbo-0613
-    enabled to return function calls in json form
-    """
-
-    def __init__(self, **kwds):
-        super().__init__(model='gpt-3.5-turbo-0613', **kwds)
-
-
-class Talker:
-    """
-    base class talking to the LLM
-    assumes all other components already inherited
-    by the DefaultInteractor
-    """
-
-    def __init__(self, **kwds):
+    def talker(self):
+        """
+           talking to the LLM:
+           assumes all other components already inherited
+           by the DefaultInteractor
+           """
         pass
 
     def ask(self, *args, **kwargs):
@@ -324,53 +303,7 @@ class Talker:
         return 0.0
 
 
-# composing an interactor from its (modular) parts
-
-def inheritor(instance, **kwargs):
-    """
-    generic mechanism to dynamically activate
-    constructors from all superclasses,
-    assuming that they serve orthogonal purpuses
-    and do not conflict
-    """
-    for b in instance.__class__.__bases__:
-        b.__init__(instance, **kwargs)
-
-
-class Agent(Prompter, Tracker, Cacher, FineTuner, Talker):
-    """
-    If not specified via variants of Prompter, Tracker, etc.
-    one can override the  DefaultInteractor by activating direct inheritance
-    from  DefaultInteractor's base classes
-
-    nothing is lost here as DefaultInteractor does not bring anything besides
-    fusing together its independent base classes
-    """
-
-    def __init__(self, name, **kwargs):
-        inheritor(self, **kwargs)
-        self.name = name
-        PARAMS()(self)
-        # add here specialization
-        PARAMS()(self)
-        #print('AGENT !!!!',self.__dict__)
-
-
-def test1(fresh=0):
-    ask = Agent()
-    if fresh: ask.clear()
-    a1 = ask.ask('What is the meaning of life?')
-    ask.spill()
-    a2 = ask.ask('Is it 42?')
-    ask.persist()
-    jp(ask.__dict__)
-    print('$', ask.dollar_cost())
-    print('A:', a1)
-    print('A:', a2)
-    print('-' * 20)
-
-
-def test(fresh=0):
+def test(fresh=1):
     CF = PARAMS()
     name = 'tester'
     DI = CF(Agent(name))
@@ -382,11 +315,9 @@ def test(fresh=0):
     a = DI.ask(thing='molecule', count='2-3')
     print(a)
     print('$', DI.dollar_cost())
-    print(DI.__dict__)
+    #print(DI.__dict__)
     DI.persist()
 
 
 if __name__ == "__main__":
-    pass
-    # test1(fresh=1)
     test(fresh=0)

@@ -23,7 +23,7 @@ class Advisor(AndOrExplorer):
         super().__init__(**kwargs)
         pname = decision_prompter['name']
         oname = f'{self.name}_{pname}'
-        self.oracle = Agent(name=oname, prompter=decision_prompter)
+        self.oracle = Agent(name=oname)
         self.oracle.set_pattern(decision_prompter['decider_p'])
 
     def appraise(self, g, _trace, topgoal):
