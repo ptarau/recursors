@@ -10,3 +10,15 @@ of a Horn Clause interpreter, except that we accommodate our logic engine to fit
 As applications, we sketch implementations of consequence predictions, causal explanations,  recommendation systems and topic-focussed exploration of scientific literature.
 
 PYTHON CODE TO BE ADDED SOON.
+
+
+
+## USAGE:
+
+As the code will use it, make sure you acquire it and have 
+
+```
+export OPENAI_KEY=<your_key>
+```
+
+added to your shell environment.
