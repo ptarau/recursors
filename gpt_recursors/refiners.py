@@ -10,12 +10,57 @@ class AbstractMaker:
         prompter = sci_abstract_maker
         pname = prompter['name']
         tname = topic.replace(' ', '_').lower()
-        self.agent = Agent('abstractor')
+        self.agent = Agent(f'{tname}_{pname}')
         self.agent.set_pattern(prompter['writer_p'])
         PARAMS()(self)
 
     def run(self):
         return ask_for_clean(self.agent, g=self.topic, context=self.keywords)
+
+
+class Rater(AndOrExplorer):
+    def __init__(self, threshold=None, **kwargs):
+        super().__init__(**kwargs)
+        pname = ratings_prompter['name']
+        oname = f'{self.name}_{pname}'
+        self.oracle = Agent(oname)
+        self.oracle.set_pattern(ratings_prompter['rater_p'])
+        self.threshold = threshold
+
+    def appraise(self, g, _trace):
+
+        advice = ask_for_clean(self.oracle, g=g, context=self.initiator)
+        if not advice:
+            print('*** NO ADVICE FOR:', g)
+            return False
+
+        advice = advice[0].split('|')[0].strip()
+        if ' ' in advice: advice = advice.split()[1]
+        try:
+            f = float(advice)
+        except Exception:
+            print('*** UNPARSED RATING:', advice)
+            f = 0.99 * self.threshold
+        f = f / 100.0
+
+        ok = f >= self.threshold
+
+        print(f'RATING of "{g}" w.r.t "{self.initiator}" is {round(f, 4)} --> {ok}')
+
+        return ok
+
+    def resume(self):
+        super().resume()
+        self.oracle.resume()
+
+    def persist(self):
+        super().persist()
+        self.oracle.persist()
+
+    def costs(self):
+        d = super().costs()
+        d['oracle'] = self.oracle.dollar_cost()
+        return d
 
 
 class Advisor(AndOrExplorer):
@@ -26,11 +71,11 @@ class Advisor(AndOrExplorer):
         self.oracle = Agent(name=oname)
         self.oracle.set_pattern(decision_prompter['decider_p'])
 
-    def appraise(self, g, _trace, topgoal):
+    def appraise(self, g, _trace):
         # xs = to_list((g, trace))
         # context = ", ".join(xs)
 
-        advice = just_ask(self.oracle, g=g, context=topgoal)
+        advice = just_ask(self.oracle, g=g, context=self.initiator)
 
         print('!!! ADVICE for:', g, advice)
 
@@ -50,11 +95,25 @@ class Advisor(AndOrExplorer):
         return d
 
 
-def test_advisor(name=None, prompter=None, goal=None, lim=None):
-    assert None not in (name, goal, prompter, lim)
-    r = Advisor(name=name, prompter=prompter, lim=lim)
+def test_advisor(prompter=None, goal=None, lim=None):
+    assert None not in (goal, prompter, lim)
+    r = Advisor(initiator=goal, prompter=prompter, lim=lim)
 
-    for a in r.solve(goal):
+    for a in r.solve():
+        print('\nTRACE:')
+        for x in a:
+            print(x)
+        print()
+
+    c = r.costs()
+    print('COSTS in $:', c)
+
+
+def test_rater(prompter=None, goal=None, threshold=None, lim=None, ):
+    assert None not in (goal, prompter, threshold, lim)
+    r = Rater(initiator=goal, prompter=prompter, threshold=threshold, lim=lim)
+
+    for a in r.solve():
         print('\nTRACE:')
         for x in a:
             print(x)
@@ -75,13 +134,11 @@ def test_abstract_maker1():
             'Conceptual graphs'])
     )
     writer.agent.resume()
-    t, a = writer.run()
+    ta = writer.run()
     print()
-    print(t)
+    print(ta)
     print()
-    print(a)
-    print()
-    print(f'Keywords: {writer.keywords}')
+    print(f'\nKeywords: {writer.keywords}')
     writer.agent.persist()
     print('Cost: $', writer.agent.dollar_cost())
 
@@ -99,27 +156,30 @@ def test_abstract_maker2():
         ])
     )
     writer.agent.resume()
-    t, a = writer.run()
+    ta = writer.run()
     print()
-    print(t)
+    print(ta)
     print()
-    print(a)
-    print()
+
     print(f'Keywords: {writer.keywords}')
     writer.agent.persist()
     print('Cost: $', writer.agent.dollar_cost())
 
 
 def demo():
-    test_advisor(name='rec_adv', prompter=recommendation_prompter, goal='The Godfather', lim=2)
-    return
-    test_advisor(name='biased_why_adv', prompter=causal_prompter, goal='Biased AI', lim=1)
+    test_advisor(prompter=recommendation_prompter, goal='The Godfather', lim=2)
+    test_rater(prompter=recommendation_prompter, goal='The Godfather', threshold=0.20, lim=2)
 
-    test_advisor(name='r_hyp', prompter=conseq_prompter, goal='Disproof the Riemann hypothesis', lim=2)
-    test_advisor(name='r_hyp', prompter=conseq_prompter, goal='Proof the Riemann hypothesis', lim=2)
+    test_rater(prompter=sci_prompter, goal='Logic programming', threshold=0.5, lim=3)
+    test_advisor(prompter=recommendation_prompter, goal='The Godfather', lim=2)
+
+    test_advisor(prompter=causal_prompter, goal='Biased AI', lim=1)
+    test_advisor(prompter=conseq_prompter, goal='Disproof the Riemann hypothesis', lim=2)
+    test_advisor(prompter=conseq_prompter, goal='Proof the Riemann hypothesis', lim=2)
 
 
 if __name__ == "__main__":
     pass
-    # test_it()
+    test_abstract_maker1()
+    test_abstract_maker2()
     demo()

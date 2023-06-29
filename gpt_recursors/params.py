@@ -5,26 +5,48 @@ from config import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-locations=('ROOT','CACHES','DATA','OUT')
+locations = ('ROOT', 'CACHES', 'DATA', 'OUT')
+
+LOCAL_LLM=True
+
 def PARAMS():
     """
     config params, easy to propagate as other objects' attributes
     simply by applying it to them
     """
 
-    d = dict(
-        TRACE=0,
-        ROOT="../STATE/",
-        CACHES="caches/",
-        OUT='out/',
-        DATA='data/',
-        model="gpt-3.5-turbo",
-        temperature=0.2,
-        n=1,
-        max_toks=4000
-    )
-    md=dict((k, d[locations[0]] + v) for (k, v) in d.items() if k in locations[1:])
-    return Mdict(**{**d,**md})
+    if not LOCAL_LLM:
+        d = dict(
+            TRACE=0,
+            ROOT="../STATE/",
+            CACHES="caches/",
+            OUT='out/',
+            DATA='data/',
+            model="gpt-3.5-turbo",
+            temperature=0.2,
+            n=1,
+            max_toks=4000
+        )
+    else:
+        import openai
+        openai.api_key = "EMPTY"
+        # openai.api_base = "http://localhost:8000/v1"
+        openai.api_base = "http://u.local:8000/v1"
+
+        d = dict(
+            TRACE=0,
+            ROOT="../STATE_LOCAL/",
+            CACHES="caches/",
+            OUT='out/',
+            DATA='data/',
+            model="vicuna-7b-v1.3",
+            temperature=0.2,
+            n=1,
+            max_toks=2000
+        )
+
+    md = dict((k, d[locations[0]] + v) for (k, v) in d.items() if k in locations[1:])
+    return Mdict(**{**d, **md})
 
 
 def spacer(text):

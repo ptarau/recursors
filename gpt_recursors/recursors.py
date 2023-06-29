@@ -4,10 +4,11 @@ from params import *
 from prompters import *
 from interactors import Agent, clean_up, to_list, from_text
 from horn_prover import qprove
-
+from tools import in_stack
 
 def ask_for_clean(agent, g, context):
     answer = agent.ask(g=g, context=context)
+    #print('>>>>!!!!',g,'\n',answer)
     agent.spill()
     xs = from_text(answer)
     res = clean_up(xs)
@@ -66,29 +67,32 @@ class AndOrExplorer:
     explored with logic programming tools.
     """
 
-    def __init__(self, name=None, prompter=None, lim=1, strict=False):
-        assert name is not None
+    def __init__(self, initiator=None, prompter=None, lim=1, strict=False):
+        assert initiator is not None
         assert prompter is not None
-        self.name = name
+        self.initiator = initiator
+        self.name = initiator.lower().strip().replace(' ', '_')
         self.pname = prompter['name']
         self.lim = lim
         self.strict = strict
-        self.unf = Unfolder(name, prompter, lim)
+        self.unf = Unfolder(self.name, prompter, lim)
         self.clauses = defaultdict(list)
         self.facts = dict()
         PARAMS()(self)
 
-    def new_clause(self, g, trace, topgoal):
+    def new_clause(self, g, trace):
         """
         invents a set of new clauses
         given a goal and the trace of
         the past steps leading to g
         """
-        or_context = to_context(trace, topgoal)
+        or_context = to_context(trace, self.initiator)
         hs = self.unf.ask_or(g, or_context)
-        and_context = to_context((g, trace), topgoal)
+        and_context = to_context((g, trace), self.initiator)
         for h in hs:
+            if h==g or in_stack(h,trace): continue
             bs = self.unf.ask_and(h, and_context)  # invent their bodies
+            if h in bs: continue
             yield h, bs
 
     # begin overrides
@@ -98,7 +102,7 @@ class AndOrExplorer:
     def persist(self):
         self.unf.persist()
 
-    def appraise(self, _g, _trace, _topgoal):
+    def appraise(self, g, _trace):
         # return g[0] in "CILKPE" # just to test it trims model
         return True
 
@@ -107,20 +111,20 @@ class AndOrExplorer:
 
     # end overrides
 
-    def solve(self, topgoal):
+    def solve(self):
 
         self.resume()
 
         def step(g, gs, d):
             self.persist()
             if d >= self.lim:
-                if self.appraise(g, gs, topgoal):
+                if self.appraise(g, gs):
                     self.facts[g] = True
                     yield g, gs
             else:
                 hs = []
-                for h, bs in self.new_clause(g, gs, topgoal):
-                    if not self.appraise(h, (g, gs), topgoal): continue
+                for h, bs in self.new_clause(g, gs):
+                    if not self.appraise(h, (g, gs)): continue
                     hs.append(h)
                     trace = h, (g, gs)
                     self.clauses[g].append([h])
@@ -129,7 +133,7 @@ class AndOrExplorer:
                         yield from step(b, trace, d + 1)
                 if self.strict and len(hs) > 1: self.clauses['false'].append(hs)
 
-        for gs in step(topgoal, (), 0):
+        for gs in step(self.initiator, (), 0):
             yield list(reversed(to_list(gs)))
 
         for fact in self.facts: self.clauses[fact].append([])
@@ -144,21 +148,20 @@ class AndOrExplorer:
 
         # css=list(self.clauses.items())
 
-        model = qprove(css, goal=topgoal)
+        model = qprove(css, goal=self.initiator)
 
         if model is None:
-            print('\nNO MODEL ENTAILING:', topgoal)
+            print('\nNO MODEL ENTAILING:', self.initiator)
         else:
             print('\nMODEL:', len(model), 'facts', '\n')
             for fact in model: print(fact)
 
 
-def run_explorer(goal=None, prompter=None, lim=None, name=None):
+def run_explorer(goal=None, prompter=None, lim=None):
     assert None not in (prompter, goal, lim)
-    if name is None: name = goal.lower().replace(' ', '_')
-    r = AndOrExplorer(name=name, prompter=prompter, lim=lim)
+    r = AndOrExplorer(initiator=goal, prompter=prompter, lim=lim)
     seen = dict()
-    for a in r.solve(goal):
+    for a in r.solve():
         print('\nTRACE:')
         # a=sorted(a)
         for x in a: print(x)
@@ -211,21 +214,22 @@ def to_context(trace, topgoal):
 
 def run_all():
     run_explorer(prompter=sci_prompter, goal='Logic programming', lim=2)
-    run_explorer(name='llm_exp', prompter=sci_prompter, goal='Generative AI', lim=2)
-    run_explorer(name='movie_exp', prompter=recommendation_prompter, goal='Apocalypse now', lim=2)
-    run_explorer(name='book_exp', prompter=recommendation_prompter, goal='1Q84, by Haruki Murakami', lim=2)
-    run_explorer(name='exp_univ', prompter=causal_prompter, goal='Expansion of the Universe', lim=2)
-    run_explorer(name='exp_nukes_cause', prompter=causal_prompter, goal='Use of tactical nukes in Ukraine war', lim=2)
-    run_explorer(name='exp_nukes_conseq', prompter=conseq_prompter, goal='Use of tactical nukes', lim=2)
-    run_explorer(name='doc_qa_bm_exp', prompter=sci_prompter, goal='benchmark QA on document colections', lim=2)
+    run_explorer(prompter=sci_prompter, goal='Generative AI', lim=2)
+    run_explorer(prompter=recommendation_prompter, goal='Apocalypse now', lim=2)
+    run_explorer(prompter=recommendation_prompter, goal='1Q84, by Haruki Murakami', lim=2)
+    run_explorer(prompter=causal_prompter, goal='Expansion of the Universe', lim=2)
+    run_explorer(prompter=causal_prompter, goal='Use of tactical nukes in Ukraine war', lim=2)
+    run_explorer(prompter=conseq_prompter, goal='Use of tactical nukes', lim=2)
+    run_explorer(prompter=sci_prompter, goal='benchmark QA on document colections', lim=2)
 
 
 def demo():
-    run_explorer(prompter=goal_prompter, goal='Repair a flat tire', lim=1)
-    run_explorer(prompter=sci_prompter, goal='Logic Programming', lim=1)
+    #run_explorer(prompter=goal_prompter, goal='Repair a flat tire', lim=1)
+    #run_explorer(prompter=sci_prompter, goal='Logic Programming', lim=1)
+    run_explorer(prompter=sci_prompter, goal='teaching computational thinking with Prolog', lim=2)
 
 
 if __name__ == "__main__":
     pass
-    # run_all()
-    demo()
+    run_all()
+    #demo()

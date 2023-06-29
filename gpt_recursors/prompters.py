@@ -1,5 +1,5 @@
 goal_prompter = dict(
-    name='goal',
+    name='planner',
     and_p="""The plan so far is: "$context".
      In this context my goal is "$g." 
      Advise me how to achieve "$g", step by step, while ensuring each step is consistent with each other.
@@ -12,7 +12,7 @@ goal_prompter = dict(
 )
 
 causal_prompter = dict(
-    name='causal',
+    name='causal_inference',
     and_p="""We need causal explanations in this context: "$context"
         Generate 3-5 explanations of 2-4 words each for the causes of "$g".
         Itemize your answer, one reason for "$g" per line.
@@ -29,7 +29,7 @@ causal_prompter = dict(
 )
 
 conseq_prompter = dict(
-    name='conseq',
+    name='consequence_prediction',
     and_p="""We need to predict consequences this context: "$context"
         Generate 3-5 noun phrases of 2-4 words each detailing consequences of "$g".
         Itemize your answer, one consequence of "$g" per line.
@@ -45,7 +45,7 @@ conseq_prompter = dict(
 )
 
 sci_prompter = dict(
-    name='sci',
+    name='scientific_concept',
     and_p="""The task we are exploring is: "$context"
         Generate 3-5 noun phrases of 2-4 words each that occur as keyphrases only
         in scientific papers bout "$g".
@@ -60,7 +60,7 @@ sci_prompter = dict(
 )
 
 recommendation_prompter_strict = dict(
-    name='rec_strict',
+    name='strict_recommender',
     and_p="""The recommandations so far are: "$context".
      In this context I really liked "$g." 
      Suggest me 2-3 related ones.
@@ -75,7 +75,7 @@ recommendation_prompter_strict = dict(
 )
 
 recommendation_prompter = dict(
-    name='rec',
+    name='recommender',
     and_p="""The recommandations so far are: "$context".
      In this context I really liked "$g." 
      Suggest me 2-3 related ones that go well together.
@@ -91,7 +91,7 @@ recommendation_prompter = dict(
 
 
 decision_prompter = dict(
-    name='oracle',
+    name='decider_oracle',
     decider_p="""
     You play the role of an oracle that decides if "$g" is similar to "$context". This means that someone 
     who is familiar with "$context"  might be also be interested in "$g".
@@ -101,7 +101,7 @@ decision_prompter = dict(
 )
 
 relevance_prompter = dict(
-    name='oracle',
+    name='relevance_oracle',
     decider_p="""
     You play the role of an oracle that decides if "$g" is semantically close and strongly relevant for "$context".
     Your answer should de "True" or "False" expressing strong agreement or some disagreement with the relevance of "$g".
@@ -110,7 +110,7 @@ relevance_prompter = dict(
 )
 
 ratings_prompter = dict(
-    name='oracle',
+    name='rater_oracle',
     rater_p="""
     On a scale from 0 to 100, rate how relevant and semantically close "$g" is to "$context".
     Return your answer in the form: rating | explanation.
@@ -118,7 +118,7 @@ ratings_prompter = dict(
 )
 
 sci_abstract_maker = dict(
-    name='sci_abstract_maker',
+    name='title_and_abstract_maker',
     writer_p="""
     Suggest a title and an abstract for a scientific paper about "$g" that has the following keywords: $context.
     """

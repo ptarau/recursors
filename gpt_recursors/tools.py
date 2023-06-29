@@ -21,7 +21,8 @@ def de_itemize(x):
 
 
 def clean_up(xs):
-    return [de_itemize(x) for x in xs if len(x) > 8]
+    xs= dict((de_itemize(x),True) for x in xs if len(x) > 8)
+    return list(xs)
 
 
 def to_list(gs):

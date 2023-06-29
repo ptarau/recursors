@@ -43,6 +43,8 @@ class Agent:
         self.tuner()
         self.talker()
         self.name = name
+        self.CACHES=None
+        self.TRACE=None
         PARAMS()(self)
         # print('AGENT !!!!',self.__dict__)
 
