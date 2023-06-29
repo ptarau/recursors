@@ -23,6 +23,7 @@ def PARAMS():
             OUT='out/',
             DATA='data/',
             model="gpt-3.5-turbo",
+            emebedding_model="text-embedding-ada-002",
             temperature=0.2,
             n=1,
             max_toks=4000
@@ -40,6 +41,7 @@ def PARAMS():
             OUT='out/',
             DATA='data/',
             model="vicuna-7b-v1.3",
+            emebedding_model="vicuna-7b-v1.3",
             temperature=0.2,
             n=1,
             max_toks=2000
@@ -89,6 +91,21 @@ def from_json(fname):
         obj = json.load(inf)
         return obj
 
+def to_pickle(obj, fname):
+    """
+    serializes an object to a .pickle file
+    """
+    ensure_path(fname)
+    with open(fname, "wb") as outf:
+        pickle.dump(obj, outf)
+
+
+def from_pickle(fname):
+    """
+    deserializes an object from a pickle file
+    """
+    with open(fname, "rb") as inf:
+        return pickle.load(inf)
 
 def jp(x):
     print(json.dumps(x, indent=2))
