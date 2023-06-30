@@ -30,6 +30,7 @@ class Rater(AndOrExplorer):
     def appraise(self, g, _trace):
 
         advice = ask_for_clean(self.oracle, g=g, context=self.initiator)
+        print(f'\n-----EXPLANATION: {advice}\n---\n')
         if not advice:
             print('*** NO ADVICE FOR:', g)
             return False
@@ -40,7 +41,7 @@ class Rater(AndOrExplorer):
             f = float(advice)
         except Exception:
             print('*** UNPARSED RATING:', advice)
-            f = 0.99 * self.threshold
+            f = 5
         f = f / 100.0
 
         ok = f >= self.threshold
@@ -167,6 +168,10 @@ def test_abstract_maker2():
 
 
 def demo():
+    test_rater(prompter=causal_prompter, goal='the Fermi paradox', threshold=0.60, lim=2)
+    return
+    test_rater(prompter=conseq_prompter, goal='P = NP', threshold=0.10, lim=3)
+
     test_advisor(prompter=recommendation_prompter, goal='The Godfather', lim=2)
     test_rater(prompter=recommendation_prompter, goal='The Godfather', threshold=0.20, lim=2)
 
@@ -176,6 +181,7 @@ def demo():
     test_advisor(prompter=causal_prompter, goal='Biased AI', lim=1)
     test_advisor(prompter=conseq_prompter, goal='Disproof the Riemann hypothesis', lim=2)
     test_advisor(prompter=conseq_prompter, goal='Proof the Riemann hypothesis', lim=2)
+
 
 
 if __name__ == "__main__":

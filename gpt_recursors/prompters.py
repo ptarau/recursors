@@ -114,6 +114,10 @@ ratings_prompter = dict(
     rater_p="""
     On a scale from 0 to 100, rate how relevant and semantically close "$g" is to "$context".
     Return your answer in the form: rating | explanation.
+    The rating should be a number between 0 and 100, nothing else.
+    The word "would" should not be part of the rating.
+    The explanation should be short, at most 50 words.
+    Do not cite sources, write just 1-2 sentences, relevant to "$context".
     """
 )
 
