@@ -1,4 +1,3 @@
-
 # helpers with text cleaning
 
 def spacer(text):
@@ -21,7 +20,7 @@ def de_itemize(x):
 
 
 def clean_up(xs):
-    xs= dict((de_itemize(x),True) for x in xs if len(x) > 8)
+    xs = dict((de_itemize(x), True) for x in xs if 8 < len(x) < 200)
     return list(xs)
 
 

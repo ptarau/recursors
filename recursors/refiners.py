@@ -4,20 +4,42 @@ from embedders import Embedder
 from wikifetch import run_wikifetch
 
 
-class AbstractMaker:
-    def __init__(self, topic=None, keywords=None):
-        assert None not in (topic, keywords)
-        self.topic = topic
-        self.keywords = keywords
-        prompter = sci_abstract_maker
-        pname = prompter['name']
-        tname = topic.replace(' ', '_').lower()
-        self.agent = Agent(f'{tname}_{pname}')
-        self.agent.set_pattern(prompter['writer_p'])
-        PARAMS()(self)
+class Advisor(AndOrExplorer):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        pname = decision_prompter['name']
+        oname = f'{self.name}_{pname}'
+        self.oracle = Agent(name=oname)
+        self.oracle.set_pattern(decision_prompter['decider_p'])
 
-    def run(self):
-        return ask_for_clean(self.agent, g=self.topic, context=self.keywords)
+    def appraise(self, g, _trace):
+        # xs = to_list((g, trace))
+        # context = ", ".join(xs)
+
+        advice = just_ask(self.oracle, g=g, context=self.initiator)
+
+        print('!!! ADVICE for:', g, advice)
+
+        return advice.startswith('True')
+
+    def resume(self):
+        super().resume()
+        self.oracle.resume()
+
+    def persist(self):
+        super().persist()
+        self.oracle.persist()
+
+    def costs(self):
+        d = super().costs()
+        d['oracle'] = self.oracle.dollar_cost()
+        return d
+
+
+def load_ground_truth(truth_file='logic_programming'):
+    with open(f'{PARAMS().DATA}{truth_file}.txt', 'r') as f:
+        sents = f.read().split('\n')
+    return [s for s in sents if s]
 
 
 class Rater(AndOrExplorer):
@@ -32,11 +54,12 @@ class Rater(AndOrExplorer):
     def appraise(self, g, _trace):
 
         advice = ask_for_clean(self.oracle, g=g, context=self.initiator)
-        print(f'\n-----EXPLANATION: {advice}\n---\n')
+
         if not advice:
             print('*** NO ADVICE FOR:', g)
             return False
 
+        print(f'\n-----EXPLANATION: {advice}\n---\n')
         advice = advice[0].split('|')[0].strip()
         if ' ' in advice: advice = advice.split()[1]
         try:
@@ -66,44 +89,6 @@ class Rater(AndOrExplorer):
         return d
 
 
-class Advisor(AndOrExplorer):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        pname = decision_prompter['name']
-        oname = f'{self.name}_{pname}'
-        self.oracle = Agent(name=oname)
-        self.oracle.set_pattern(decision_prompter['decider_p'])
-
-    def appraise(self, g, _trace):
-        # xs = to_list((g, trace))
-        # context = ", ".join(xs)
-
-        advice = just_ask(self.oracle, g=g, context=self.initiator)
-
-        print('!!! ADVICE for:', g, advice)
-
-        return 'True.' == advice
-
-    def resume(self):
-        super().resume()
-        self.oracle.resume()
-
-    def persist(self):
-        super().persist()
-        self.oracle.persist()
-
-    def costs(self):
-        d = super().costs()
-        d['oracle'] = self.oracle.dollar_cost()
-        return d
-
-
-def load_ground_truth(truth_file='logic_programming'):
-    with open(f'{PARAMS().DATA}{truth_file}.txt', 'r') as f:
-        sents = f.read().split('\n')
-    return [s for s in sents if s]
-
-
 class TruthRater(AndOrExplorer):
     """
     recursor enhanced with ability to look-up
@@ -112,9 +97,9 @@ class TruthRater(AndOrExplorer):
     """
 
     def __init__(self, truth_file=None, threshold=None, **kwargs):
-        assert None not in (truth_file,threshold)
+        assert None not in (truth_file, threshold)
         super().__init__(**kwargs)
-        self.threshold=threshold
+        self.threshold = threshold
         self.store = Embedder(truth_file)
         if not exists_file(self.store.cache()):
             sents = load_ground_truth(truth_file=truth_file)
@@ -122,7 +107,7 @@ class TruthRater(AndOrExplorer):
 
     def appraise(self, g, _trace):
         sent, r = self.store.query(g, 1)[0]
-        #print('!!!!!', r, '>', self.threshold)
+        # print('!!!!!', r, '>', self.threshold)
         if r > self.threshold:
             ok = True
         else:
@@ -132,23 +117,9 @@ class TruthRater(AndOrExplorer):
         return ok
 
 
-def test_truth_rater(name=None, goal=None, prompter=None, truth_file=None, threshold=None, lim=None):
-    assert None not in (name, goal, prompter, truth_file, threshold, lim)
-    r = TruthRater(name=name, prompter=prompter, truth_file=truth_file, threshold=threshold, lim=lim)
-    r.unf.resume()
-    for a in r.solve(goal):
-        print('\nTRACE:')
-        for x in a:
-            print(x)
-        print()
-    r.unf.persist()
-    c = r.costs()
-    print('COSTS in $:', c)
-
-
 def test_truth_rater(goal=None, prompter=None, truth_file=None, threshold=None, lim=None):
     assert None not in (goal, prompter, truth_file, threshold, lim)
-    r = TruthRater(initiator=goal,prompter=prompter, truth_file=truth_file, threshold=threshold, lim=lim)
+    r = TruthRater(initiator=goal, prompter=prompter, truth_file=truth_file, threshold=threshold, lim=lim)
     r.unf.resume()
     for a in r.solve():
         print('\nTRACE:')
@@ -173,6 +144,7 @@ def test_rater(prompter=None, goal=None, threshold=None, lim=None, ):
     c = r.costs()
     print('COSTS in $:', c)
 
+
 def test_advisor(prompter=None, goal=None, lim=None):
     assert None not in (goal, prompter, lim)
     r = Advisor(initiator=goal, prompter=prompter, lim=lim)
@@ -185,6 +157,22 @@ def test_advisor(prompter=None, goal=None, lim=None):
 
     c = r.costs()
     print('COSTS in $:', c)
+
+
+class AbstractMaker:
+    def __init__(self, topic=None, keywords=None):
+        assert None not in (topic, keywords)
+        self.topic = topic
+        self.keywords = keywords
+        prompter = sci_abstract_maker
+        pname = prompter['name']
+        tname = topic.replace(' ', '_').lower()
+        self.agent = Agent(f'{tname}_{pname}')
+        self.agent.set_pattern(prompter['writer_p'])
+        PARAMS()(self)
+
+    def run(self):
+        return ask_for_clean(self.agent, g=self.topic, context=self.keywords)
 
 
 def test_abstract_maker1():
@@ -232,6 +220,7 @@ def test_abstract_maker2():
 
 def demo():
     run_wikifetch()
+    test_advisor(prompter=causal_prompter, goal='Biased AI', lim=1)
     test_truth_rater(prompter=sci_prompter, goal='Teaching computational thinking with Prolog',
                      truth_file='computational_thinking', threshold=0.50, lim=2)
     test_truth_rater(prompter=sci_prompter, goal='Artificial general intelligence',
@@ -239,7 +228,7 @@ def demo():
 
     test_rater(prompter=causal_prompter, goal='the Fermi paradox', threshold=0.60, lim=2)
 
-    test_rater(prompter=conseq_prompter, goal='P = NP', threshold=0.10, lim=3)
+    test_rater(prompter=conseq_prompter, goal='P = NP', threshold=0.50, lim=3)
 
     test_advisor(prompter=recommendation_prompter, goal='The Godfather', lim=2)
     test_rater(prompter=recommendation_prompter, goal='The Godfather', threshold=0.20, lim=2)
@@ -247,13 +236,15 @@ def demo():
     test_rater(prompter=sci_prompter, goal='Logic programming', threshold=0.5, lim=3)
     test_advisor(prompter=recommendation_prompter, goal='The Godfather', lim=2)
 
-    test_advisor(prompter=causal_prompter, goal='Biased AI', lim=1)
     test_advisor(prompter=conseq_prompter, goal='Disproof the Riemann hypothesis', lim=2)
     test_advisor(prompter=conseq_prompter, goal='Proof the Riemann hypothesis', lim=2)
 
 
 if __name__ == "__main__":
     pass
-    test_abstract_maker1()
-    test_abstract_maker2()
-    demo()
+    # test_abstract_maker1()
+    # test_abstract_maker2()
+    #demo()
+    test_advisor(prompter=conseq_prompter, goal='Disproof the Riemann hypothesis', lim=2)
+    test_advisor(prompter=conseq_prompter, goal='Proof the Riemann hypothesis', lim=2)
+

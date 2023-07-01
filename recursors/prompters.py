@@ -36,7 +36,7 @@ conseq_prompter = dict(
         No explanations needed, just the noun phrase, nothing else.
         Avoid using the words "Noun phrases" in your answer.
         Your answer should not contain ":".""",
-    or_p="""We need to predict consequences of "$g" inthis context: "$context"
+    or_p="""We need to predict consequences of "$g" in this context: "$context"
         Generate 2-3 alternative predictions citing facts that are likely to be consequences of "$g".
         Itemize your answer, one noun phrase per line.
          No explanations are needed, just the noun phrase, nothing else.
@@ -93,9 +93,9 @@ recommendation_prompter = dict(
 decision_prompter = dict(
     name='decider_oracle',
     decider_p="""
-    You play the role of an oracle that decides if "$g" is similar to "$context". This means that someone 
+    You play the role of an oracle that decides if "$g" is related to "$context". This means that someone 
     who is familiar with "$context"  might be also be interested in "$g".
-    Your answer should de "True" or "False" expressing strong agreement or some disagreement with the relevance of "$g".
+    Your answer should de "True" or "False" expressing agreement or disagreement with the relevance of "$g".
     No explanations or comments are needed, just one of the two words "True" or "False"
     """
 )

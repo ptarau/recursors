@@ -278,7 +278,6 @@ class Agent:
         answer = self.post_process(quest0, answer)
 
         self.short_mem[quest] = answer
-
         assert isinstance(answer, str), answer
         return answer
 

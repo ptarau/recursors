@@ -2,7 +2,12 @@ import wikipediaapi
 from fast_sentence_segment import segment_text
 from params import PARAMS,ensure_path
 
+import logging
+logger=logging.getLogger()
+logger.setLevel(logging.CRITICAL)
+
 def page2text(page_name, lang='en'):
+    print('PROCESSING WIKI FOR:',page_name)
     wiki_wiki = wikipediaapi.Wikipedia(language=lang, extract_format=wikipediaapi.ExtractFormat.WIKI)
     page = wiki_wiki.page(page_name)
     text = page.text

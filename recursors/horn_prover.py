@@ -5,7 +5,9 @@ def qprove(css0, goal=None, early=False):
     """
     Variant of Algorithm 1 in Dowling and Gallier
      Finds a (minimal) model of a propositional Horn Clause program
-     Added goal-driven optional goal-focussed execution
+     Added goal-driven optional goal-focussed execution (if early=True)
+     in which case as soon as the goal is proven it returns the model,
+     (possibly incomplete).
     """
     props = dict()
     css = []
@@ -39,7 +41,7 @@ def qprove(css0, goal=None, early=False):
 
     """
     propagate True from facts to rules
-    while watching for inconsitencies
+    while watching for inconsistencies
     """
     change = True
     while change:
@@ -73,7 +75,7 @@ def qprove(css0, goal=None, early=False):
 
 def horn_formula(n):
     """
-    plain Horn formulas
+    generates all Horn formulas if size n
     """
 
     for xs in list_partition(n):

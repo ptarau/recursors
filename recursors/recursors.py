@@ -6,6 +6,7 @@ from interactors import Agent, clean_up, to_list, from_text
 from horn_prover import qprove
 from tools import in_stack
 
+
 def ask_for_clean(agent, g, context):
     answer = agent.ask(g=g, context=context)
     agent.spill()
@@ -78,7 +79,7 @@ class AndOrExplorer:
         self.unf = Unfolder(self.name, prompter, lim)
         self.clauses = defaultdict(list)
         self.facts = dict()
-        self.OUT=None
+        self.OUT = None
         PARAMS()(self)
 
     def new_clause(self, g, trace):
@@ -91,7 +92,7 @@ class AndOrExplorer:
         hs = self.unf.ask_or(g, or_context)
         and_context = to_context((g, trace), self.initiator)
         for h in hs:
-            if h==g or in_stack(h,trace): continue
+            if h == g or in_stack(h, trace): continue
             bs = self.unf.ask_and(h, and_context)  # invent their bodies
             if h in bs: continue
             yield h, bs
@@ -157,6 +158,7 @@ class AndOrExplorer:
         else:
             print('\nMODEL:', len(model), 'facts', '\n')
             for fact in model: print(fact)
+            save_model(self.initiator, model, pro_name + "_model")
 
 
 def run_explorer(goal=None, prompter=None, lim=None):
@@ -182,10 +184,22 @@ def run_explorer(goal=None, prompter=None, lim=None):
     print('COSTS in $:', {'and': c1, 'or': c2, 'total': c1 + c2})
 
 
-def to_prolog(clauses, fname, neck=":-"):
-    def quote(x):
-        return "'" + x + "'"
+def quote(x):
+    return "'" + x + "'"
 
+
+def save_model(goal, facts, fname, suf='.pl'):
+    path = fname + suf
+    ensure_path(path)
+    with open(path, 'w') as f:
+        print(f'% MODEL: {len(facts)} facts', file=f)
+        for fact in facts:
+            line = quote(fact) + "."
+            if fact == goal: line = line + "%" + (10*" ") +"<==== initiator !"
+            print(line, file=f)
+
+
+def to_prolog(clauses, fname, neck=":-"):
     suf = '.nat' if neck == ":" else ".pl"
 
     path = fname + suf
@@ -216,6 +230,7 @@ def to_context(trace, topgoal):
 
 def run_all():
     run_explorer(prompter=sci_prompter, goal='Logic programming', lim=2)
+    return
     run_explorer(prompter=sci_prompter, goal='Generative AI', lim=2)
     run_explorer(prompter=recommendation_prompter, goal='Apocalypse now', lim=2)
     run_explorer(prompter=recommendation_prompter, goal='1Q84, by Haruki Murakami', lim=2)
@@ -226,12 +241,12 @@ def run_all():
 
 
 def demo():
-    #run_explorer(prompter=goal_prompter, goal='Repair a flat tire', lim=1)
-    #run_explorer(prompter=sci_prompter, goal='Logic Programming', lim=1)
+    # run_explorer(prompter=goal_prompter, goal='Repair a flat tire', lim=1)
+    # run_explorer(prompter=sci_prompter, goal='Logic Programming', lim=1)
     run_explorer(prompter=sci_prompter, goal='Teaching computational thinking with Prolog', lim=2)
 
 
 if __name__ == "__main__":
     pass
     run_all()
-    #demo()
+    # demo()
