@@ -1,0 +1,3 @@
+save models
+add vote between knns in truth_rater
+make package

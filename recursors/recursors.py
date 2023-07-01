@@ -117,6 +117,7 @@ class AndOrExplorer:
         self.resume()
 
         def step(g, gs, d):
+            if g in gs: return
             self.persist()
             if d >= self.lim:
                 if self.appraise(g, gs):

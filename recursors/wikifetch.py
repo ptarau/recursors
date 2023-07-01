@@ -40,7 +40,7 @@ def page2text(page_name, lang='en'):
         return None
 
 
-def test():
+def run_wikifetch():
     page2text('Logic programming')
     page2text('Computational thinking')
     page2text('Artificial general intelligence')
@@ -50,5 +50,5 @@ def test():
 
 if __name__ == "__main__":
     pass
-    test()
+    run_wikifetch()
 
