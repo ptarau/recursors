@@ -230,10 +230,11 @@ def test_abstract_maker2():
 
 
 def demo():
+    test_truth_rater(prompter=sci_prompter, goal='Teaching computational thinking with Prolog',
+                     truth_file='computational_thinking', threshold=0.50, lim=2)
+    return
     test_truth_rater(prompter=sci_prompter, goal='Artificial general intelligence',
                      truth_file='artificial_general_intelligence', threshold=0.50, lim=2)
-    return
-
 
     test_rater(prompter=causal_prompter, goal='the Fermi paradox', threshold=0.60, lim=2)
 

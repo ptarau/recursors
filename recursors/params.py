@@ -7,7 +7,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 locations = ('ROOT', 'CACHES', 'DATA', 'OUT')
 
-LOCAL_LLM=False
+LOCAL_LLM=True
 
 def PARAMS():
     """

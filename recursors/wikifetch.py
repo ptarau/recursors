@@ -42,6 +42,7 @@ def page2text(page_name, lang='en'):
 
 def test():
     page2text('Logic programming')
+    page2text('Computational thinking')
     page2text('Artificial general intelligence')
     page2text('Expansion of the universe')
     page2text('No such page')
@@ -51,8 +52,3 @@ if __name__ == "__main__":
     pass
     test()
 
-"""
-TODO: use GPT function interface to generate
-links to relevant wiki pages to be fetched?
-
-"""

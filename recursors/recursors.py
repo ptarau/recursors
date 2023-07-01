@@ -8,6 +8,7 @@ from tools import in_stack
 
 def ask_for_clean(agent, g, context):
     answer = agent.ask(g=g, context=context)
+    agent.spill()
 
     xs = from_text(answer)
     res = clean_up(xs)
@@ -226,7 +227,7 @@ def run_all():
 def demo():
     #run_explorer(prompter=goal_prompter, goal='Repair a flat tire', lim=1)
     #run_explorer(prompter=sci_prompter, goal='Logic Programming', lim=1)
-    run_explorer(prompter=sci_prompter, goal='teaching computational thinking with Prolog', lim=2)
+    run_explorer(prompter=sci_prompter, goal='Teaching computational thinking with Prolog', lim=2)
 
 
 if __name__ == "__main__":
