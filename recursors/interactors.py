@@ -302,7 +302,7 @@ class Agent:
             return (self.prompt_toks * 0.03 + self.compl_toks * 0.06) / 1000
         if self.model == 'gpt-4-32k':
             return (self.prompt_toks * 0.06 + self.compl_toks * 0.12) / 1000
-        return 0.0
+        return 0.0 # case of local LLM
 
 
 def test(fresh=1):

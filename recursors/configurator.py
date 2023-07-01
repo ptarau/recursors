@@ -29,7 +29,7 @@ class Mdict:
         return other
 
 
-def test_config():
+def test_configurator():
     d = Mdict(**dict(a=1, b=2, c=3, d=4, e=5))
     md = Mdict(a=22, c=33)
     md.b = 0
@@ -41,4 +41,4 @@ def test_config():
 
 
 if __name__ == "__main__":
-    test_config()
+    test_configurator()

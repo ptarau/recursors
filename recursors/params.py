@@ -1,7 +1,7 @@
 import os
 import pickle
 import json
-from config import *
+from configurator import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -20,13 +20,14 @@ def PARAMS():
             TRACE=0,
             ROOT="../STATE/",
             CACHES="caches/",
+            DATA="data/",
             OUT='out/',
-            DATA='data/',
             model="gpt-3.5-turbo",
             emebedding_model="text-embedding-ada-002",
             temperature=0.2,
             n=1,
-            max_toks=4000
+            max_toks=4000,
+            LOCAL_LLM=LOCAL_LLM
         )
     else:
         import openai
@@ -44,7 +45,8 @@ def PARAMS():
             emebedding_model="vicuna-7b-v1.3",
             temperature=0.2,
             n=1,
-            max_toks=2000
+            max_toks=2000,
+            LOCAL_LLM=LOCAL_LLM
         )
 
     md = dict((k, d[locations[0]] + v) for (k, v) in d.items() if k in locations[1:])

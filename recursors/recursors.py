@@ -8,8 +8,7 @@ from tools import in_stack
 
 def ask_for_clean(agent, g, context):
     answer = agent.ask(g=g, context=context)
-    #print('>>>>!!!!',g,'\n',answer)
-    agent.spill()
+
     xs = from_text(answer)
     res = clean_up(xs)
     return res
@@ -78,6 +77,7 @@ class AndOrExplorer:
         self.unf = Unfolder(self.name, prompter, lim)
         self.clauses = defaultdict(list)
         self.facts = dict()
+        self.OUT=None
         PARAMS()(self)
 
     def new_clause(self, g, trace):

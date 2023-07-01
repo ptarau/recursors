@@ -1,5 +1,6 @@
 from recursors import *
 from prompters import *
+from embedders import Embedder
 
 
 class AbstractMaker:
@@ -96,9 +97,71 @@ class Advisor(AndOrExplorer):
         return d
 
 
-def test_advisor(prompter=None, goal=None, lim=None):
-    assert None not in (goal, prompter, lim)
-    r = Advisor(initiator=goal, prompter=prompter, lim=lim)
+def load_ground_truth(truth_file='logic_programming'):
+    with open(f'{PARAMS().DATA}{truth_file}.txt', 'r') as f:
+        sents = f.read().split('\n')
+    return [s for s in sents if s]
+
+
+class TruthRater(AndOrExplorer):
+    """
+    recursor enhanced with ability to look-up
+    how close a given fact is to the set of
+    gound-truth facts
+    """
+
+    def __init__(self, truth_file=None, threshold=None, **kwargs):
+        assert None not in (truth_file,threshold)
+        super().__init__(**kwargs)
+        self.threshold=threshold
+        self.store = Embedder(truth_file)
+        if not exists_file(self.store.cache()):
+            sents = load_ground_truth(truth_file=truth_file)
+            self.store.store(sents)
+
+    def appraise(self, g, _trace):
+        sent, r = self.store.query(g, 1)[0]
+        #print('!!!!!', r, '>', self.threshold)
+        if r > self.threshold:
+            ok = True
+        else:
+            ok = False
+        print(f'RATING of "{g}" w.r.t "{self.initiator}" is {round(r, 4)} --> {ok}')
+        print('NEAREST SENT:', sent)
+        return ok
+
+
+def test_truth_rater(name=None, goal=None, prompter=None, truth_file=None, threshold=None, lim=None):
+    assert None not in (name, goal, prompter, truth_file, threshold, lim)
+    r = TruthRater(name=name, prompter=prompter, truth_file=truth_file, threshold=threshold, lim=lim)
+    r.unf.resume()
+    for a in r.solve(goal):
+        print('\nTRACE:')
+        for x in a:
+            print(x)
+        print()
+    r.unf.persist()
+    c = r.costs()
+    print('COSTS in $:', c)
+
+
+def test_truth_rater(goal=None, prompter=None, truth_file=None, threshold=None, lim=None):
+    assert None not in (goal, prompter, truth_file, threshold, lim)
+    r = TruthRater(initiator=goal,prompter=prompter, truth_file=truth_file, threshold=threshold, lim=lim)
+    r.unf.resume()
+    for a in r.solve():
+        print('\nTRACE:')
+        for x in a:
+            print(x)
+        print()
+    r.unf.persist()
+    c = r.costs()
+    print('COSTS in $:', c)
+
+
+def test_rater(prompter=None, goal=None, threshold=None, lim=None, ):
+    assert None not in (goal, prompter, threshold, lim)
+    r = Rater(initiator=goal, prompter=prompter, threshold=threshold, lim=lim)
 
     for a in r.solve():
         print('\nTRACE:')
@@ -109,10 +172,9 @@ def test_advisor(prompter=None, goal=None, lim=None):
     c = r.costs()
     print('COSTS in $:', c)
 
-
-def test_rater(prompter=None, goal=None, threshold=None, lim=None, ):
-    assert None not in (goal, prompter, threshold, lim)
-    r = Rater(initiator=goal, prompter=prompter, threshold=threshold, lim=lim)
+def test_advisor(prompter=None, goal=None, lim=None):
+    assert None not in (goal, prompter, lim)
+    r = Advisor(initiator=goal, prompter=prompter, lim=lim)
 
     for a in r.solve():
         print('\nTRACE:')
@@ -168,8 +230,13 @@ def test_abstract_maker2():
 
 
 def demo():
-    test_rater(prompter=causal_prompter, goal='the Fermi paradox', threshold=0.60, lim=2)
+    test_truth_rater(prompter=sci_prompter, goal='Artificial general intelligence',
+                     truth_file='artificial_general_intelligence', threshold=0.50, lim=2)
     return
+
+
+    test_rater(prompter=causal_prompter, goal='the Fermi paradox', threshold=0.60, lim=2)
+
     test_rater(prompter=conseq_prompter, goal='P = NP', threshold=0.10, lim=3)
 
     test_advisor(prompter=recommendation_prompter, goal='The Godfather', lim=2)
@@ -181,7 +248,6 @@ def demo():
     test_advisor(prompter=causal_prompter, goal='Biased AI', lim=1)
     test_advisor(prompter=conseq_prompter, goal='Disproof the Riemann hypothesis', lim=2)
     test_advisor(prompter=conseq_prompter, goal='Proof the Riemann hypothesis', lim=2)
-
 
 
 if __name__ == "__main__":

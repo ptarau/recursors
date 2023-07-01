@@ -1,0 +1,6 @@
+numpy
+scipy
+openai
+fastchat
+wikipediaapi
+fast_sentence_segment
