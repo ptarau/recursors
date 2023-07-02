@@ -59,13 +59,15 @@ class Rater(AndOrExplorer):
             print('*** NO ADVICE FOR:', g)
             return False
 
-        print(f'\n-----EXPLANATION: {advice}\n---\n')
-        advice = advice[0].split('|')[0].strip()
-        if ' ' in advice: advice = advice.split()[1]
+        rating=advice[0].strip()
+
+        print(f'\n-----EXPLANATION {rating}\n---\n')
+        rating = rating.split('|')[0].strip()
+        if ' ' in rating: rating = rating.split()[1]
         try:
-            f = float(advice)
+            f = float(rating)
         except Exception:
-            print('*** UNPARSED RATING:', advice)
+            print('*** UNPARSED RATING:', rating)
             f = 5
         f = f / 100.0
 
@@ -218,8 +220,11 @@ def test_abstract_maker2():
     print('Cost: $', writer.agent.dollar_cost())
 
 
-def demo():
+def run_all():
+
     run_wikifetch()
+    test_abstract_maker1()
+    test_abstract_maker2()
     test_advisor(prompter=causal_prompter, goal='Biased AI', lim=1)
     test_truth_rater(prompter=sci_prompter, goal='Teaching computational thinking with Prolog',
                      truth_file='computational_thinking', threshold=0.50, lim=2)
@@ -240,11 +245,19 @@ def demo():
     test_advisor(prompter=conseq_prompter, goal='Proof the Riemann hypothesis', lim=2)
 
 
+def demo():
+    test_rater(prompter=sci_prompter, goal='Low power circuit design', threshold=0.50, lim=2)
+    return
+    test_abstract_maker1()
+    run_wikifetch()
+    test_advisor(prompter=recommendation_prompter, goal='The Godfather', lim=1)
+    test_rater(prompter=causal_prompter, goal='the Fermi paradox', threshold=0.60, lim=1)
+    test_truth_rater(prompter=sci_prompter, goal='Artificial general intelligence',
+                     truth_file='artificial_general_intelligence', threshold=0.50, lim=1)
+
 if __name__ == "__main__":
     pass
-    # test_abstract_maker1()
-    # test_abstract_maker2()
-    #demo()
-    test_advisor(prompter=conseq_prompter, goal='Disproof the Riemann hypothesis', lim=2)
-    test_advisor(prompter=conseq_prompter, goal='Proof the Riemann hypothesis', lim=2)
+    #run_all()
+    demo()
+
 

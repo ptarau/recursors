@@ -20,7 +20,7 @@ def de_itemize(x):
 
 
 def clean_up(xs):
-    xs = dict((de_itemize(x), True) for x in xs if 8 < len(x) < 200)
+    xs = dict((de_itemize(x), True) for x in xs if 8 < len(x) < 2000)
     return list(xs)
 
 
