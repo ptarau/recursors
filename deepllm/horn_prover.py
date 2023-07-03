@@ -119,7 +119,8 @@ def list_partition(n):
         yield part2list_(n, pss)
 
 
-def test(n=7):
+def test_horn_prover(n=7):
+    print('testing on all Horn formulas of size =',n)
     # for x in list_partition(3): print(x)
     # for x in horn_formula(3): print(x)
 
@@ -134,7 +135,8 @@ def test(n=7):
 
     t2 = time.time()
     print(f'yes={yes}, no={no} density={yes / (yes + no)}, time={round((t2 - t1), 2)}s')
+    if n==7: assert yes==1234073 and no==4149830
 
 
 if __name__ == "__main__":
-    test()
+    test_horn_prover()

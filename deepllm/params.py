@@ -1,19 +1,18 @@
 import os
 import pickle
 import json
-from configurator import *
+from .configurator import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-locations = ('ROOT', 'CACHES', 'DATA', 'OUT')
 
-LOCAL_LLM=False
-
-def PARAMS():
+def PARAMS(LOCAL_LLM=False):
     """
     config params, easy to propagate as other objects' attributes
     simply by applying it to them
     """
+
+    locations = ('ROOT', 'CACHES', 'DATA', 'OUT')
 
     if not LOCAL_LLM:
         d = dict(
@@ -27,6 +26,7 @@ def PARAMS():
             temperature=0.2,
             n=1,
             max_toks=4000,
+            TOP_K=3,
             LOCAL_LLM=LOCAL_LLM
         )
     else:
@@ -46,11 +46,15 @@ def PARAMS():
             temperature=0.2,
             n=1,
             max_toks=2000,
+            TOP_K=3,
             LOCAL_LLM=LOCAL_LLM
         )
 
-    md = dict((k, d[locations[0]] + v) for (k, v) in d.items() if k in locations[1:])
-    return Mdict(**{**d, **md})
+    ld = dict((k, d[locations[0]] + v) for (k, v) in d.items() if k in locations[1:])
+    # by applying the Mdict of md and d (a callable) to an instance
+    # it overrides its attributes with the ones collected from d and ld
+    attribute_overrider = Mdict(**{**d, **ld})
+    return attribute_overrider
 
 
 def spacer(text):
@@ -93,6 +97,7 @@ def from_json(fname):
         obj = json.load(inf)
         return obj
 
+
 def to_pickle(obj, fname):
     """
     serializes an object to a .pickle file
@@ -109,6 +114,7 @@ def from_pickle(fname):
     with open(fname, "rb") as inf:
         return pickle.load(inf)
 
+
 def jp(x):
     print(json.dumps(x, indent=2))
 
@@ -116,7 +122,3 @@ def jp(x):
 def xp(xs):
     for x in xs:
         print(x)
-
-
-if __name__ == "__main__":
-    print(PARAMS())

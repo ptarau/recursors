@@ -2,8 +2,8 @@ import time
 import openai
 import tiktoken
 from string import Template
-from params import *
-from tools import *
+from .params import *
+from .tools import *
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -302,23 +302,3 @@ class Agent:
         if self.model == 'gpt-4-32k':
             return (self.prompt_toks * 0.06 + self.compl_toks * 0.12) / 1000
         return 0.0 # case of local LLM
-
-
-def test(fresh=1):
-    CF = PARAMS()
-    name = 'tester'
-    DI = CF(Agent(name))
-    if not fresh:
-        DI.resume()
-    else:
-        DI.clear()
-    DI.pattern = "Explain to a teenager what $thing is in $count senences."
-    a = DI.ask(thing='molecule', count='2-3')
-    print(a)
-    print('$', DI.dollar_cost())
-    #print(DI.__dict__)
-    DI.persist()
-
-
-if __name__ == "__main__":
-    test(fresh=0)

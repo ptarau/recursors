@@ -1,7 +1,7 @@
 from scipy.spatial.distance import cdist
 import numpy as np
-from params import to_pickle, from_pickle, PARAMS
 import openai
+from .params import to_pickle, from_pickle, PARAMS
 
 
 class Embedder:
@@ -48,8 +48,10 @@ class Embedder:
         dm = cdist(embeddings, query_embeddings, metric='cosine')
         dm = [1 - d[0] for d in dm]  # cosinus similarity vector
         ids = list(np.argpartition(dm, -top_k)[-top_k:])
-        ids.sort(reverse=True)
-        answers = [(sents[i], dm[i]) for i in ids]
+        rids = [(i, dm[i]) for i in ids]
+        rids.sort(reverse=True, key=lambda x: x[1])
+        print('!!!', rids)
+        answers = [(sents[i], dm[i]) for (i, _) in rids]
         return answers
 
     def __call__(self, quest, top_k):
@@ -58,23 +60,3 @@ class Embedder:
     def dollar_cost(self):
         if self.LOCAL_LLM: return 0.0
         return self.total_toks * 0.0004 / 1000
-
-
-def test_embedders():
-    e = Embedder(cache_name='boo')
-    sents = [
-        "The dog barks to the moon",
-        "The cat sits on the mat",
-        "The phone rings",
-        "The rocket explodes",
-        "The cat and the dog sleep"
-    ]
-    e.store(sents)
-    q = 'Who sleeps on the floor?'
-    rs = e(q, 2)
-    for r in rs: print(r)
-    print('COST:', e.dollar_cost())
-
-
-if __name__ == "__main__":
-    test_embedders()

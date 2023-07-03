@@ -1,6 +1,6 @@
 import wikipediaapi
 from fast_sentence_segment import segment_text
-from params import PARAMS,ensure_path
+from .params import PARAMS,ensure_path
 
 import logging
 logger=logging.getLogger()
