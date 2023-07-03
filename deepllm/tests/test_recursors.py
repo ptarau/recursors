@@ -1,9 +1,9 @@
-from deepllm.recursors import *
+from deepllm.prompters import *
+from deepllm.recursors import run_explorer
 
 
 def run_all():
     run_explorer(prompter=sci_prompter, goal='Logic programming', lim=2)
-    return
     run_explorer(prompter=sci_prompter, goal='Generative AI', lim=2)
     run_explorer(prompter=recommendation_prompter, goal='Apocalypse now', lim=2)
     run_explorer(prompter=recommendation_prompter, goal='1Q84, by Haruki Murakami', lim=2)
@@ -25,4 +25,3 @@ def test_recursors():
 
 if __name__ == "__main__":
     test_recursors()
-

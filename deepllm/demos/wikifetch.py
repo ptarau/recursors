@@ -1,6 +1,6 @@
 import wikipediaapi
 from fast_sentence_segment import segment_text
-from .params import PARAMS,ensure_path
+from deepllm.params import PARAMS,ensure_path
 
 import logging
 logger=logging.getLogger()
@@ -8,7 +8,11 @@ logger.setLevel(logging.CRITICAL)
 
 def page2text(page_name, lang='en'):
     print('PROCESSING WIKI FOR:',page_name)
-    wiki_wiki = wikipediaapi.Wikipedia(language=lang, extract_format=wikipediaapi.ExtractFormat.WIKI)
+    wiki_wiki = wikipediaapi.Wikipedia(
+        language=lang,
+        extract_format=wikipediaapi.ExtractFormat.WIKI,
+        user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 13_4_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+    )
     page = wiki_wiki.page(page_name)
     text = page.text
     if not text:

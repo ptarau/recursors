@@ -11,7 +11,7 @@ with open("README.md", "r") as f:
 version = deepllm.__version__
 setup(name='deepllm',
       version=version,
-      description='Prolog-like interpreter and tuple store',
+      description='Deep, recursive, goal-driven LLM explorer',
       long_description=long_description,
       long_description_content_type='text/markdown',
       url='https://github.com/ptarau/recursors.git',
@@ -19,14 +19,15 @@ setup(name='deepllm',
       author_email='paul.tarau@gmail.com',
       license='MIT',
       packages=setuptools.find_packages(),
-      package_data={'deepllm': [
-                               'docs/*.pdf',
-                               'tests/*.py',
-                               'apps/*.py',
-                               'demos/*.py'
-                               'local_llms/*.py'
-                               ]
-                    },
+      package_data={
+          'deepllm': [
+              'docs/*.*',
+              'tests/*.*',
+              'apps/*.*',
+              'demos/*.*',
+              'local_llms/*.*'
+          ]
+      },
       include_package_data=True,
       install_requires=required,
       zip_safe=False

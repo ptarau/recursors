@@ -123,21 +123,6 @@ class TruthRater(AndOrExplorer):
         for sent, r in sents_rs: print(sent, '->', round(r, 4))
         return ok
 
-
-def test_truth_rater(goal=None, prompter=None, truth_file=None, threshold=None, lim=None):
-    assert None not in (goal, prompter, truth_file, threshold, lim)
-    r = TruthRater(initiator=goal, prompter=prompter, truth_file=truth_file, threshold=threshold, lim=lim)
-    r.unf.resume()
-    for a in r.solve():
-        print('\nTRACE:')
-        for x in a:
-            print(x)
-        print()
-    r.unf.persist()
-    c = r.costs()
-    print('COSTS in $:', c)
-
-
 class AbstractMaker:
     def __init__(self, topic=None, keywords=None):
         assert None not in (topic, keywords)
