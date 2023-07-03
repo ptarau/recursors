@@ -6,7 +6,7 @@ from .configurator import *
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
-def PARAMS(LOCAL_LLM=False):
+def PARAMS(LOCAL_LLM=True):
     """
     config params, easy to propagate as other objects' attributes
     simply by applying it to them
