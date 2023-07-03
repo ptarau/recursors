@@ -1,7 +1,6 @@
 from collections import defaultdict
 
 from .params import *
-from .prompters import *
 from .interactors import Agent, clean_up, to_list, from_text
 from .horn_prover import qprove
 from .tools import in_stack

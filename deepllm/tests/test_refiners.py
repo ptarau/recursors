@@ -16,6 +16,7 @@ def test_rater(prompter=None, goal=None, threshold=None, lim=None, ):
 
     c = r.costs()
     print('COSTS in $:', c)
+    return True
 
 
 def test_advisor(prompter=None, goal=None, lim=None):
