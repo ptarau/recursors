@@ -1,6 +1,6 @@
 from deepllm.interactors import *
 
-def test(fresh=1):
+def test_interactors(fresh=1):
     CF = PARAMS()
     name = 'tester'
     DI = CF(Agent(name))
@@ -19,5 +19,5 @@ def test(fresh=1):
 if __name__ == "__main__":
     assert os.getenv("OPENAI_API_KEY")
 
-    test(fresh=0)
+    test_interactors()
 

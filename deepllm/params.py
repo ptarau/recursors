@@ -5,50 +5,58 @@ from .configurator import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
+IS_LOCAL_LLM = [False]
 
-def PARAMS(LOCAL_LLM=True):
+GPT_PARAMS = dict(
+    TRACE=0,
+    ROOT="../STATE/",
+    CACHES="caches/",
+    DATA="data/",
+    OUT='out/',
+    model="gpt-3.5-turbo",
+    emebedding_model="text-embedding-ada-002",
+    temperature=0.2,
+    n=1,
+    max_toks=4000,
+    TOP_K=3,
+    #LOCAL_LLM=IS_LOCAL_LLM[0]
+)
+
+LOCAL_PARAMS = dict(
+    TRACE=0,
+    ROOT="../STATE_LOCAL/",
+    CACHES="caches/",
+    OUT='out/',
+    DATA='data/',
+    model="vicuna-7b-v1.3",
+    emebedding_model="vicuna-7b-v1.3",
+    temperature=0.2,
+    n=1,
+    max_toks=2000,
+    TOP_K=3,
+    API_BASE="http://u.local:8000/v1",  # replace with where the server is
+    # API_BASE = "http://localhost:8000/v1" # if on the same machine
+    #LOCAL_LLM=IS_LOCAL_LLM[0]
+)
+
+
+def PARAMS():
     """
     config params, easy to propagate as other objects' attributes
     simply by applying it to them
     """
 
-    locations = ('ROOT', 'CACHES', 'DATA', 'OUT')
+    LOCAL_LLM = IS_LOCAL_LLM[0]
+
+    locations = ['ROOT', 'CACHES', 'DATA', 'OUT']
 
     if not LOCAL_LLM:
-        d = dict(
-            TRACE=0,
-            ROOT="../STATE/",
-            CACHES="caches/",
-            DATA="data/",
-            OUT='out/',
-            model="gpt-3.5-turbo",
-            emebedding_model="text-embedding-ada-002",
-            temperature=0.2,
-            n=1,
-            max_toks=4000,
-            TOP_K=3,
-            LOCAL_LLM=LOCAL_LLM
-        )
+        d = GPT_PARAMS
     else:
         import openai
         openai.api_key = "EMPTY"
-        # openai.api_base = "http://localhost:8000/v1"
-        openai.api_base = "http://u.local:8000/v1"
-
-        d = dict(
-            TRACE=0,
-            ROOT="../STATE_LOCAL/",
-            CACHES="caches/",
-            OUT='out/',
-            DATA='data/',
-            model="vicuna-7b-v1.3",
-            emebedding_model="vicuna-7b-v1.3",
-            temperature=0.2,
-            n=1,
-            max_toks=2000,
-            TOP_K=3,
-            LOCAL_LLM=LOCAL_LLM
-        )
+        openai.api_base = LOCAL_PARAMS['API_BASE']
+        d = LOCAL_PARAMS
 
     ld = dict((k, d[locations[0]] + v) for (k, v) in d.items() if k in locations[1:])
     # by applying the Mdict of md and d (a callable) to an instance

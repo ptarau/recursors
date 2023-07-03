@@ -6,10 +6,15 @@ class Temp:
         self.hi = 'hello'
 
 
-if __name__ == "__main__":
+def test_params():
     CF = PARAMS()
     print(CF)
     CF.TRACE = 1
     d = CF(Temp())
-    print(d.hi,d.TRACE)
-    assert d.TRACE==1
+    print(d.hi, d.TRACE)
+    assert d.TRACE == 1
+    # print(CF)
+
+
+if __name__ == "__main__":
+    test_params()
