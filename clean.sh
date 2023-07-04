@@ -1,20 +1,19 @@
 rm -r -f dist build
 rm -r -f *.egg-info
-pushd .
 cd deepllm
 rm -r -f __pycache__
-popd
-pushd .
-cd deepllm
-cd apps
+cd ..
+pwd
+cd deepllm/apps
 rm -r -f __pycache__
-popd
-cd deepllm
-cd demos
+cd ../..
+pwd
+cd deepllm/demos
 rm -r -f __pycache__
-popd
-cd deepllm
-cd tests
+cd ../..
+pwd
+cd deepllm/tests
 rm -r -f __pycache__
-popd
+cd ../..
+pwd
 
