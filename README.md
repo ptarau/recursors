@@ -48,6 +48,14 @@ pip3 install -e .
 
 * If you install  [fastchat](https://github.com/lm-sys/FastChat), there are examples of using Vicuna models with it in folder [deepllm/local_llms](https://github.com/ptarau/recursors/tree/main/deepllm/local_llms).
 
+#### Streamlit eeb app
+
+After installing streamlit, try it with:
+
+```
+streamlit run deepllm/apps/app.py
+```
+
 #### Paper describing this work
 
 If you find this software useful please cite it as:
