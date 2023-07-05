@@ -81,7 +81,7 @@ def test_abstract_maker2():
 def test_refiners():
     assert test_abstract_maker1()
     # assert test_abstract_maker2()
-    assert test_rater(prompter=sci_prompter, goal='Low power circuit design', threshold=0.50, lim=1)
+    assert test_advisor(prompter=sci_prompter, goal='Low power circuit design',lim=1)
     assert test_rater(prompter=causal_prompter, goal='The Fermi paradox', threshold=0.50, lim=1)
 
 

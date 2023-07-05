@@ -1,6 +1,7 @@
 import os
 import pickle
 import json
+import openai
 from .configurator import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -19,7 +20,7 @@ GPT_PARAMS = dict(
     n=1,
     max_toks=4000,
     TOP_K=3,
-    #LOCAL_LLM=IS_LOCAL_LLM[0]
+    # LOCAL_LLM=IS_LOCAL_LLM[0]
 )
 
 LOCAL_PARAMS = dict(
@@ -36,7 +37,7 @@ LOCAL_PARAMS = dict(
     TOP_K=3,
     API_BASE="http://u.local:8000/v1",  # replace with where the server is
     # API_BASE = "http://localhost:8000/v1" # if on the same machine
-    #LOCAL_LLM=IS_LOCAL_LLM[0]
+    # LOCAL_LLM=IS_LOCAL_LLM[0]
 )
 
 
@@ -63,6 +64,12 @@ def PARAMS():
     # it overrides its attributes with the ones collected from d and ld
     attribute_overrider = Mdict(**{**d, **ld})
     return attribute_overrider
+
+
+def ensure_openai_api_key(key):
+    if not openai.api_key:
+        openai.api_key = key
+    # assert openai.api_key
 
 
 def spacer(text):
@@ -130,3 +137,8 @@ def jp(x):
 def xp(xs):
     for x in xs:
         print(x)
+
+
+def tprint(*args, **kwargs):
+    if PARAMS().TRACE:
+        print(*args, **kwargs)

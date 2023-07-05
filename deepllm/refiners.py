@@ -6,10 +6,10 @@ from .recursors import *
 class Advisor(AndOrExplorer):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        pname = decision_prompter['name']
+        pname = advisor_oracle['name']
         oname = f'{self.name}_{pname}'
         self.oracle = Agent(name=oname)
-        self.oracle.set_pattern(decision_prompter['decider_p'])
+        self.oracle.set_pattern(advisor_oracle['decider_p'])
 
     def appraise(self, g, _trace):
         # xs = to_list((g, trace))
@@ -17,7 +17,7 @@ class Advisor(AndOrExplorer):
 
         advice = just_ask(self.oracle, g=g, context=self.initiator)
 
-        print('!!! ADVICE for:', g, advice)
+        tprint('!!! ADVICE for:', g, advice)
 
         return advice.startswith('True')
 
@@ -49,12 +49,12 @@ class Rater(AndOrExplorer):
         advice = ask_for_clean(self.oracle, g=g, context=self.initiator)
 
         if not advice:
-            print('*** NO ADVICE FOR:', g)
+            tprint('*** NO ADVICE FOR:', g)
             return False
 
         rating = advice[0].strip()
 
-        print(f'\n-----EXPLANATION {rating}\n---\n')
+        tprint(f'\n-----EXPLANATION {rating}\n---\n')
         rating = rating.split('|')[0].strip()
         if ' ' in rating: rating = rating.split()[1]
         try:
@@ -66,7 +66,7 @@ class Rater(AndOrExplorer):
 
         ok = f >= self.threshold
 
-        print(f'RATING of "{g}" w.r.t "{self.initiator}" is {round(f, 4)} --> {ok}')
+        tprint(f'RATING of "{g}" w.r.t "{self.initiator}" is {round(f, 4)} --> {ok}')
 
         return ok
 
@@ -114,14 +114,14 @@ class TruthRater(AndOrExplorer):
         r = sum(z[1]) / self.top_k
         # sents=map(str,sents_rs)
 
-        # print('!!!!!', r, '>', self.threshold)
+        # tprint('!!!!!', r, '>', self.threshold)
         if r > self.threshold:
             ok = True
         else:
             ok = False
-        print(f'RATING of "{self.initiator}->{g}" w.r.t truth in "{self.truth_file}.txt" is {round(r, 4)} --> {ok}')
-        print('AS AVG. OF NEAREST SENTS:')
-        for sent, r in sents_rs: print(sent, '->', round(r, 4))
+        tprint(f'RATING of "{self.initiator}->{g}" w.r.t truth in "{self.truth_file}.txt" is {round(r, 4)} --> {ok}')
+        tprint('AS AVG. OF NEAREST SENTS:')
+        for sent, r in sents_rs: tprint(sent, '->', round(r, 4))
         return ok
 
 class AbstractMaker:

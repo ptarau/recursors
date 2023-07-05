@@ -150,14 +150,23 @@ class AndOrExplorer:
 
         # css=list(self.clauses.items())
 
-        model = qprove(css, goal=self.initiator)
+        self.logic_model = qprove(css, goal=self.initiator)
 
-        if model is None:
-            print('\nNO MODEL ENTAILING:', self.initiator)
-        else:
-            print('\nMODEL:', len(model), 'facts', '\n')
-            for fact in model: print(fact)
-            save_model(self.initiator, model, pro_name + "_model")
+        if PARAMS().TRACE > 0:
+            if self.logic_model is None:
+                print('\nNO MODEL ENTAILING:', self.initiator)
+            else:
+                print('\nMODEL:', len(self.logic_model), 'facts', '\n')
+                for fact in self.logic_model: print(fact)
+                save_model(self.initiator, self.logic_model, pro_name + "_model")
+
+
+    def run(self):
+        for r in self.solve():
+            yield 'TRACE', r
+        yield 'CLAUSES',dict(self.clauses)
+        yield 'MODEL', self.logic_model
+        yield 'COSTS', self.costs()
 
 
 def run_explorer(goal=None, prompter=None, lim=None):
@@ -195,7 +204,7 @@ def save_model(goal, facts, fname, suf='.pl'):
         print(f'% MODEL: {len(facts)} facts', file=f)
         for fact in facts:
             line = quote(fact) + "."
-            if fact == goal: line = line + "%" + (10*" ") +"<==== initiator !"
+            if fact == goal: line = line + "%" + (10 * " ") + "<==== initiator !"
             print(line, file=f)
 
 

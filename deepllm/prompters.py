@@ -89,8 +89,7 @@ recommendation_prompter = dict(
      """
 )
 
-
-decision_prompter = dict(
+advisor_oracle = dict(
     name='decider_oracle',
     decider_p="""
     You play the role of an oracle that decides if "$g" is related to "$context". This means that someone 
@@ -127,3 +126,18 @@ sci_abstract_maker = dict(
     Suggest a title and an abstract for a scientific paper about "$g" that has the following keywords: $context.
     """
 )
+
+prompter_vars = []
+for p in dir():
+    if p.endswith('_prompter'):
+        prompter_vars.append(p)
+
+
+def prompter_dict():
+    d = dict()
+    for p in prompter_vars:
+        prompter = eval(p)
+        name = prompter['name']
+        if name.endswith('oracle') : continue
+        d[name] = p
+    return d

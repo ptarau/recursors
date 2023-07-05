@@ -17,11 +17,10 @@ setup(name='deepllm',
       url='https://github.com/ptarau/recursors.git',
       author='Paul Tarau',
       author_email='paul.tarau@gmail.com',
-      license='MIT',
+      license='GPL-3',
       packages=setuptools.find_packages(),
       package_data={
           'deepllm': [
-              'docs/*.*',
               'tests/*.*',
               'apps/*.*',
               'demos/*.*',
