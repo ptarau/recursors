@@ -8,7 +8,7 @@ def run_recursor(initiator=None, prompter=None, lim=None):
     recursor = AndOrExplorer(initiator=initiator, prompter=prompter, lim=lim)
     yield from recursor.run()
 
-def run_advisor(initiator=None, prompter=None, lim=None):
+def run_adviser(initiator=None, prompter=None, lim=None):
     assert None not in (prompter, initiator, lim)
     recursor = Advisor(initiator=initiator, prompter=prompter, lim=lim)
     yield from recursor.run()
