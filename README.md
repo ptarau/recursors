@@ -53,12 +53,11 @@ for result in run_recursor(initiator='Using tactical nukes', prompter=conseq_pro
 ...   print(result)
 ```
 
-Also, you can ask more interesting questions like in:
+Also, you can explore questions with less gruesome results like in:
 
 ```
-from deepllm.api import *
-1. for result in run_rrater(initiator='How to repair a flat tire', prompter=goal_prompter, lim=1):
-  print(result)
+for result in run_rater(initiator='Artificial General Intelligence', prompter=sci_prompter, lim=2, threshold=0.5):
+...   print(result))
 ```
 
 #### Tests and demos 
