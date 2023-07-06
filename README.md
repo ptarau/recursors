@@ -49,16 +49,15 @@ pip3 install deepllm
 The DeepLLM [API](https://github.com/ptarau/recursors/blob/main/deepllm/api.py) exposes its high-level functions ready to embed in your application with something as simple as (assuming the your OPENAI_KEY is exported by your environment):
 
 ```
-from deepllm.api import *
-for result in run_recursor(initiator='How to repair a flat tire', prompter=goal_prompter, lim=1):
-  print(result)
-
+for result in run_recursor(initiator='Using tactical nukes', prompter=conseq_prompter, lim=2):
+...   print(result)
 ```
+
 Also, you can ask more interesting questions like in:
 
 ```
 from deepllm.api import *
-for result in run_rrater(initiator='How to repair a flat tire', prompter=goal_prompter, lim=1):
+1. for result in run_rrater(initiator='How to repair a flat tire', prompter=goal_prompter, lim=1):
   print(result)
 ```
 
