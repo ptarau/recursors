@@ -50,14 +50,14 @@ The DeepLLM [API](https://github.com/ptarau/recursors/blob/main/deepllm/api.py) 
 
 ```
 for result in run_recursor(initiator='Using tactical nukes', prompter=conseq_prompter, lim=2):
-...   print(result)
+    print(result)
 ```
 
 Also, you can explore questions with less gruesome results like in:
 
 ```
 for result in run_rater(initiator='Artificial General Intelligence', prompter=sci_prompter, lim=2, threshold=0.5):
-...   print(result))
+    print(result)
 ```
 
 #### Tests and demos 
