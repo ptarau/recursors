@@ -32,10 +32,34 @@ git clone git@github.com:ptarau/recursors.git
 
 #### Installing
 
-You can install the package ```deepllm``` by typing in folder ```recursors```
+If you have cloned this repo, you can install the package ```deepllm``` by typing in folder ```recursors```
 
 ```
 pip3 install -e .
+```
+
+You can also install it from [pypi](https://pypi.org/search/?q=deepllm) with
+
+```
+pip3 install deepllm
+```
+
+#### API
+
+The DeepLLM [API](https://github.com/ptarau/recursors/blob/main/deepllm/api.py) exposes its high-level functions ready to embed in your application with something as simple as (assuming the your OPENAI_KEY is exported by your environment):
+
+```
+from deepllm.api import *
+for result in run_recursor(initiator='How to repair a flat tire', prompter=goal_prompter, lim=1):
+  print(result)
+
+```
+Also, you can ask more interesting questions like in:
+
+```
+from deepllm.api import *
+for result in run_rrater(initiator='How to repair a flat tire', prompter=goal_prompter, lim=1):
+  print(result)
 ```
 
 #### Tests and demos 
@@ -48,7 +72,7 @@ pip3 install -e .
 
 * If you install  [fastchat](https://github.com/lm-sys/FastChat), there are examples of using Vicuna models with it in folder [deepllm/local_llms](https://github.com/ptarau/recursors/tree/main/deepllm/local_llms).
 
-#### Streamlit eeb app
+#### Streamlit web app
 
 After installing streamlit, try it with:
 
@@ -79,7 +103,7 @@ archivePrefix = {arXiv},
 }
 ```
 
-You can also find the paper (and future related work) in folder  [docs](https://github.com/ptarau/recursors/tree/main/deepllm/docs).
+You can also find the paper (and future related work) in folder  [docs](https://github.com/ptarau/recursors/tree/main/docs).
 
 Enjoy,
 
