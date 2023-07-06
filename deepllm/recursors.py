@@ -152,14 +152,12 @@ class AndOrExplorer:
 
         self.logic_model = qprove(css, goal=self.initiator)
 
-        if PARAMS().TRACE > 0:
-            if self.logic_model is None:
-                print('\nNO MODEL ENTAILING:', self.initiator)
-            else:
-                print('\nMODEL:', len(self.logic_model), 'facts', '\n')
-                for fact in self.logic_model: print(fact)
-                save_model(self.initiator, self.logic_model, pro_name + "_model")
-
+        if self.logic_model is None:
+            tprint('\nNO MODEL ENTAILING:', self.initiator)
+        else:
+            tprint('\nMODEL:', len(self.logic_model), 'facts', '\n')
+            for fact in self.logic_model: tprint(fact)
+            save_model(self.initiator, self.logic_model, pro_name + "_model")
 
     def run(self):
         for r in self.solve():
