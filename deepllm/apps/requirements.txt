@@ -1,1 +1,7 @@
 streamlit
+numpy
+scipy
+openai
+tiktoken
+deepllm
+

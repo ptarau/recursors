@@ -12,7 +12,7 @@ As applications, we sketch implementations of consequence predictions, causal ex
 
 ### INSTALLATION and USAGE:
 
-#### Getting to OpenAI key:
+#### Getting the OpenAI key:
 
 As the code will use it, make sure you acquire it and have 
 
