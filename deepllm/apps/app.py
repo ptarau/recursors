@@ -14,7 +14,7 @@ key = ensure_openai_api_key(
     st.sidebar.text_area("Unless it is in your environment, enter your OPENAI_API_KEY:", ""))
 
 d = prompter_dict()
-#st.write(d)
+# st.write(d)
 
 
 with st.sidebar:
@@ -26,10 +26,9 @@ with st.sidebar:
 
     initiator = st.text_area('Topic to explore:', value='Origin of COVID-19')
 
-
     prompter_name = st.radio('Prompter:', list(d.keys()))
 
-    prompter=eval(d[prompter_name])
+    prompter = eval(d[prompter_name])
 
     query_it = st.button('Activate LLM!')
 
@@ -46,7 +45,7 @@ def do_query():
 
     st.write('STARTING:')
     for x in g:
-        #st.write('.')
+        # st.write('.')
         st.write(*x)
     st.write('DONE:')
 
