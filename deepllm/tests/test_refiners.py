@@ -13,7 +13,7 @@ def test_rater(prompter=None, goal=None, threshold=None, lim=None, ):
         for x in a:
             print(x)
         print()
-
+    print('MODEL:',len(r.logic_model))
     c = r.costs()
     print('COSTS in $:', c)
     return True
@@ -82,7 +82,7 @@ def test_refiners():
     assert test_abstract_maker1()
     # assert test_abstract_maker2()
     assert test_advisor(prompter=sci_prompter, goal='Low power circuit design',lim=1)
-    assert test_rater(prompter=causal_prompter, goal='The Fermi paradox', threshold=0.50, lim=1)
+    assert test_rater(prompter=causal_prompter, goal='The Fermi paradox', threshold=0.60, lim=1)
 
 
 if __name__ == "__main__":

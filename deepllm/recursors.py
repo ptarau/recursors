@@ -96,17 +96,6 @@ class AndOrExplorer:
             if h in bs: continue
             yield h, bs
 
-    # begin overrides
-    def resume(self):
-        self.unf.resume()
-
-    def persist(self):
-        self.unf.persist()
-
-    def appraise(self, g, _trace):
-        # return g[0] in "CILKPE" # just to test it trims model
-        return True
-
     def costs(self):
         return self.unf.costs()
 
@@ -138,33 +127,64 @@ class AndOrExplorer:
         for gs in step(self.initiator, (), 0):
             yield list(reversed(to_list(gs)))
 
-        for fact in self.facts: self.clauses[fact].append([])
-
         self.persist()
 
+        for fact in self.facts: self.clauses[fact].append([])
+        css = [(h, bs) for (h, bss) in self.clauses.items() for bs in bss]
+        self.logic_model = qprove(css, goal=self.initiator)
+        self.trim_clauses()
+        self.save_results()
+
+    def save_results(self):
         pro_name = f'{self.OUT}{self.name}_{self.pname}_{self.lim}'
+        mo_name=pro_name + "_model"
 
         to_prolog(self.clauses, pro_name)
 
-        css = [(h, bs) for (h, bss) in self.clauses.items() for bs in bss]
-
-        # css=list(self.clauses.items())
-
-        self.logic_model = qprove(css, goal=self.initiator)
-
         if self.logic_model is None:
+            self.logic_model=[]
             tprint('\nNO MODEL ENTAILING:', self.initiator)
         else:
             tprint('\nMODEL:', len(self.logic_model), 'facts', '\n')
             for fact in self.logic_model: tprint(fact)
-            save_model(self.initiator, self.logic_model, pro_name + "_model")
+        save_model(self.initiator, self.logic_model, mo_name)
 
     def run(self):
         for r in self.solve():
             yield 'TRACE', r
-        yield 'CLAUSES',dict(self.clauses)
+        yield 'CLAUSES', dict(self.clauses)
         yield 'MODEL', self.logic_model
         yield 'COSTS', self.costs()
+
+    # -------- begin overrides -------------
+
+    def resume(self):
+        self.unf.resume()
+
+    def persist(self):
+        self.unf.persist()
+
+    def appraise(self, g, _trace):
+        """
+        to be overriden by refiners
+        """
+        return True
+
+    def trim_clauses(self):
+        """
+        to be overriden : only atoms in the model
+        will be kept - no action here as they all are
+        """
+        pass
+        clauses = defaultdict(list)
+        if self.logic_model is not None:
+            model = set(self.logic_model)
+            clauses = defaultdict(list)
+            for (h, bss) in self.clauses.items():
+                for bs in bss:
+                    ok = all(b in model for b in bs)
+                    if ok: clauses[h].append(bs)
+        self.clauses = clauses
 
 
 def run_explorer(goal=None, prompter=None, lim=None):
@@ -195,7 +215,7 @@ def quote(x):
     return "'" + x + "'"
 
 
-def save_model(goal, facts, fname, suf='.pl'):
+def save_model(goal, facts, fname, suf='.pro'):
     path = fname + suf
     ensure_path(path)
     with open(path, 'w') as f:
@@ -206,8 +226,8 @@ def save_model(goal, facts, fname, suf='.pl'):
             print(line, file=f)
 
 
-def to_prolog(clauses, fname, neck=":-"):
-    suf = '.nat' if neck == ":" else ".pl"
+def to_prolog(clauses, fname, neck=":-", suf='.pro'):
+    suf = '.nat' if neck == ":" else suf
 
     path = fname + suf
     ensure_path(path)
