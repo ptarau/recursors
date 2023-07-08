@@ -3,16 +3,30 @@ import matplotlib.pyplot as plt
 from deepllm.api import *
 
 
-def vizrun():
-    for result in run_rater(initiator='Artificial General Intelligence', prompter=sci_prompter, lim=1, threshold=0.80):
+def vizrun(lim=1):
+    for result in run_rater(initiator='Artificial General Intelligence', prompter=sci_prompter, lim=lim, threshold=0.80):
         kind,vals=result
         if kind == 'CLAUSES':
-            css=[(h,xs)  for (h,xss) in vals.items() for xs in xss]
-            g=to_horn_graph(css)
-            print(g)
-            draw(g)
+            clauses=vals
+        elif kind == 'MODEL':
+            model=vals
         else:
             print(result)
+
+    css = [(h, xs) for (h, xss) in clauses.items() for xs in xss]
+
+
+    if lim>1:
+        model = dict(zip(model, range(len(model))))
+        nss = [(model[h], [model[b] for b in bs]) for (h, bs) in css]
+        g = to_horn_graph(nss)
+    else:
+        g = to_horn_graph(css)
+    print(g)
+    draw(g)
+
+
+
 
 
 def to_horn_graph(css, ics=None):
