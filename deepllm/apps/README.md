@@ -1,3 +1,3 @@
 # TODO
 
-make minimal streamlit app for recursor+refiner
+minimal streamlit app for recursor+refiner

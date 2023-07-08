@@ -1,0 +1,66 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+from deepllm.api import *
+
+
+def vizrun():
+    for result in run_rater(initiator='Artificial General Intelligence', prompter=sci_prompter, lim=1, threshold=0.80):
+        kind,vals=result
+        if kind == 'CLAUSES':
+            css=[(h,xs)  for (h,xss) in vals.items() for xs in xss]
+            g=to_horn_graph(css)
+            print(g)
+            draw(g)
+        else:
+            print(result)
+
+
+def to_horn_graph(css, ics=None):
+    g = nx.DiGraph()
+    for i, c in enumerate(css):
+        if isinstance(c, tuple):
+            h, bs = c
+            if bs == []:
+                g.add_edge(True, h, clause=i)
+
+            else:
+                for b in bs:
+                    g.add_edge(b, h, clause=i)
+            if ics is not None:
+                for ic in ics:
+                    g.add_edge(ic, 'false', clause=i)
+        else:
+            g.add_edge(True, c, clause=i)
+
+    return g
+
+
+def draw(G, edge_label='clause'):
+    """
+    draws (directed) graph using node names as node labels
+    and give edge_label for labeling edges
+    """
+    # pos = nx.spring_layout(G)
+    pos = nx.nx_agraph.graphviz_layout(G)
+
+    plt.figure()
+    nx.draw(
+        G, pos, edge_color='black', width=1, linewidths=2,
+        node_size=500, node_color='grey', alpha=0.9,
+        labels={node: node for node in G.nodes()},
+        arrows=True,
+    )
+    edge_labels = [((x, y), G[x][y][edge_label]) for (x, y) in G.edges()]
+    nx.draw_networkx_edge_labels(
+        G, pos,
+        font_color='black',
+        edge_labels=dict(edge_labels)
+    )
+    plt.axis('off')
+    plt.show()
+
+
+
+
+if __name__=="__main__":
+    vizrun()
