@@ -20,7 +20,7 @@ d = prompter_dict()
 with st.sidebar:
     recursor = st.radio('LLM Agent:', ['Recursor', 'Advisor', 'Rater'])  # , 'Truth_rater'])
 
-    threshold = st.slider('Threshold:', 0, 100, 50)
+    threshold = st.slider('Threshold:', 0, 100, 50)/100
 
     lim = st.slider('Maximum depth', 1, 4, 1)
 

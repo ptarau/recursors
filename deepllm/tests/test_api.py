@@ -18,6 +18,14 @@ def test_api():
     for x in run_rater(
         prompter=sci_prompter,
         initiator='Low power circuit design',
+        threshold=0.95,
+        lim=1
+    ):
+        print(x)
+
+    for x in run_rater(
+        prompter=sci_prompter,
+        initiator='Low power circuit design',
         threshold=0.50,
         lim=1
     ):
