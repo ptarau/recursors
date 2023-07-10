@@ -1,5 +1,5 @@
 goal_prompter = dict(
-    name='planner',
+    name='task_planner',
     and_p="""The plan so far is: "$context".
      In this context my goal is "$g." 
      Advise me how to achieve "$g", step by step, while ensuring each step is consistent with each other.

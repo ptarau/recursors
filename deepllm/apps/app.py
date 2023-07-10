@@ -8,7 +8,8 @@ print('Running DeepLLM as a streamlit app!')
 
 st.set_page_config(layout="wide")
 
-st.title('Streamlit-based DeepLLM Client')
+st.title('Streamlit-based [DeepLLM](https://github.com/ptarau/recursors) Demo Client')
+#st.write("check out this [link](https://github.com/ptarau/recursors)")
 
 key = ensure_openai_api_key(
     st.sidebar.text_area("Unless it is in your environment, enter your OPENAI_API_KEY:", ""))
