@@ -137,12 +137,12 @@ class AndOrExplorer:
 
     def save_results(self):
         pro_name = f'{self.OUT}{self.name}_{self.pname}_{self.lim}'
-        mo_name=pro_name + "_model"
+        mo_name = pro_name + "_model"
 
         to_prolog(self.clauses, pro_name)
 
         if self.logic_model is None:
-            self.logic_model=[]
+            self.logic_model = []
             tprint('\nNO MODEL ENTAILING:', self.initiator)
         else:
             tprint('\nMODEL:', len(self.logic_model), 'facts', '\n')
@@ -213,6 +213,41 @@ def run_explorer(goal=None, prompter=None, lim=None):
 
 def quote(x):
     return "'" + x + "'"
+
+
+def show_clauses(clauses):
+    buf = []
+
+    def p(x):
+        buf.append(x)
+
+    for h, bss in clauses.items():
+        if bss == []:
+            p(f"'{h}'.\n")
+            break
+
+        for i, bs in enumerate(bss):
+            if i == 0:
+                end = ":-" if bs else "."
+                p(f"'{h}'{end}\n")
+
+            for j, b in enumerate(bs):
+                b = f"'{b}'"
+                if j + 1 == len(bs):
+                    print('!!!!',b)
+                    b = b + ("." if i + 1 == len(bss) else ";")
+                else:
+                    b = b + ","
+                p("    " + b + "\n")
+
+    return "".join(buf)
+
+
+def show_model(facts):
+    buf = []
+    for fact in facts:
+        buf.append(f"'{fact}'.")
+    return "\n".join(buf)
 
 
 def save_model(goal, facts, fname, suf='.pro'):

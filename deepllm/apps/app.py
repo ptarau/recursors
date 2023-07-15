@@ -9,21 +9,22 @@ print('Running DeepLLM as a streamlit app!')
 st.set_page_config(layout="wide")
 
 st.title('Streamlit-based [DeepLLM](https://github.com/ptarau/recursors) Demo Client')
-#st.write("check out this [link](https://github.com/ptarau/recursors)")
-
-key = ensure_openai_api_key(
-    st.sidebar.text_area("Unless it is in your environment, enter your OPENAI_API_KEY:", ""))
 
 d = prompter_dict()
-# st.write(d)
-
 
 with st.sidebar:
-    recursor = st.radio('LLM Agent:', ['Recursor', 'Advisor', 'Rater'])  # , 'Truth_rater'])
+    # recursor = st.radio('LLM Agent:', ['Recursor', 'Advisor', 'Rater'])  # , 'Truth_rater'])
 
-    threshold = st.slider('Threshold:', 0, 100, 50)/100
+    recursor = st.select_slider('LLM Agent', options=('Advisor', 'Recursor', 'Rater'), value='Recursor')
+
+    threshold = st.slider('Threshold:', 0, 100, 50) / 100
 
     lim = st.slider('Maximum depth', 1, 4, 1)
+
+    trace = 'on' == st.select_slider('Trace', options=('off', 'on'), value='off')
+
+    key = ensure_openai_api_key(
+        st.sidebar.text_area("Unless it is in your environment, enter your OPENAI_API_KEY:", ""))
 
     initiator = st.text_area('Topic to explore:', value='Origin of COVID-19')
 
@@ -44,11 +45,22 @@ def do_query():
         g = run_rater(
             initiator=initiator, prompter=prompter, lim=lim, threshold=threshold)
 
-    st.write('STARTING:')
-    for x in g:
-        # st.write('.')
-        st.write(*x)
-    st.write('DONE:')
+    st.write('STARTING!')
+    if trace:  st.write('TRACE')
+    for kind, data in g:
+        if kind == 'TRACE':
+            if trace: st.write(data)
+        else:
+            st.write(kind)
+            if kind == 'CLAUSES':
+                st.code(show_clauses(data), language='prolog')
+            elif kind == 'MODEL':
+                st.code(show_model(data))
+            else:
+                assert kind == 'COSTS'
+                st.write(data)
+
+    st.write('DONE!')
 
 
 if query_it:
