@@ -1,5 +1,3 @@
-import openai
-
 import streamlit as st
 
 from deepllm.api import *
@@ -10,7 +8,7 @@ st.set_page_config(layout="wide")
 
 st.title('Streamlit-based [DeepLLM](https://github.com/ptarau/recursors) Demo Client')
 
-d = prompter_dict()
+prompters = prompter_dict()
 
 with st.sidebar:
     # recursor = st.radio('LLM Agent:', ['Recursor', 'Advisor', 'Rater'])  # , 'Truth_rater'])
@@ -23,14 +21,14 @@ with st.sidebar:
 
     trace = 'on' == st.select_slider('Trace', options=('off', 'on'), value='off')
 
-    key = ensure_openai_api_key(
-        st.sidebar.text_area("Unless it is in your environment, enter your OPENAI_API_KEY:", ""))
+    ensure_openai_api_key(
+        st.sidebar.text_input("Unless it is in your environment, enter your OPENAI_API_KEY:", "",type="password"))
 
     initiator = st.text_area('Topic to explore:', value='Origin of COVID-19')
 
-    prompter_name = st.radio('Prompter:', list(d.keys()))
+    prompter_name = st.radio('Prompter:', list(prompters.keys()))
 
-    prompter = eval(d[prompter_name])
+    prompter = prompters[prompter_name]
 
     query_it = st.button('Activate LLM!')
 
@@ -49,6 +47,8 @@ def do_query():
     if trace:  st.write('TRACE')
     for kind, data in g:
         if kind == 'TRACE':
+            if trace: st.write(data)
+        elif kind=='PROMPTER':
             if trace: st.write(data)
         else:
             st.write(kind)

@@ -1,14 +1,37 @@
-goal_prompter = dict(
-    name='task_planner',
+task_planning_prompter = dict(
+    name='step_by_step_guidance_to_achieve_a_goal',
     and_p="""The plan so far is: "$context".
      In this context my goal is "$g." 
-     Advise me how to achieve "$g", step by step, while ensuring each step is consistent with each other.
+     Advise me how to achieve "$g", step by step, while ensuring steps are consistent with each other.
      Itemize your answer, one sentence per line.""",
     or_p="""The plan so far is: "$context".
     In this context my goal is "$g." 
     Suggest 2-3 mutually exclusive alternative ways to achieve "$g".
     Avoid starting your sentence with the word "Alternative"."""
+)
 
+support_prompter = dict(
+    name='supporting_arguments_for_a_thesis',
+    and_p="""The context discussed so far is: "$context".
+     The thesis I strongly believe in and I want to argue for is "$g." 
+     Enumerate a few reasons for "$g", while ensuring that the reasons are consistent with each other.
+     Itemize your answer, one sentence per line.""",
+    or_p="""The context discussed so far is: "$context".
+    The thesis I strongly believe in is "$g." 
+    Suggest a few alternative, mutually exclusive reasons that support "$g".
+    Itemize your answer, one sentence per line ."""
+)
+
+balanced_prompter = dict(
+    name='cons_and_pros_for_a_thesis',
+    and_p="""The context discussed so far is: "$context".
+     The thesis I strongly disagree with and I want to argue against it is "$g." 
+     Enumerate a few reasons that together argue against "$g", while ensuring they are consistent with each other.
+     Itemize your answer, one sentence per line.""",
+    or_p="""The context discussed so far is: "$context".
+    The thesis I strongly disagree with and I want to argue against it is "$g." 
+    Suggest a few alternative, mutually exclusive sentences that each provide strong arguments against "$g".
+    Itemize your answer, one sentence per line ."""
 )
 
 causal_prompter = dict(
@@ -45,7 +68,7 @@ conseq_prompter = dict(
 )
 
 sci_prompter = dict(
-    name='scientific_concept',
+    name='scientific_concept_explorer',
     and_p="""The task we are exploring is: "$context"
         Generate 3-5 noun phrases of 2-4 words each that occur as keyphrases only
         in scientific papers bout "$g".
@@ -75,7 +98,7 @@ recommendation_prompter_strict = dict(
 )
 
 recommendation_prompter = dict(
-    name='recommender',
+    name='recommender_system',
     and_p="""The recommandations so far are: "$context".
      In this context I really liked "$g." 
      Suggest me 2-3 related ones that go well together.
@@ -99,7 +122,7 @@ advisor_oracle = dict(
     """
 )
 
-relevance_prompter = dict(
+relevance_oracle = dict(
     name='relevance_oracle',
     decider_p="""
     You play the role of an oracle that decides if "$g" is semantically close and strongly relevant for "$context".
@@ -108,7 +131,7 @@ relevance_prompter = dict(
     """
 )
 
-ratings_prompter = dict(
+rater_oracle = dict(
     name='rater_oracle',
     rater_p="""
     On a scale from 0 to 100, rate how relevant and semantically close "$g" is to "$context".
@@ -127,17 +150,19 @@ sci_abstract_maker = dict(
     """
 )
 
-prompter_vars = []
-for p in dir():
-    if p.endswith('_prompter'):
-        prompter_vars.append(p)
-
+prompter_vars = [
+    causal_prompter,
+    conseq_prompter,
+    task_planning_prompter,
+    recommendation_prompter,
+    sci_prompter,
+    support_prompter,
+    balanced_prompter
+]
 
 def prompter_dict():
     d = dict()
-    for p in prompter_vars:
-        prompter = eval(p)
+    for prompter in prompter_vars:
         name = prompter['name']
-        if name.endswith('oracle') : continue
-        d[name] = p
+        d[name] = prompter
     return d

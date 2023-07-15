@@ -14,13 +14,13 @@ def run_all():
 
 
 def demo():
-    run_explorer(prompter=goal_prompter, goal='Repair a flat tire', lim=1)
+    run_explorer(prompter=task_planning_prompter, goal='Repair a flat tire', lim=1)
     run_explorer(prompter=sci_prompter, goal='Logic Programming', lim=1)
     run_explorer(prompter=sci_prompter, goal='Teaching computational thinking with Prolog', lim=2)
 
 
 def test_recursors():
-    assert run_explorer(prompter=goal_prompter, goal='Repair a flat tire', lim=1)
+    assert run_explorer(prompter=task_planning_prompter, goal='Repair a flat tire', lim=1)
 
 
 if __name__ == "__main__":

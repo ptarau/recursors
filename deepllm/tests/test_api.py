@@ -3,7 +3,7 @@ from deepllm.api import *
 
 def test_api():
     for x in run_recursor(
-        prompter=goal_prompter,
+        prompter=task_planning_prompter,
         initiator='Repair a flat tire',
         lim=1
     ):

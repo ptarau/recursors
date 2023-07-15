@@ -72,6 +72,7 @@ class AndOrExplorer:
         assert prompter is not None
         self.initiator = initiator
         self.name = initiator.lower().strip().replace(' ', '_')
+        self.prompter=prompter
         self.pname = prompter['name']
         self.lim = lim
         self.strict = strict
@@ -150,6 +151,7 @@ class AndOrExplorer:
         save_model(self.initiator, self.logic_model, mo_name)
 
     def run(self):
+        yield 'PROMPTER',self.prompter
         for r in self.solve():
             yield 'TRACE', r
         yield 'CLAUSES', dict(self.clauses)

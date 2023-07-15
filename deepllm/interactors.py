@@ -37,14 +37,13 @@ class Agent:
     """
 
     def __init__(self, name):
-        self.prompter()
         self.tracker()
         self.cacher()
         self.tuner()
         self.talker()
         self.name = name
-        self.CACHES=None
-        self.TRACE=None
+        self.CACHES = None
+        self.TRACE = None
         PARAMS()(self)
         # print('AGENT !!!!',self.__dict__)
 
@@ -177,14 +176,6 @@ class Agent:
         self.short_mem = dict()
         return self
 
-    def prompter(self):
-        """
-           prompt generators:
-           a prompt can be either the actual question
-           or the result of substituting in a template values from a dict
-        """
-        pass
-
     def set_pattern(self, pattern):
         """
         sets the prompter's pattern to be filled later
@@ -301,4 +292,4 @@ class Agent:
             return (self.prompt_toks * 0.03 + self.compl_toks * 0.06) / 1000
         if self.model == 'gpt-4-32k':
             return (self.prompt_toks * 0.06 + self.compl_toks * 0.12) / 1000
-        return 0.0 # case of local LLM
+        return 0.0  # case of local LLM

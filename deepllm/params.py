@@ -60,8 +60,8 @@ def PARAMS():
         d = LOCAL_PARAMS
 
     ld = dict((k, d[locations[0]] + v) for (k, v) in d.items() if k in locations[1:])
-    # by applying the Mdict of md and d (a callable) to an instance
-    # it overrides its attributes with the ones collected from d and ld
+    # by applying the Mdict of md and prompters (a callable) to an instance
+    # it overrides its attributes with the ones collected from prompters and ld
     attribute_overrider = Mdict(**{**d, **ld})
     return attribute_overrider
 

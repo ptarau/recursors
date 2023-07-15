@@ -38,10 +38,10 @@ class Advisor(AndOrExplorer):
 class Rater(AndOrExplorer):
     def __init__(self, threshold=None, **kwargs):
         super().__init__(**kwargs)
-        pname = ratings_prompter['name']
+        pname = rater_oracle['name']
         oname = f'{self.name}_{pname}'
         self.oracle = Agent(oname)
-        self.oracle.set_pattern(ratings_prompter['rater_p'])
+        self.oracle.set_pattern(rater_oracle['rater_p'])
         self.threshold = threshold
 
     def appraise(self, g, _trace):
