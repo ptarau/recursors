@@ -236,7 +236,7 @@ def show_clauses(clauses):
             for j, b in enumerate(bs):
                 b = f"'{b}'"
                 if j + 1 == len(bs):
-                    print('!!!!', b)
+                    #print('!!!!', b)
                     b = b + ("." if i + 1 == len(bss) else ";")
                 else:
                     b = b + ","
