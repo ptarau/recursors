@@ -70,9 +70,9 @@ class AndOrExplorer:
     def __init__(self, initiator=None, prompter=None, lim=1, strict=False):
         assert initiator is not None
         assert prompter is not None
-        self.initiator = initiator
-        self.name = initiator.lower().strip().replace(' ', '_')
-        self.prompter=prompter
+        self.initiator = " ".join(initiator.replace('.', ' ').strip().split())
+        self.name = self.initiator.lower().strip().replace(' ', '_')
+        self.prompter = prompter
         self.pname = prompter['name']
         self.lim = lim
         self.strict = strict
@@ -151,7 +151,7 @@ class AndOrExplorer:
         save_model(self.initiator, self.logic_model, mo_name)
 
     def run(self):
-        yield 'PROMPTER',self.prompter
+        yield 'PROMPTER', self.prompter
         for r in self.solve():
             yield 'TRACE', r
         yield 'CLAUSES', dict(self.clauses)
@@ -236,7 +236,7 @@ def show_clauses(clauses):
             for j, b in enumerate(bs):
                 b = f"'{b}'"
                 if j + 1 == len(bs):
-                    print('!!!!',b)
+                    print('!!!!', b)
                     b = b + ("." if i + 1 == len(bss) else ";")
                 else:
                     b = b + ","

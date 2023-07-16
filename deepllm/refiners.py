@@ -127,7 +127,7 @@ class TruthRater(AndOrExplorer):
 class AbstractMaker:
     def __init__(self, topic=None, keywords=None):
         assert None not in (topic, keywords)
-        self.topic = topic
+        self.topic = " ".join(topic.strip().split())
         self.keywords = keywords
         prompter = sci_abstract_maker
         pname = prompter['name']
