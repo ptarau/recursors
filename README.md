@@ -18,6 +18,8 @@ topic-focussed exploration of scientific literature.
 
 #### *NEW:* with it, you are ready to try out at: https://deepllm.streamlit.app/
 
+#### NEW: an intro on how to use the app and the API is now on [Youtube](https://www.youtube.com/watch?v=41MgPX44szs&ab_channel=PaulTarau)
+
 To run the code locally, put the OpenAI key in your Linux or OS X shell environment with:
 
 ```
@@ -70,8 +72,8 @@ for result in run_rater(initiator='Artificial General Intelligence', prompter=sc
 * There are more extensive demos in
   folder  [deepllm/demos](https://github.com/ptarau/recursors/tree/main/deepllm/demos) .
 
-* There will be soon ```streamlit``` apps at https://github.com/ptarau/recursors/tree/main/deepllm/apps showing typical
-  use cases.
+* There is [a ```streamlit``` app]( https://github.com/ptarau/recursors/tree/main/deepllm/apps) showing typical
+  use cases, also deployed on the cloud at https://deepllm.streamlit.app/ .
 
 * If you install  [fastchat](https://github.com/lm-sys/FastChat), there are examples of using Vicuna models with it in
   folder [deepllm/local_llms](https://github.com/ptarau/recursors/tree/main/deepllm/local_llms).

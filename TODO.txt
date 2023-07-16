@@ -1,3 +1,2 @@
-save models
-add vote between knns in truth_rater
-make package
+spread news about how cool this software is :-)
+help develop an ecosystem of apps built around the API with their own more refined prompters and topics
