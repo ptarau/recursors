@@ -23,7 +23,7 @@ topic-focussed exploration of scientific literature.
 To run the code locally, put the OpenAI key in your Linux or OS X shell environment with:
 
 ```
-export OPENAI_KEY=<your_key>
+export OPENAI_API_KEY=<your_key>
 ```
 
 #### Downloading
