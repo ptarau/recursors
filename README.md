@@ -1,5 +1,7 @@
 # deepllm: Full Automation of Goal-driven LLM Dialog Threads with And-Or Recursors and Refiner Oracles
 
+![recursors](docs/DeepLLM.jpg)
+
 ### Overview
 
 We automate deep step-by step reasoning in an LLM dialog thread by recursively exploring alternatives (OR-nodes) and
