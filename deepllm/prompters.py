@@ -10,7 +10,7 @@ task_planning_prompter = dict(
     Avoid starting your sentence with the word "Alternative"."""
 )
 
-support_prompter = dict(
+thesis_support_prompter = dict(
     name='supporting_arguments_for_a_thesis',
     and_p="""The context discussed so far is: "$context".
      The thesis I strongly believe in and I want to argue for is "$g." 
@@ -22,7 +22,7 @@ support_prompter = dict(
     Itemize your answer, one sentence per line ."""
 )
 
-balanced_prompter = dict(
+cons_and_pros_prompter = dict(
     name='cons_and_pros_for_a_thesis',
     and_p="""The context discussed so far is: "$context".
      The thesis I strongly disagree with and I want to argue against it is "$g." 
@@ -151,13 +151,13 @@ sci_abstract_maker = dict(
 )
 
 prompter_vars = [
-    causal_prompter,
+    sci_prompter,
     conseq_prompter,
+    causal_prompter,
     task_planning_prompter,
     recommendation_prompter,
-    sci_prompter,
-    support_prompter,
-    balanced_prompter
+    thesis_support_prompter,
+    cons_and_pros_prompter
 ]
 
 def prompter_dict():

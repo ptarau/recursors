@@ -5,7 +5,7 @@ from string import Template
 from .params import *
 from .tools import *
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 
 # tools
@@ -37,6 +37,8 @@ class Agent:
     """
 
     def __init__(self, name):
+        ensure_openai_api_key(os.getenv("OPENAI_API_KEY"))
+
         self.tracker()
         self.cacher()
         self.tuner()

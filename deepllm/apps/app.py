@@ -10,6 +10,9 @@ st.title('Streamlit-based [DeepLLM](https://github.com/ptarau/recursors) Demo Cl
 
 prompters = prompter_dict()
 
+key=None
+#st.write('Key:',key)
+
 with st.sidebar:
     # recursor = st.radio('LLM Agent:', ['Recursor', 'Advisor', 'Rater'])  # , 'Truth_rater'])
 
@@ -21,10 +24,9 @@ with st.sidebar:
 
     trace = 'on' == st.select_slider('Trace', options=('off', 'on'), value='off')
 
-    ensure_openai_api_key(
-        st.sidebar.text_input("Unless it is in your environment, enter your OPENAI_API_KEY:", "",type="password"))
+    key = st.sidebar.text_input("Enter your OPENAI_API_KEY:", "", type="password")
 
-    initiator = st.text_area('Topic to explore:', value='Origin of COVID-19')
+    initiator = st.text_area('Topic to explore:', value='Superhuman artificial general intelligence')
 
     prompter_name = st.radio('Prompter:', list(prompters.keys()))
 
@@ -34,6 +36,10 @@ with st.sidebar:
 
 
 def do_query():
+    assert key
+    assert len(key)>40
+    set_openai_api_key(key)
+
     if recursor == 'Recursor':
         g = run_recursor(initiator=initiator, prompter=prompter, lim=lim)
     elif recursor == 'Advisor':
@@ -48,7 +54,7 @@ def do_query():
     for kind, data in g:
         if kind == 'TRACE':
             if trace: st.write(data)
-        elif kind=='PROMPTER':
+        elif kind == 'PROMPTER':
             if trace: st.write(data)
         else:
             st.write(kind)

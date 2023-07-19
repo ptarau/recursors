@@ -8,7 +8,7 @@ def test_interactors(fresh=1):
         DI.resume()
     else:
         DI.clear()
-    DI.pattern = "Explain to a teenager what $thing is in $count senences."
+    DI.pattern = "Explain to a teenager what $thing is in $count sentences."
     a = DI.ask(thing='molecule', count='2-3')
     print(a)
     print('$', DI.dollar_cost())

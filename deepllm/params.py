@@ -66,10 +66,15 @@ def PARAMS():
     return attribute_overrider
 
 
+def set_openai_api_key(key):
+    assert key
+    assert len(key)>40
+    openai.api_key = key
+
+
 def ensure_openai_api_key(key):
     if not openai.api_key:
-        openai.api_key = key
-    # assert openai.api_key
+        set_openai_api_key(key)
 
 
 def spacer(text):
