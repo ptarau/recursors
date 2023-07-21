@@ -10,8 +10,8 @@ st.title('Streamlit-based [DeepLLM](https://github.com/ptarau/recursors) Demo Cl
 
 prompters = prompter_dict()
 
-key=None
-#st.write('Key:',key)
+key = None
+# st.write('Key:',key)
 
 with st.sidebar:
     # recursor = st.radio('LLM Agent:', ['Recursor', 'Advisor', 'Rater'])  # , 'Truth_rater'])
@@ -23,6 +23,11 @@ with st.sidebar:
     lim = st.slider('Maximum depth', 1, 4, 1)
 
     trace = 'on' == st.select_slider('Trace', options=('off', 'on'), value='off')
+
+    smarter = 'Smarter: gpt-4' == st.select_slider(
+        'LLM model', options=('Cheaper: gpt-3.5-turbo', 'Smarter: gpt-4'),
+        value='Smarter: gpt-4'
+    )
 
     key = st.sidebar.text_input("Enter your OPENAI_API_KEY:", "", type="password")
 
@@ -37,8 +42,13 @@ with st.sidebar:
 
 def do_query():
     assert key
-    assert len(key)>40
+    assert len(key) > 40
     set_openai_api_key(key)
+
+    if smarter:
+        smarter_model()
+    else:
+        cheaper_model()
 
     if recursor == 'Recursor':
         g = run_recursor(initiator=initiator, prompter=prompter, lim=lim)

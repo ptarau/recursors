@@ -4,6 +4,16 @@ from .recursors import AndOrExplorer, show_clauses, show_model
 from .refiners import Advisor, Rater, TruthRater, AbstractMaker
 
 
+def smarter_model():
+    GPT_PARAMS['model'] = "gpt-4"
+    GPT_PARAMS['ROOT'] = "./STATE_SMARTER/"
+
+
+def cheaper_model():
+    GPT_PARAMS['model'] = "gpt-3.5-turbo"
+    GPT_PARAMS['ROOT'] = "./STATE/"
+
+
 def run_recursor(initiator=None, prompter=None, lim=None):
     assert None not in (prompter, initiator, lim)
     recursor = AndOrExplorer(initiator=initiator, prompter=prompter, lim=lim)
@@ -32,5 +42,3 @@ def run_abstract_maker(topic=None, keywords=None):
     assert None not in (topic, keywords)
     recursor = AbstractMaker(topic=topic, keywords=keywords)
     return recursor.run()
-
-

@@ -10,11 +10,13 @@ IS_LOCAL_LLM = [False]
 
 GPT_PARAMS = dict(
     TRACE=0,
-    ROOT="./STATE/",
+    #ROOT="./STATE/",
+    ROOT="./STATE_SMARTER/",
     CACHES="caches/",
     DATA="data/",
     OUT='out/',
-    model="gpt-3.5-turbo",
+    #model="gpt-3.5-turbo",
+    model="gpt-4",
     emebedding_model="text-embedding-ada-002",
     temperature=0.2,
     n=1,
