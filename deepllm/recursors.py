@@ -281,6 +281,7 @@ class SvoMaker:
         for fact in facts:
             svo = self.to_svo(fact)
             svos.append(svo)
+            self.agent.spill()
         self.persist()
         return svos
 
