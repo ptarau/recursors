@@ -72,7 +72,7 @@ class Agent:
         """
         pass
 
-    def cache(self):
+    def cache_name(self):
         return self.CACHES + self.name + ".json"
 
     def persist(self):
@@ -81,7 +81,7 @@ class Agent:
         """
         if self.name is None: return
 
-        if self.TRACE: print('PERSISTING:', self.cache())
+        if self.TRACE: print('PERSISTING:', self.cache_name())
 
         kvs = []
         d = self.__dict__
@@ -89,8 +89,8 @@ class Agent:
             if any(map(lambda t: isinstance(v, t), [int, float, str, list, tuple, dict])):
                 kvs.append((k, v))
 
-        ensure_path(self.cache())
-        to_json(kvs, self.cache())
+        ensure_path(self.cache_name())
+        to_json(kvs, self.cache_name())
 
     def resume(self):
         """
@@ -103,15 +103,15 @@ class Agent:
         """
         if self.name is None: return
 
-        if not exists_file(self.cache()): return
-        kvs = from_json(self.cache())
+        if not exists_file(self.cache_name()): return
+        kvs = from_json(self.cache_name())
         for k, v in kvs:
             setattr(self, k, v)
 
     def clear(self):
         if self.name is None: return
-        if exists_file(self.cache()):
-            remove_file(self.cache())
+        if exists_file(self.cache_name()):
+            remove_file(self.cache_name())
 
     def tracker(self):
         """
@@ -171,7 +171,7 @@ class Agent:
     def spill(self):
         """
         programmatically spills the content of its short term
-        memory ot its long-term memory - a way to forget current context
+        memory to its long-term memory - a way to forget current context
         """
         for k, v in self.short_mem.items():
             self.long_mem[k] = v
@@ -201,8 +201,8 @@ class Agent:
     def talker(self):
         """
            talking to the LLM:
-           assumes all other components already inherited
-           by the DefaultInteractor
+           assumes all other components
+           initialized
            """
         pass
 

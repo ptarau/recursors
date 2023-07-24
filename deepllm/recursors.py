@@ -1,9 +1,11 @@
 from collections import defaultdict
+import json
 
 from .params import *
 from .interactors import Agent, clean_up, to_list, from_text
 from .horn_prover import qprove
 from .tools import in_stack
+from .prompters import *
 
 
 def ask_for_clean(agent, g, context):
@@ -79,6 +81,7 @@ class AndOrExplorer:
         self.unf = Unfolder(self.name, prompter, lim)
         self.clauses = defaultdict(list)
         self.facts = dict()
+        self.svo=None
         self.OUT = None
         PARAMS()(self)
 
@@ -98,7 +101,9 @@ class AndOrExplorer:
             yield h, bs
 
     def costs(self):
-        return self.unf.costs()
+        cost_dict= self.unf.costs()
+        if self.TO_SVOS: cost_dict['svo']=self.svo.agent.dollar_cost()
+        return cost_dict
 
     # end overrides
 
@@ -135,6 +140,8 @@ class AndOrExplorer:
         self.logic_model = qprove(css, goal=self.initiator)
         self.trim_clauses()
         self.save_results()
+        if self.TO_SVOS:
+            self.svo=SvoMaker(self.name)
 
     def save_results(self):
         pro_name = f'{self.OUT}{self.name}_{self.pname}_{self.lim}'
@@ -156,6 +163,7 @@ class AndOrExplorer:
             yield 'TRACE', r
         yield 'CLAUSES', dict(self.clauses)
         yield 'MODEL', self.logic_model
+        if self.TO_SVOS: yield 'SVOS', self.svo.to_svos(self.logic_model)
         yield 'COSTS', self.costs()
 
     # -------- begin overrides -------------
@@ -174,10 +182,9 @@ class AndOrExplorer:
 
     def trim_clauses(self):
         """
-        to be overriden : only atoms in the model
-        will be kept - no action here as they all are
+        can be overriden : for now, only atoms in the model
+        will be kept
         """
-        pass
         clauses = defaultdict(list)
         if self.logic_model is not None:
             model = set(self.logic_model)
@@ -236,13 +243,59 @@ def show_clauses(clauses):
             for j, b in enumerate(bs):
                 b = f"'{b}'"
                 if j + 1 == len(bs):
-                    #print('!!!!', b)
+                    # print('!!!!', b)
                     b = b + ("." if i + 1 == len(bss) else ";")
                 else:
                     b = b + ","
                 p("    " + b + "\n")
 
     return "".join(buf)
+
+
+class SvoMaker:
+    def __init__(self,topic):
+        prompter = to_svo_prompter
+        pname = prompter['name']
+        tname = topic.replace(' ', '_').lower()
+        self.agent = Agent(f'{tname}_{pname}')
+        self.agent.set_pattern(prompter['svo_p'])
+        PARAMS()(self)
+
+    def to_svo(self, sentence):
+        # print('<<<',sentence)
+        sentence = " ".join(sentence.strip().split())
+        answer = self.agent.ask(sentence=sentence)
+        # print('!!!------------:', answer)
+        try:
+            answer = json.loads(answer)
+            answer = list(answer.values())
+            assert len(answer) == 3
+        except Exception:
+            answer = None
+        #print('>>>', answer)
+        return answer
+
+    def to_svos(self,facts):
+        svos = []
+        self.resume()
+        for fact in facts:
+            svo = self.to_svo(fact)
+            svos.append(svo)
+        self.persist()
+        return svos
+
+    def resume(self):
+        return self.agent.resume()
+
+    def persist(self):
+        return self.agent.persist()
+
+    def costs(self):
+        return {"svo":self.agent.dollar_cost()}
+
+
+def show_svos(svos):
+   return json.dumps(svos, indent=2)
 
 
 def show_model(facts):

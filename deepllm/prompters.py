@@ -150,6 +150,13 @@ sci_abstract_maker = dict(
     """
 )
 
+to_svo_prompter = dict(
+    name="sentence_to_svo_transformer",
+    svo_p="""Transform "$sentence"  to a <subject verb, object> form.  Make sure you shorten the subject and object components to concise noun phrases. Return your result as a json term.".
+    """
+)
+
+
 prompter_vars = [
     sci_prompter,
     conseq_prompter,

@@ -10,6 +10,7 @@ IS_LOCAL_LLM = [False]
 
 GPT_PARAMS = dict(
     TRACE=0,
+    TO_SVOS=True,
     #ROOT="./STATE/",
     ROOT="./STATE_SMARTER/",
     CACHES="caches/",
@@ -23,10 +24,12 @@ GPT_PARAMS = dict(
     max_toks=4000,
     TOP_K=3,
     # LOCAL_LLM=IS_LOCAL_LLM[0]
+
 )
 
 LOCAL_PARAMS = dict(
     TRACE=0,
+    TO_SVOS=True,
     ROOT="./STATE_LOCAL/",
     CACHES="caches/",
     OUT='out/',

@@ -1,6 +1,6 @@
 from .prompters import *
 from .params import *
-from .recursors import AndOrExplorer, show_clauses, show_model
+from .recursors import AndOrExplorer, show_clauses, show_model, show_svos
 from .refiners import Advisor, Rater, TruthRater, AbstractMaker
 
 
