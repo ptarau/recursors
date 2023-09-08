@@ -6,7 +6,7 @@ import time
 openai.api_key = "EMPTY"  # Not support yet
 openai.api_base = "http://u.local:8000/v1"
 
-model = "vicuna-7b-v1.3"
+model = "vicuna-7b-v1.5"
 
 
 def complete(prompt="Once upon a time"):

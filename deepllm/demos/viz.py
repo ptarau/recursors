@@ -2,16 +2,15 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from deepllm.api import *
 
-
 def vizrun(lim=1):
-    for result in run_rater(initiator='Artificial General Intelligence', prompter=sci_prompter, lim=lim, threshold=0.80):
+    for result in run_rater(initiator='Artificial General Intelligence', prompter=sci_prompter, lim=lim, threshold=0.30):
         kind,vals=result
         if kind == 'CLAUSES':
             clauses=vals
         elif kind == 'MODEL':
             model=vals
         else:
-            print(result)
+            jpp(result)
 
     css = [(h, xs) for (h, xss) in clauses.items() for xs in xss]
 

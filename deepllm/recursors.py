@@ -253,16 +253,20 @@ def show_clauses(clauses):
 
 
 class SvoMaker:
-    def __init__(self,topic):
+    def __init__(self,topic,min_words=6):
         prompter = to_svo_prompter
         pname = prompter['name']
         tname = topic.replace(' ', '_').lower()
         self.agent = Agent(f'{tname}_{pname}')
         self.agent.set_pattern(prompter['svo_p'])
+        self.min_words=min_words
         PARAMS()(self)
 
     def to_svo(self, sentence):
         # print('<<<',sentence)
+        sentence=sentence.strip()
+        if sentence.count(' ') < self.min_words:
+            return 'this', 'is about', [sentence]
         sentence = " ".join(sentence.strip().split())
         answer = self.agent.ask(sentence=sentence)
         # print('!!!------------:', answer)
@@ -280,6 +284,9 @@ class SvoMaker:
         self.resume()
         for fact in facts:
             svo = self.to_svo(fact)
+            if svo is None:
+                tprint('NO SVOs for:',fact)
+                continue
             svos.append(svo)
             self.agent.spill()
         self.persist()

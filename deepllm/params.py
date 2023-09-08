@@ -10,7 +10,7 @@ IS_LOCAL_LLM = [False]
 
 GPT_PARAMS = dict(
     TRACE=0,
-    TO_SVOS=False,
+    TO_SVOS=True,
     #ROOT="./STATE/",
     ROOT="./STATE_SMARTER/",
     CACHES="caches/",
@@ -34,8 +34,8 @@ LOCAL_PARAMS = dict(
     CACHES="caches/",
     OUT='out/',
     DATA='data/',
-    model="vicuna-7b-v1.3",
-    emebedding_model="vicuna-7b-v1.3",
+    model="vicuna-7b-v1.5",
+    emebedding_model="vicuna-7b-v1.5",
     temperature=0.2,
     n=1,
     max_toks=2000,
@@ -140,7 +140,7 @@ def from_pickle(fname):
         return pickle.load(inf)
 
 
-def jp(x):
+def jpp(x):
     print(json.dumps(x, indent=2))
 
 
