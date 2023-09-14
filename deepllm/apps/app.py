@@ -10,11 +10,15 @@ st.title('Streamlit-based [DeepLLM](https://github.com/ptarau/recursors) Demo Cl
 
 prompters = prompter_dict()
 
-key = None
-# st.write('Key:',key)
+key = os.getenv("OPENAI_API_KEY")
+if not key:
+    key = st.sidebar.text_input("Enter your OPENAI_API_KEY:", "", type="password")
 
 with st.sidebar:
-    # recursor = st.radio('LLM Agent:', ['Recursor', 'Advisor', 'Rater'])  # , 'Truth_rater'])
+    smarter = 'Smarter: gpt-4' == st.select_slider(
+        'LLM model', options=('Cheaper: gpt-3.5-turbo', 'Smarter: gpt-4'),
+        value='Smarter: gpt-4'
+    )
 
     recursor = st.select_slider('LLM Agent', options=('Advisor', 'Recursor', 'Rater'), value='Recursor')
 
@@ -22,14 +26,9 @@ with st.sidebar:
 
     lim = st.slider('Maximum depth', 1, 4, 1)
 
-    trace = 'on' == st.select_slider('Trace', options=('off', 'on'), value='off')
+    svos = st.toggle('Compute SVO relations?', value=False)
 
-    smarter = 'Smarter: gpt-4' == st.select_slider(
-        'LLM model', options=('Cheaper: gpt-3.5-turbo', 'Smarter: gpt-4'),
-        value='Smarter: gpt-4'
-    )
-
-    key = st.sidebar.text_input("Enter your OPENAI_API_KEY:", "", type="password")
+    trace = st.toggle('Show trace?', value=False)
 
     initiator = st.text_area('Topic to explore:', value='Superhuman artificial general intelligence')
 
@@ -41,7 +40,11 @@ with st.sidebar:
 
 
 def do_query():
+    if not key:
+        st.write('Please enter your OPENAI_API_KEY!')
+        return
     assert key
+    set_openai_api_key(key)
     assert len(key) > 40
     set_openai_api_key(key)
 
@@ -49,6 +52,11 @@ def do_query():
         smarter_model()
     else:
         cheaper_model()
+
+    if svos:
+        activate_svos()
+    else:
+        deactivate_svos()
 
     if recursor == 'Recursor':
         g = run_recursor(initiator=initiator, prompter=prompter, lim=lim)

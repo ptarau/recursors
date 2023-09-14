@@ -2,10 +2,8 @@ import time
 import openai
 import tiktoken
 from string import Template
-from .params import *
-from .tools import *
-
-
+from deepllm.params import *
+from deepllm.tools import *
 
 
 # tools
@@ -25,6 +23,7 @@ def dict_trim(d):
 # basic building blocks
 
 def clean_pattern(p):
+    if p is None: return p
     ps = p.split('\n')
     ps = [p.strip() for p in ps]
     return ' '.join(ps)  # +"\n\n"
@@ -218,6 +217,7 @@ class Agent:
             assert len(args) == 1, ('BAD args', args)
             quest0 = args[0]
             assert isinstance(quest0, str)
+
         else:
             quest0 = h
 
@@ -246,6 +246,9 @@ class Agent:
                 ct = r['usage']['completion_tokens']
 
                 break
+            except openai.error.APIConnectionError:
+                return "Unable to connect to LLM server!"
+
             except Exception as e:
                 if attempt >= max_attempts - 1:
                     print('\n\n ***GPT exception:', e)

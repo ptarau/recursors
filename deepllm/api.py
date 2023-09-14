@@ -1,7 +1,16 @@
-from .prompters import *
-from .params import *
-from .recursors import AndOrExplorer, show_clauses, show_model, show_svos
-from .refiners import Advisor, Rater, TruthRater, AbstractMaker
+from deepllm.prompters import *
+from deepllm.params import *
+from deepllm.recursors import AndOrExplorer, show_clauses, show_model, show_svos
+from deepllm.refiners import Advisor, Rater, TruthRater, AbstractMaker
+
+
+def activate_svos():
+    GPT_PARAMS['TO_SVOS']=True
+    LOCAL_PARAMS['TO_SVOS'] = True
+
+def deactivate_svos():
+    GPT_PARAMS['TO_SVOS']=False
+    LOCAL_PARAMS['TO_SVOS'] = False
 
 
 def smarter_model():

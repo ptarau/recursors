@@ -2,7 +2,7 @@ import os
 import pickle
 import json
 import openai
-from .configurator import *
+from deepllm.configurator import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -10,7 +10,7 @@ IS_LOCAL_LLM = [False]
 
 GPT_PARAMS = dict(
     TRACE=0,
-    TO_SVOS=True,
+    TO_SVOS=False,
     #ROOT="./STATE/",
     ROOT="./STATE_SMARTER/",
     CACHES="caches/",
@@ -29,7 +29,7 @@ GPT_PARAMS = dict(
 
 LOCAL_PARAMS = dict(
     TRACE=0,
-    TO_SVOS=True,
+    TO_SVOS=False,
     ROOT="./STATE_LOCAL/",
     CACHES="caches/",
     OUT='out/',

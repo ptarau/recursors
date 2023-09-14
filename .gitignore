@@ -161,3 +161,4 @@ cython_debug/
 STATE/
 STATE_LOCAL/
 STATE_SMARTER/
+scratch/

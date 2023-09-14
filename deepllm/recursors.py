@@ -1,11 +1,11 @@
 from collections import defaultdict
 import json
 
-from .params import *
-from .interactors import Agent, clean_up, to_list, from_text
-from .horn_prover import qprove
-from .tools import in_stack
-from .prompters import *
+from deepllm.params import *
+from deepllm.interactors import Agent, clean_up, to_list, from_text
+from deepllm.horn_prover import qprove
+from deepllm.tools import in_stack
+from deepllm.prompters import *
 
 
 def ask_for_clean(agent, g, context):

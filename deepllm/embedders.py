@@ -1,7 +1,7 @@
 from scipy.spatial.distance import cdist
 import numpy as np
 import openai
-from .params import to_pickle, from_pickle, PARAMS
+from deepllm.params import to_pickle, from_pickle, PARAMS
 
 
 class Embedder:

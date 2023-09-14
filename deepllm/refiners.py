@@ -1,6 +1,6 @@
-from .embedders import Embedder
-from .prompters import *
-from .recursors import *
+from deepllm.embedders import Embedder
+from deepllm.prompters import *
+from deepllm.recursors import *
 
 
 class Advisor(AndOrExplorer):
