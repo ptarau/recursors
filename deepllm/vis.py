@@ -27,7 +27,8 @@ def visualize_rels(svos, fname='rel_graph', show=True):
     hfile = fname + '.html'
     net.show(hfile, notebook=False)
     url = "file://" + os.path.abspath(hfile)
-    browse(url)
+    if show: browse(url)
+    return url
 
 
 def browse(url):

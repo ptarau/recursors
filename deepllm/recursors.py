@@ -311,7 +311,7 @@ def show_svos(svos):
 
 
 def vis_svos(svos,fname='rel_graph',show=True):
-    visualize_rels(svos, fname=fname,show=show)
+    return visualize_rels(svos, fname=fname,show=show)
 
 
 def show_model(facts):

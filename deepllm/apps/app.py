@@ -82,7 +82,9 @@ def do_query():
                 st.code(show_model(data))
             elif kind == 'SVOS':
                 st.code(show_svos(data))
-                vis_svos(data)
+                fname='rel_graph'
+                url=vis_svos(data,fname=fname,show=True)
+                #st.write(f'View relation graph at:',url)
             else:
                 assert kind == 'COSTS'
                 st.write(data)
