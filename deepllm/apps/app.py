@@ -82,6 +82,7 @@ def do_query():
                 st.code(show_model(data))
             elif kind == 'SVOS':
                 st.code(show_svos(data))
+                vis_svos(data)
             else:
                 assert kind == 'COSTS'
                 st.write(data)

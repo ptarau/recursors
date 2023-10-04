@@ -6,6 +6,7 @@ from deepllm.interactors import Agent, clean_up, to_list, from_text
 from deepllm.horn_prover import qprove
 from deepllm.tools import in_stack
 from deepllm.prompters import *
+from deepllm.vis import visualize_rels
 
 
 def ask_for_clean(agent, g, context):
@@ -289,7 +290,7 @@ class SvoMaker:
                 print('NO SVOs for:',fact)
                 continue
             svos.append(svo)
-            print("SVO:",svo)
+            #print("SVO:",svo)
             self.agent.spill()
         self.persist()
         return svos
@@ -306,6 +307,10 @@ class SvoMaker:
 
 def show_svos(svos):
    return json.dumps(svos, indent=2)
+
+
+def vis_svos(svos,fname='rel_graph',show=True):
+    visualize_rels(svos, fname=fname,show=show)
 
 
 def show_model(facts):
