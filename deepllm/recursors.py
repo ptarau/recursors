@@ -274,11 +274,12 @@ class SvoMaker:
         try:
             answer = json.loads(answer)
             answer = [x.lower() for x in answer.values()]
-            #assert len(answer) == 3
         except Exception as ex:
             #print(ex)
             answer = None
         #print('>>>', answer)
+        if answer and len(answer)!=3:
+            answer=['this','is about',sentence.lower()]
         return answer
 
     def to_svos(self,facts):
@@ -290,7 +291,7 @@ class SvoMaker:
                 print('NO SVOs for:',fact)
                 continue
             svos.append(svo)
-            #print("SVO:",svo)
+            print("SVO:",svo)
             self.agent.spill()
         self.persist()
         return svos
