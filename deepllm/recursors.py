@@ -253,7 +253,7 @@ def show_clauses(clauses):
 
 
 class SvoMaker:
-    def __init__(self,topic,min_words=6):
+    def __init__(self,topic,min_words=2):
         prompter = to_svo_prompter
         pname = prompter['name']
         tname = topic.replace(' ', '_').lower()
@@ -266,15 +266,16 @@ class SvoMaker:
         # print('<<<',sentence)
         sentence=sentence.strip()
         if sentence.count(' ') < self.min_words:
-            return 'this', 'is about', [sentence]
+            return ['this', 'is about', sentence.lower()]
         sentence = " ".join(sentence.strip().split())
-        answer = self.agent.ask(sentence=sentence)
-        # print('!!!------------:', answer)
+        answer = self.agent.ask(sentence=sentence.lower())
+        #print('!!!------------:', answer)
         try:
             answer = json.loads(answer)
-            answer = list(answer.values())
-            assert len(answer) == 3
-        except Exception:
+            answer = [x.lower() for x in answer.values()]
+            #assert len(answer) == 3
+        except Exception as ex:
+            #print(ex)
             answer = None
         #print('>>>', answer)
         return answer
@@ -285,9 +286,10 @@ class SvoMaker:
         for fact in facts:
             svo = self.to_svo(fact)
             if svo is None:
-                tprint('NO SVOs for:',fact)
+                print('NO SVOs for:',fact)
                 continue
             svos.append(svo)
+            print("SVO:",svo)
             self.agent.spill()
         self.persist()
         return svos
@@ -351,3 +353,16 @@ def to_context(trace, topgoal):
     context = ".\n".join(reversed(to_list(trace))) + ".\n"
     # print('!!!! CONTEXT:',context, '!!!!\n')
     return context
+
+def test_svo(sent="The black cat sits on the shiny white mat"):
+    m=SvoMaker(topic='test')
+    print(sent)
+    print(m.to_svo(sent))
+    print()
+
+
+if __name__=="__main__":
+    test_svo()
+    test_svo('The  elephant in the room')
+    test_svo("Jason's dog")
+    test_svo('The  unexpected end of the blue water world')

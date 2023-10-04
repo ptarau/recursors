@@ -26,7 +26,7 @@ with st.sidebar:
 
     lim = st.slider('Maximum depth', 1, 4, 1)
 
-    svos = st.toggle('Compute SVO relations?', value=False)
+    svos = st.toggle('Extract relations?', value=False)
 
     trace = st.toggle('Show trace?', value=False)
 
