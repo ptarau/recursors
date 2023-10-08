@@ -278,7 +278,7 @@ class SvoMaker:
             # print(ex)
             answer = None
         # print('>>>', answer)
-        if answer and len(answer) != 3:
+        if not answer or (answer and len(answer) != 3):
             answer = ['this', 'is about', sentence.lower()]
         s,v,o=answer
         if not s or not v or not o:
