@@ -2,20 +2,21 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from deepllm.api import *
 
+
 def vizrun(lim=1):
-    for result in run_rater(initiator='Artificial General Intelligence', prompter=sci_prompter, lim=lim, threshold=0.30):
-        kind,vals=result
+    for result in run_rater(initiator='Artificial General Intelligence', prompter=sci_prompter, lim=lim,
+                            threshold=0.30):
+        kind, vals = result
         if kind == 'CLAUSES':
-            clauses=vals
+            clauses = vals
         elif kind == 'MODEL':
-            model=vals
+            model = vals
         else:
             jpp(result)
 
     css = [(h, xs) for (h, xss) in clauses.items() for xs in xss]
 
-
-    if lim>1:
+    if lim > 1:
         model = dict(zip(model, range(len(model))))
         nss = [(model[h], [model[b] for b in bs]) for (h, bs) in css]
         g = to_horn_graph(nss)
@@ -23,9 +24,6 @@ def vizrun(lim=1):
         g = to_horn_graph(css)
     print(g)
     draw(g)
-
-
-
 
 
 def to_horn_graph(css, ics=None):
@@ -73,7 +71,5 @@ def draw(G, edge_label='clause'):
     plt.show()
 
 
-
-
-if __name__=="__main__":
+if __name__ == "__main__":
     vizrun()

@@ -6,7 +6,7 @@ from deepllm.interactors import Agent, clean_up, to_list, from_text
 from deepllm.horn_prover import qprove
 from deepllm.tools import in_stack
 from deepllm.prompters import *
-from deepllm.vis import visualize_rels
+from deepllm.vis import visualize_rels,browse
 
 
 def ask_for_clean(agent, g, context):
@@ -82,7 +82,7 @@ class AndOrExplorer:
         self.unf = Unfolder(self.name, prompter, lim)
         self.clauses = defaultdict(list)
         self.facts = dict()
-        self.svo=None
+        self.svo = None
         self.OUT = None
         PARAMS()(self)
 
@@ -102,8 +102,8 @@ class AndOrExplorer:
             yield h, bs
 
     def costs(self):
-        cost_dict= self.unf.costs()
-        if self.TO_SVOS: cost_dict['svo']=self.svo.agent.dollar_cost()
+        cost_dict = self.unf.costs()
+        if self.TO_SVOS: cost_dict['svo'] = self.svo.agent.dollar_cost()
         return cost_dict
 
     # end overrides
@@ -142,7 +142,7 @@ class AndOrExplorer:
         self.trim_clauses()
         self.save_results()
         if self.TO_SVOS:
-            self.svo=SvoMaker(self.name)
+            self.svo = SvoMaker(self.name)
 
     def save_results(self):
         pro_name = f'{self.OUT}{self.name}_{self.pname}_{self.lim}'
@@ -164,7 +164,7 @@ class AndOrExplorer:
             yield 'TRACE', r
         yield 'CLAUSES', dict(self.clauses)
         yield 'MODEL', self.logic_model
-        if self.TO_SVOS: yield 'SVOS', self.svo.to_svos(self.logic_model)
+        if self.TO_SVOS: yield 'SVOS', self.svo.to_svos(self.logic_model, self.clauses)
         yield 'COSTS', self.costs()
 
     # -------- begin overrides -------------
@@ -254,46 +254,62 @@ def show_clauses(clauses):
 
 
 class SvoMaker:
-    def __init__(self,topic,min_words=2):
+    def __init__(self, topic, min_words=2):
         prompter = to_svo_prompter
         pname = prompter['name']
         tname = topic.replace(' ', '_').lower()
         self.agent = Agent(f'{tname}_{pname}')
         self.agent.set_pattern(prompter['svo_p'])
-        self.min_words=min_words
+        self.min_words = min_words
         PARAMS()(self)
 
     def to_svo(self, sentence):
         # print('<<<',sentence)
-        sentence=sentence.strip()
+        sentence = sentence.strip()
         if sentence.count(' ') < self.min_words:
             return ['this', 'is about', sentence.lower()]
         sentence = " ".join(sentence.strip().split())
         answer = self.agent.ask(sentence=sentence.lower())
-        #print('!!!------------:', answer)
+        # print('!!!------------:', answer)
         try:
             answer = json.loads(answer)
             answer = [x.lower() for x in answer.values()]
         except Exception as ex:
-            #print(ex)
+            # print(ex)
             answer = None
-        #print('>>>', answer)
-        if answer and len(answer)!=3:
-            answer=['this','is about',sentence.lower()]
+        # print('>>>', answer)
+        if answer and len(answer) != 3:
+            answer = ['this', 'is about', sentence.lower()]
+        s,v,o=answer
+        if not s or not v or not o:
+            answer=['this', 'is about', sentence.lower()]
         return answer
 
-    def to_svos(self,facts):
+    def to_svos(self, facts, clauses):
+
+        #jpp(clauses)
         svos = []
         self.resume()
         for fact in facts:
             svo = self.to_svo(fact)
-            if svo is None:
-                print('NO SVOs for:',fact)
+            if svo is None and fact:
+                svos.append(('this', 'is mentioned', fact))
                 continue
             svos.append(svo)
-            print("SVO:",svo)
+            #print("SVO:", svo)
             self.agent.spill()
+            s, v, o = svo
+            svos.append((fact, 'is about', s))
+            # svos.append((fact, 'has predicate', v))
+            svos.append((fact, 'discusses', o))
+            body = clauses[fact]
+            for ors in body:
+                assert isinstance(ors, list), ors
+                for and_ in ors:
+                    svos.append((fact, 'depends on', and_))
+
         self.persist()
+        #jpp(svos)
         return svos
 
     def resume(self):
@@ -303,15 +319,15 @@ class SvoMaker:
         return self.agent.persist()
 
     def costs(self):
-        return {"svo":self.agent.dollar_cost()}
+        return {"svo": self.agent.dollar_cost()}
 
 
 def show_svos(svos):
-   return json.dumps(svos, indent=2)
+    return json.dumps(svos, indent=2)
 
 
-def vis_svos(svos,fname='rel_graph',show=True):
-    return visualize_rels(svos, fname=fname,show=show)
+def vis_svos(svos, fname='rel_graph', show=True):
+    return visualize_rels(svos, fname=fname, show=show)
 
 
 def show_model(facts):
@@ -360,14 +376,15 @@ def to_context(trace, topgoal):
     # print('!!!! CONTEXT:',context, '!!!!\n')
     return context
 
+
 def test_svo(sent="The black cat sits on the shiny white mat"):
-    m=SvoMaker(topic='test')
+    m = SvoMaker(topic='test')
     print(sent)
     print(m.to_svo(sent))
     print()
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     test_svo()
     test_svo('The  elephant in the room')
     test_svo("Jason's dog")

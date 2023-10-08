@@ -30,13 +30,27 @@ with st.sidebar:
 
     trace = st.toggle('Show trace?', value=False)
 
-    initiator = st.text_area('Topic to explore:', value='Superhuman artificial general intelligence')
+    initiator = st.text_area('Topic to explore:', value='artificial general intelligence')
 
     prompter_name = st.radio('Prompter:', list(prompters.keys()))
 
     prompter = prompters[prompter_name]
 
     query_it = st.button('Activate LLM!')
+
+    show_it = st.button('Visualize relation graph!')
+
+    browse_it = st.button('Browse relation graph in new tab!')
+
+
+def visualize(data, new_tab=False):
+    fname = 'rel_graph'
+    url, hfile = vis_svos(data, fname=fname, show=False)
+    if new_tab:
+        browse(url)
+    else:
+        html_code = open(hfile, 'r', encoding='utf-8').read()
+        st.components.v1.html(html_code, height=960, width=960, scrolling=True)
 
 
 def do_query():
@@ -82,15 +96,19 @@ def do_query():
                 st.code(show_model(data))
             elif kind == 'SVOS':
                 st.code(show_svos(data))
-                fname='rel_graph'
-                url=vis_svos(data,fname=fname,show=True)
-                #st.write(f'View relation graph at:',url)
+                return data
             else:
                 assert kind == 'COSTS'
                 st.write(data)
 
-    st.write('DONE!')
-
+if 'svo_data' not in st.session_state:
+    st.session_state.svo_data=None
 
 if query_it:
-    do_query()
+    st.session_state.svo_data = do_query()
+
+if st.session_state.svo_data is not None and (show_it or browse_it):
+    new_tab = False
+    if browse_it:
+        new_tab = True
+    visualize(st.session_state.svo_data, new_tab=new_tab)
