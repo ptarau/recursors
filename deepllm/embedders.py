@@ -1,4 +1,5 @@
 from scipy.spatial.distance import cdist
+from sklearn.cluster import KMeans
 import numpy as np
 import openai
 from deepllm.params import to_pickle, from_pickle, PARAMS
@@ -50,9 +51,40 @@ class Embedder:
         ids = list(np.argpartition(dm, -top_k)[-top_k:])
         rids = [(i, dm[i]) for i in ids]
         rids.sort(reverse=True, key=lambda x: x[1])
-        print('!!!', rids)
+        # print('!!!', rids)
         answers = [(sents[i], dm[i]) for (i, _) in rids]
         return answers
+
+    def cluster(self, k=None):
+        # Initialize and fit the KMeans model
+        sents, embeddings = from_pickle(self.cache())
+        if k is None: k=int(len(sents)**0.55)
+        embeddings = np.array(embeddings)
+        sents=np.array(sents)
+        kmeans = KMeans(n_clusters=k, random_state=0, init='k-means++', n_init="auto")
+        kmeans.fit(embeddings)
+
+        # Get the cluster labels for each data point
+        labels = kmeans.labels_
+
+        # Get the coordinates of the cluster centers
+        cluster_centers = kmeans.cluster_centers_
+
+        representative_sentences = []
+        for i in range(k):
+            cluster_indices = np.where(labels == i)[0]
+            # Indices of sentences in the current cluster
+            cluster_embeddings = embeddings[cluster_indices]
+
+            # Sentence embeddings for the current cluster
+            centroid = cluster_embeddings.mean(axis=0)
+            # Calculate the centroid of the cluster
+            closest_sentence_index = np.argmin(np.linalg.norm(cluster_embeddings - centroid, axis=1))
+            representative_sentence = sents[cluster_indices[closest_sentence_index]]
+            cluster_sents = [s for s in sents[cluster_indices] if s != representative_sentence]
+            representative_sentences.append((representative_sentence,cluster_sents))
+
+        return representative_sentences
 
     def __call__(self, quest, top_k):
         return self.query(quest, top_k)

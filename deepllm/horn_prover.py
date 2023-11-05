@@ -137,6 +137,24 @@ def test_horn_prover(n=7):
     print(f'yes={yes}, no={no} density={yes / (yes + no)}, time={round((t2 - t1), 2)}s')
     if n==7: assert yes==1234073 and no==4149830
 
+def loop_test():
+    tree=(0,[(0,[1,2]),1,2])
+    g, css = tree
+    r = qprove(css, goal=g)
+    print('TREE RES:', r)
+
+    loop=(0,[(0,[1,0,2]),1,2,(3,[4,5]),4,5])
+    g,css=loop
+    r=qprove(css,goal=g)
+    print('LOOP RES from 0:',r)
+
+    loop = (3, [(0, [1, 0, 2]), 1, 2, (3, [4, 5]), 4, 5])
+    g, css = loop
+    r = qprove(css, goal=g)
+    print('LOOP RES from 3:', r)
+
 
 if __name__ == "__main__":
+    pass
+    loop_test()
     test_horn_prover()

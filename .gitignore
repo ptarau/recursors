@@ -163,3 +163,4 @@ STATE_LOCAL/
 STATE_SMARTER/
 scratch/
 deepllm/apps/*.html
+docprover/
