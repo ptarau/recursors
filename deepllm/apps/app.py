@@ -15,14 +15,15 @@ with st.sidebar:
     local = st.sidebar.checkbox('Local LLM?', value=False)
 
     if local:
-        IS_LOCAL_LLM[0] = True
+        local_model()
         LOCAL_PARAMS['API_BASE'] = st.sidebar.text_input('Local LLM server:', value=LOCAL_PARAMS['API_BASE'])
     else:
         key = os.getenv("OPENAI_API_KEY")
+        LOCAL_PARAMS['API_BASE']="https://api.openai.com/v1"
         if not key:
             key = st.text_input("Enter your OPENAI_API_KEY:", "", type="password")
             if not key:
-                # st.write('Please enter your OPENAI_API_KEY!')
+                st.write('Please enter your OPENAI_API_KEY!')
                 exit(0)
             else:
                 set_openai_api_key(key)
@@ -69,7 +70,6 @@ def visualize(data, new_tab=False):
 def do_query():
     if not local and not key:
         st.write('Please enter your OPENAI_API_KEY!')
-        return
         assert key
         set_openai_api_key(key)
         assert len(key) > 40

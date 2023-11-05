@@ -11,19 +11,20 @@ IS_LOCAL_LLM = [False]
 GPT_PARAMS = dict(
     TRACE=0,
     TO_SVOS=False,
-    #ROOT="./STATE/",
+    # ROOT="./STATE/",
     ROOT="./STATE_SMARTER/",
     CACHES="caches/",
     DATA="data/",
     OUT='out/',
-    #model="gpt-3.5-turbo",
+    # model="gpt-3.5-turbo",
     model="gpt-4",
     emebedding_model="text-embedding-ada-002",
     temperature=0.2,
     n=1,
     max_toks=4000,
     TOP_K=3,
-    # LOCAL_LLM=IS_LOCAL_LLM[0]
+    API_BASE="https://api.openai.com/v1",
+    LOCAL_LLM=IS_LOCAL_LLM[0]
 
 )
 
@@ -42,7 +43,7 @@ LOCAL_PARAMS = dict(
     TOP_K=3,
     API_BASE="http://u.local:8000/v1",  # replace with where the server is
     # API_BASE = "http://localhost:8000/v1" # if on the same machine
-    # LOCAL_LLM=IS_LOCAL_LLM[0]
+    LOCAL_LLM=IS_LOCAL_LLM[0]
 )
 
 
@@ -73,11 +74,12 @@ def PARAMS():
 
 def set_openai_api_key(key):
     assert key
-    assert len(key)>40
+    assert len(key) > 40
     openai.api_key = key
 
 
 def ensure_openai_api_key(key):
+    if IS_LOCAL_LLM[0]: return
     if not openai.api_key:
         set_openai_api_key(key)
 

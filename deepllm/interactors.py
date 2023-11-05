@@ -37,7 +37,6 @@ class Agent:
 
     def __init__(self, name):
         ensure_openai_api_key(os.getenv("OPENAI_API_KEY"))
-
         self.tracker()
         self.cacher()
         self.tuner()
@@ -79,6 +78,7 @@ class Agent:
         collects and persits all appropriate attributs
         """
         if self.name is None: return
+        if not self.short_mem and not self.long_mem : return
 
         if self.TRACE: print('PERSISTING:', self.cache_name())
 
@@ -108,9 +108,14 @@ class Agent:
             setattr(self, k, v)
 
     def clear(self):
+        self.forget()
         if self.name is None: return
         if exists_file(self.cache_name()):
             remove_file(self.cache_name())
+
+    def forget(self):
+        self.short_mem = dict()
+        self.long_mem = dict()
 
     def tracker(self):
         """
@@ -247,12 +252,12 @@ class Agent:
 
                 break
             except openai.error.APIConnectionError:
-                return "Unable to connect to LLM server!"
+                raise Exception("Unable to connect to LLM server!")
 
             except Exception as e:
                 if attempt >= max_attempts - 1:
-                    print('\n\n ***GPT exception:', e)
-                    raise e
+                    # print('\n\n ***GPT exception:', e)
+                    raise Exception('LLM exception')
                 else:
                     print('retrying: ', attempt)
                     time.sleep(0.5)
