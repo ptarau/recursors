@@ -3,7 +3,7 @@ import setuptools
 
 import deepllm
 
-with open('requirements.txt') as f:
+with open('deepllm/requirements.txt') as f:
     required = f.read().splitlines()
 with open("README.md", "r") as f:
     long_description = f.read()
@@ -19,8 +19,10 @@ setup(name='deepllm',
       author_email='paul.tarau@gmail.com',
       license='GPL-3',
       packages=setuptools.find_packages(),
+      #packages=['deepllm'],
       package_data={
           'deepllm': [
+              'requirements.txt',
               'tests/*.*',
               'apps/*.*',
               'demos/*.*',
