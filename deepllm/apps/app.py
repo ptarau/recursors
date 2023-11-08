@@ -10,29 +10,27 @@ st.title('Streamlit-based [DeepLLM](https://github.com/ptarau/recursors) Demo Cl
 
 prompters = prompter_dict()
 
-
 with st.sidebar:
     local = st.sidebar.checkbox('Local LLM?', value=False)
 
     if local:
-        local_model()
+
         LOCAL_PARAMS['API_BASE'] = st.sidebar.text_input('Local LLM server:', value=LOCAL_PARAMS['API_BASE'])
+        local_model()
     else:
+        choice = st.sidebar.radio('OpenAI LLM', ['GPT-4', 'GPT-3.5'])
+        if choice == 'GPT-4':
+            smarter_model()
+        else:
+            cheaper_model()
         key = os.getenv("OPENAI_API_KEY")
-        LOCAL_PARAMS['API_BASE']="https://api.openai.com/v1"
-        if not key:
+        if not key or key == 'EMPTY':
             key = st.text_input("Enter your OPENAI_API_KEY:", "", type="password")
             if not key:
                 st.write('Please enter your OPENAI_API_KEY!')
                 exit(0)
             else:
                 set_openai_api_key(key)
-
-        choice = st.sidebar.radio('OpenAI LLM', ['GPT-4', 'GPT-3.5'])
-        if choice == 'GPT-4':
-            smarter_model()
-        else:
-            cheaper_model()
 
     recursor = st.select_slider('LLM Agent', options=('Advisor', 'Recursor', 'Rater'), value='Recursor')
 
@@ -71,7 +69,6 @@ def do_query():
     if not local and not key:
         st.write('Please enter your OPENAI_API_KEY!')
         assert key
-        set_openai_api_key(key)
         assert len(key) > 40
         set_openai_api_key(key)
 
@@ -109,8 +106,9 @@ def do_query():
                 assert kind == 'COSTS'
                 st.write(data)
 
+
 if 'svo_data' not in st.session_state:
-    st.session_state.svo_data=None
+    st.session_state.svo_data = None
 
 if query_it:
     st.session_state.svo_data = do_query()

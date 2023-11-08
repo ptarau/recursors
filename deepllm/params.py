@@ -59,10 +59,10 @@ def PARAMS():
 
     if not LOCAL_LLM:
         d = GPT_PARAMS
+        #openai.api_base = GPT_PARAMS['API_BASE']
     else:
         import openai
-        openai.api_key = "EMPTY"
-        openai.api_base = LOCAL_PARAMS['API_BASE']
+        #openai.api_base = LOCAL_PARAMS['API_BASE']
         d = LOCAL_PARAMS
 
     ld = dict((k, d[locations[0]] + v) for (k, v) in d.items() if k in locations[1:])

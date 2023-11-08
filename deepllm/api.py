@@ -16,16 +16,22 @@ def deactivate_svos():
 def smarter_model():
     IS_LOCAL_LLM[0] = False
     GPT_PARAMS['model'] = "gpt-4"
+    openai.api_base = GPT_PARAMS['API_BASE']
     GPT_PARAMS['ROOT'] = "./STATE_SMARTER/"
+    PARAMS()
 
 
 def cheaper_model():
     IS_LOCAL_LLM[0] = False
     GPT_PARAMS['model'] = "gpt-3.5-turbo"
+    openai.api_base = GPT_PARAMS['API_BASE']
     GPT_PARAMS['ROOT'] = "./STATE/"
+    PARAMS()
 
 def local_model():
     IS_LOCAL_LLM[0]=True
+    openai.api_base = LOCAL_PARAMS['API_BASE']
+    PARAMS()
 
 
 def run_recursor(initiator=None, prompter=None, lim=None):
