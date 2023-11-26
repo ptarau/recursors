@@ -44,6 +44,7 @@ class Agent:
         self.name = name
         self.CACHES = None
         self.TRACE = None
+        self.initiator = None
         PARAMS()(self)
         # print('AGENT !!!!',self.__dict__)
 
@@ -78,7 +79,7 @@ class Agent:
         collects and persits all appropriate attributs
         """
         if self.name is None: return
-        if not self.short_mem and not self.long_mem : return
+        if not self.short_mem and not self.long_mem: return
 
         if self.TRACE: print('PERSISTING:', self.cache_name())
 
@@ -110,6 +111,7 @@ class Agent:
     def clear(self):
         self.forget()
         if self.name is None: return
+        # print('DELETING:',(self.cache_name())
         if exists_file(self.cache_name()):
             remove_file(self.cache_name())
 
@@ -172,6 +174,11 @@ class Agent:
             k, v = dict_trim(self.short_mem)
             self.long_mem[k] = v
 
+    def trim_at(self, lim):
+        if len(self.short_mem) > lim:
+            k, v = dict_trim(self.short_mem)
+            self.long_mem[k] = v
+
     def spill(self):
         """
         programmatically spills the content of its short term
@@ -210,6 +217,13 @@ class Agent:
            """
         pass
 
+    def set_initiator(self, initiator):
+        """
+        remember initial goal/query/task
+        """
+        if self.initiator is None:
+            self.initiator = initiator
+
     def ask(self, *args, **kwargs):
         """
         asks the LLM via the API and returns a
@@ -217,11 +231,13 @@ class Agent:
         while memoizing the prompt-answer pair and
         computing the token costs
         """
+
         h = tuple(kwargs.items())
         if not h:
             assert len(args) == 1, ('BAD args', args)
             quest0 = args[0]
             assert isinstance(quest0, str)
+
 
         else:
             quest0 = h
@@ -295,11 +311,13 @@ class Agent:
         to be extended as new models appear
         """
         if self.model == 'gpt-3.5-turbo':
-            return (self.prompt_toks * 0.0015 + self.compl_toks * 0.002) / 1000
-        if self.model == 'gpt-3.5-turbo-16k':
-            return (self.prompt_toks * 0.003 + self.compl_toks * 0.004) / 1000
+            return (self.prompt_toks * 0.0010 + self.compl_toks * 0.0020) / 1000
+        if self.model == 'gpt-3.5-turbo-instruct':
+            return (self.prompt_toks * 0.0015 + self.compl_toks * 0.0020) / 1000
         if self.model == 'gpt-4':
             return (self.prompt_toks * 0.03 + self.compl_toks * 0.06) / 1000
         if self.model == 'gpt-4-32k':
             return (self.prompt_toks * 0.06 + self.compl_toks * 0.12) / 1000
+        if self.model == 'gpt-4-1106-preview':
+            return (self.prompt_toks * 0.01 + self.compl_toks * 0.03) / 1000
         return 0.0  # case of local LLM
