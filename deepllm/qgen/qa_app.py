@@ -3,11 +3,11 @@ import streamlit as st
 from deepllm.api import *
 from deepllm.interactors import Agent
 
-from qa_maker import make_agent, one_quest
+from deepllm.qgen.qa_maker import make_agent, one_quest
 
 st.set_page_config(layout="wide")
 
-st.sidebar.title(":blue[Permion Chat Agent]")
+st.sidebar.title(":blue[DeepLLM with Follow-up Question Generator]")
 
 local = st.sidebar.checkbox('Local LLM?', value=False)
 
