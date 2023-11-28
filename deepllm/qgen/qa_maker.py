@@ -1,5 +1,5 @@
 import time
-
+from collections import defaultdict
 from deepllm.interactors import Agent
 from deepllm.api import *
 
@@ -14,7 +14,7 @@ def clean_sent(sent):
 
 def clean_quest(x0, sent, context):
     x = x0.strip()
-    #print('!!! CLEANING:', x)
+    # print('!!! CLEANING:', x)
 
     assert x, ("Empty!!!!", (sent, context))
 
@@ -40,7 +40,7 @@ def to_quests(agent, question, context, k=3):
     answer = agent.ask(prompt)
 
     # print('PROMPT:',prompt)
-    #print('!!! RETURN:\n',answer)
+    # print('!!! RETURN:\n',answer)
     # print()
 
     return answer
@@ -53,9 +53,9 @@ def quest2quests(agent, quest, context, k=3):
     quests0 = quests_.replace('\n\n', '\n').split('\n')
     quests = [clean_quest(q, quest, context) for q in quests0]
     # print('LENS:', len(quests0), len(quests))
-    if len(quests)% 2 !=0:
-        quests=quests[0:-1] # fix LLM ignoring instruction
-    #assert len(quests) % 2 == 0, (len(quests0), len(quests), quest, quests0)
+    if len(quests) % 2 != 0:
+        quests = quests[0:-1]  # fix LLM ignoring instruction
+    # assert len(quests) % 2 == 0, (len(quests0), len(quests), quest, quests0)
 
     pairs = []
     for j, x in enumerate(quests):
@@ -113,9 +113,11 @@ def recursor(initiator, trim_size=3, max_k=2, max_d=5):
 
         def thread_end(a, q):
             if a in seen or q in seen:
-                return ()
-            elif d >= max_d:
-                return (quest, a),
+                return []
+            elif d > max_d:
+                seen.add(a)
+                seen.add(q)
+                return [[quest,a]]
             else:
                 seen.add(a)
                 seen.add(q)
@@ -123,20 +125,43 @@ def recursor(initiator, trim_size=3, max_k=2, max_d=5):
 
         pairs = quest2quests(agent, quest, initiator, k=max_k)
         agent.trim_at(trim_size)
+
         for a, q in pairs:
             end = thread_end(a, q)
             if end is not None:
                 yield end
             else:
                 for trace in generate(q, d + 1):
-                    yield ((quest, a),) + trace
+                    yield [[quest, a]] + trace
+
 
     for trace in generate(initiator, 0):
         if trace:
             show_mems(agent)
             agent.persist()
             yield trace
+        #save_rules(rules)
+        #print('RULES:',rules)
 
+""""
+def save_rules(rules, fname="rules.pl"):
+    def qt(x):
+        x=x.replace("'",'_').replace('"','_')
+        return f"'{x}'"
+
+    with open(fname, 'w') as f:
+        print('% RULES:', len(rules), file=f)
+        for h, bs in rules.items():
+            print(f"{qt(h)} -->", file=f)
+            for i, (a, q) in enumerate(bs):
+                line = f"['A:',{qt(a)}]"
+                if q:
+                    line = line + f",['Q:',{qt(q)}],{qt(q)}"
+                print('    ', line, end="", file=f)
+                if i < len(bs) - 1:
+                    print(";", file=f)
+            print(".", file=f)
+"""
 
 def show_mems(agent):
     print('SHORT_TERM_MEMORY SIZE:',
@@ -150,16 +175,18 @@ def test_qa_maker(fresh=0, local=1):
     localize(local)
     agent = make_agent()
     agent.resume()
-    #initiator = "Why do some people think that we live in a simulation?"
+    # initiator = "Why do some people think that we live in a simulation?"
     initiator = "How do transformers work?"
     print('INITIATOR:', initiator)
     for thread in recursor(initiator):
         print('\nTHREAD:\n')
-        for q, a in thread:
+        for qa in thread:
+            assert len(qa)==2,("HERE",qa)
+            q,a=qa
             print('Q:', q)
             print('A:', a)
             print()
-        print()
+        print('-----\n')
     if fresh: agent.clear()
     print('SHORT_TERM_MEMORY SIZE:',
           len(agent.short_mem),
