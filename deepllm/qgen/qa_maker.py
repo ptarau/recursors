@@ -108,6 +108,7 @@ def localize(local):
 def recursor(initiator, trim_size=3, max_k=2, max_d=5):
     agent = make_agent()
     seen = {initiator}
+    rules = dict()
 
     def generate(quest, d):
 
@@ -117,7 +118,7 @@ def recursor(initiator, trim_size=3, max_k=2, max_d=5):
             elif d > max_d:
                 seen.add(a)
                 seen.add(q)
-                return [[quest,a]]
+                return [[quest, a]]
             else:
                 seen.add(a)
                 seen.add(q)
@@ -125,6 +126,8 @@ def recursor(initiator, trim_size=3, max_k=2, max_d=5):
 
         pairs = quest2quests(agent, quest, initiator, k=max_k)
         agent.trim_at(trim_size)
+
+        rules[quest] = pairs
 
         for a, q in pairs:
             end = thread_end(a, q)
@@ -134,16 +137,15 @@ def recursor(initiator, trim_size=3, max_k=2, max_d=5):
                 for trace in generate(q, d + 1):
                     yield [[quest, a]] + trace
 
-
     for trace in generate(initiator, 0):
         if trace:
             show_mems(agent)
             agent.persist()
             yield trace
-        #save_rules(rules)
+        save_rules(rules)
         #print('RULES:',rules)
 
-""""
+
 def save_rules(rules, fname="rules.pl"):
     def qt(x):
         x=x.replace("'",'_').replace('"','_')
@@ -161,7 +163,7 @@ def save_rules(rules, fname="rules.pl"):
                 if i < len(bs) - 1:
                     print(";", file=f)
             print(".", file=f)
-"""
+
 
 def show_mems(agent):
     print('SHORT_TERM_MEMORY SIZE:',
@@ -181,8 +183,8 @@ def test_qa_maker(fresh=0, local=1):
     for thread in recursor(initiator):
         print('\nTHREAD:\n')
         for qa in thread:
-            assert len(qa)==2,("HERE",qa)
-            q,a=qa
+            assert len(qa) == 2, ("HERE", qa)
+            q, a = qa
             print('Q:', q)
             print('A:', a)
             print()
