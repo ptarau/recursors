@@ -142,27 +142,42 @@ def recursor(initiator, trim_size=3, max_k=2, max_d=5):
             show_mems(agent)
             agent.persist()
             yield trace
-        save_rules(rules)
+        save_rules(initiator,rules)
         #print('RULES:',rules)
 
 
-def save_rules(rules, fname="rules.pl"):
+def save_rules(initiator, rules, fname="rules.pl"):
     def qt(x):
         x=x.replace("'",'_').replace('"','_')
         return f"'{x}'"
 
+    defined=set()
+    referred=set()
     with open(fname, 'w') as f:
+        line= f"""go:-
+                 {qt(initiator)}(Xs,[]),nl,nl,
+                 write('Q:'),nl,write({qt(initiator)}),nl,
+                 member(X,Xs),write(X),nl,fail.
+           """
+        print(line,file=f)
         print('% RULES:', len(rules), file=f)
         for h, bs in rules.items():
+            defined.add(h)
             print(f"{qt(h)} -->", file=f)
             for i, (a, q) in enumerate(bs):
                 line = f"['A:',{qt(a)}]"
-                if q:
+                if q and q not in defined:
+                    referred.add(q)
                     line = line + f",['Q:',{qt(q)}],{qt(q)}"
                 print('    ', line, end="", file=f)
                 if i < len(bs) - 1:
                     print(";", file=f)
             print(".", file=f)
+        for q in referred:
+            if q not in defined:
+                line=f"{qt(q)} --> []."
+                print(line,file=f)
+
 
 
 def show_mems(agent):
