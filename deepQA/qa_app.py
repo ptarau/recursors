@@ -3,7 +3,7 @@ import streamlit as st
 from deepllm.api import *
 from deepllm.interactors import Agent
 
-from deepllm.qgen.qa_maker import make_agent, one_quest
+from qa_recursor import make_agent, one_quest
 
 st.set_page_config(layout="wide")
 

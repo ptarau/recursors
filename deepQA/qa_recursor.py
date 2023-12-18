@@ -105,7 +105,8 @@ def localize(local):
         cheaper_model()
 
 
-def recursor(initiator, trim_size=3, max_k=2, max_d=5):
+def recursor(initiator, trim_size=4, max_k=4, max_d=3, local=1):
+    localize(local)
     agent = make_agent()
     seen = {initiator}
     rules = dict()
@@ -142,43 +143,64 @@ def recursor(initiator, trim_size=3, max_k=2, max_d=5):
             show_mems(agent)
             agent.persist()
             yield trace
-        save_rules(initiator,rules)
-        #print('RULES:',rules)
+
+    rules = trim_rules(rules)
+    ensure_path('OUT/')
+    to_json(rules, f'OUT/rules_{local}.json')
+    save_rules(initiator, rules, f'OUT/rules_{local}.pl')
+    # print('RULES:',rules)
 
 
-def save_rules(initiator, rules, fname="rules.pl"):
+def trim_rules(rules):
+    defined = set()
+    referred = set()
+    looper = set()
+    for h, bs in rules.items():
+        defined.add(h)
+        for (_, q) in bs:
+            if q in defined:
+                looper.add(q)
+            else:
+                referred.add(q)
+
+    trimmed = dict()
+    for h, bs in rules.items():
+        cs = []
+        for (a, q) in bs:
+            if q in looper:
+                cs.append((a, ()))
+            elif q in referred - defined:
+                cs.append((a, ()))
+            else:
+                cs.append((a, q))
+            trimmed[h] = cs
+    return trimmed
+
+
+def save_rules(initiator, rules,fname):
     def qt(x):
-        x=x.replace("'",'_').replace('"','_')
+        x = x.replace("'", '_').replace('"', '_')
         return f"'{x}'"
 
-    defined=set()
-    referred=set()
     with open(fname, 'w') as f:
-        line= f"""go:-
+        line = f"""go:-
                  {qt(initiator)}(Xs,[]),nl,nl,
                  write('Q:'),nl,write({qt(initiator)}),nl,
                  member(X,Xs),write(X),nl,fail.
            """
-        print(line,file=f)
+        print(line, file=f)
         print('% RULES:', len(rules), file=f)
         for h, bs in rules.items():
-            defined.add(h)
+
             print(f"{qt(h)} -->", file=f)
             for i, (a, q) in enumerate(bs):
                 line = f"['A:',{qt(a)}]"
-                if q and q not in defined:
-                    referred.add(q)
+                if q:
                     line = line + f",['Q:',{qt(q)}],{qt(q)}"
                 print('    ', line, end="", file=f)
                 if i < len(bs) - 1:
                     print(";", file=f)
             print(".", file=f)
-        for q in referred:
-            if q not in defined:
-                line=f"{qt(q)} --> []."
-                print(line,file=f)
-
-
 
 def show_mems(agent):
     print('SHORT_TERM_MEMORY SIZE:',
@@ -187,13 +209,31 @@ def show_mems(agent):
           len(agent.long_mem),
           'COSTS:', round(agent.dollar_cost(), 4))
 
+def old_test_qa_maker1(fresh=0):
+    agent = make_agent()
+    agent.resume()
+    # quest = "Why do some people think that We live in a simulation?"
+    quest = "Why would introducing a planning element in the training of an LLM be a big step toward AGI?"
+
+    print('QUEST0:', quest)
+    for a, q in quest2quests(agent, quest, quest):
+        print('A:', a)
+        print('Q:', q)
+        print()
+    x = one_quest(agent, quest, 'think clearly')
+    print('QA:', x)
+    agent.persist()
+    if fresh: agent.clear()
+
 
 def test_qa_maker(fresh=0, local=1):
     localize(local)
     agent = make_agent()
     agent.resume()
     # initiator = "Why do some people think that we live in a simulation?"
-    initiator = "How do transformers work?"
+    #initiator = "How does finetuning an LLM work?"
+    #initiator = "How to teach grammars with Prolog?"
+    initiator="Where the idea that subject and object are inseparable leads in Heidegger's Zein und Zeit?"
     print('INITIATOR:', initiator)
     for thread in recursor(initiator):
         print('\nTHREAD:\n')
@@ -212,20 +252,6 @@ def test_qa_maker(fresh=0, local=1):
           'COSTS:', round(agent.dollar_cost(), 4))
 
 
-def test_qa_maker1(fresh=0):
-    agent = make_agent()
-    agent.resume()
-    # quest = "Why do some people think that We live in a simulation?"
-    quest = "Why would introducing a planning element in the training of an LLM be a big step toward AGI?"
-    print('QUEST0:', quest)
-    for a, q in quest2quests(agent, quest, quest):
-        print('A:', a)
-        print('Q:', q)
-        print()
-    x = one_quest(agent, quest, 'think clearly')
-    print('QA:', x)
-    agent.persist()
-    if fresh: agent.clear()
 
 
 if __name__ == "__main__":
