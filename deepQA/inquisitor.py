@@ -50,8 +50,12 @@ class QuestExplorer:
     explored with logic programming tools.
     """
 
-    def __init__(self, initiator=None, prompter=None, lim=None):
-        assert None not in (initiator, prompter, lim)
+    def __init__(self, initiator=None, prompter=None, lim=None, local=None):
+        assert None not in (initiator, prompter, lim, local)
+        if local:
+            localize(local)
+        self.local = local
+        PARAMS()(self)
         self.initiator = " ".join(initiator.replace('.', ' ').strip().split())
         self.name = self.initiator.lower().strip().replace(' ', '_')
         self.prompter = prompter
@@ -59,7 +63,6 @@ class QuestExplorer:
         self.lim = lim
         self.unf = QAUnfolder(self.name, prompter, lim)
         self.OUT = None
-        PARAMS()(self)
 
     def new_pair(self, g, trace):
         """
@@ -107,51 +110,49 @@ class QuestExplorer:
         self.persist()
 
     def run(self, printer=print):
-        rules = defaultdict(list)
+        rules = defaultdict(dict)
         for gs in self.solve():
-            if printer:
-                d = len(gs)
-                for i in range(d):
-                    if i % 2 == 1:
-                        q = gs[i - 1]
-                        a = gs[i]
-                        printer('Q:', q)
-                        printer()
-                        printer('A:', a)
-                        printer()
-                        if i < d - 2:
-                            q_ = gs[i + 1]
-                            rules[q].append([q, a, q_])
-                        else:
-                            assert i == d - 1
-                            rules[q].append([q, a])
-                printer()
-        if printer:
-            printer('Q RINGS:')
-            for r in self.qrings.items():
-                printer(r)
+            d = len(gs)
+            for i in range(d):
+                if i % 2 == 1:
+                    q = gs[i - 1]
+                    a = gs[i]
+                    printer('Q:', q)
+                    printer()
+                    printer('A:', a)
+                    printer()
+                    if i < d - 2:
+                        q_ = gs[i + 1]
+                        rules[q][(q, a, q_)] = True
+                    else:
+                        assert i == d - 1
+                        rules[q][(q, a)] = True
             printer()
-            printer('A RINGS:')
-            for r in self.arings.items():
-                printer(r)
-            printer()
-            printer('OPENS:')
-            for q in self.opens.items():
-                printer(q)
-            printer()
-            printer('COSTS', self.costs())
-        pro_name = f"./OUT/{self.pname}_{self.lim}__{self.name.replace('?','')}.pl"
-        save_rules(rules,pro_name)
-        printer('SAVED TO:',pro_name)
+
+        printer('Q RINGS:')
+        for r in self.qrings.items():
+            printer(r)
+        printer()
+        printer('A RINGS:')
+        for r in self.arings.items():
+            printer(r)
+        printer()
+        printer('OPENS:')
+        for q in self.opens.items():
+            printer(q)
+        printer()
+        printer('COSTS', self.costs())
+        name = self.name.replace('?', '').lower()
+        pro_name = f"./OUT/{self.pname}_{self.lim}_{name}_{self.local}.pl"
+        save_rules(rules, pro_name)
+        printer('SAVED TO:', pro_name)
+
+        jname=f'./OUT/rules_{self.local}.json'
+        printer('JSAVED TO:', jname)
+        jrules=[(k,v) for (k,vs) in rules.items() for v in vs]
+        to_json(jrules,jname)
 
         self.persist()
-
-    def store_results(self):
-        # pro_name = f'{self.OUT}{self.name}_{self.pname}_{self.lim}'
-        # to_dcg(self.clauses, pro_name)
-        for r in self.solve():
-            yield 'TRACE', r
-        pass
 
     # -------- begin overrides -------------
 
@@ -181,23 +182,23 @@ def save_rules(rules, fname):
         return "a" + str(atable.add(a))
 
     with open(fname, 'w') as f:
-        print(f"go:-q0(Xs,[]),nl,member(X,Xs),write(X),nl,nl,fail.\n",file=f)
-        for _h,bss in rules.items():
-          for t in bss:
-            lt = len(t)
-            if lt == 3:
-                q, a, q1 = t
-                q = qsym(q)
-                a = asym(a)
-                q1 = qsym(q1)
-                print(f"{q}-->{q}_,{a}_,{q1}.", file=f)
-            else:
-                assert lt == 2, t
-                q, a = t
-                assert isinstance(a,str),(q,a)
-                q = qsym(q)
-                a = asym(a)
-                print(f"{q}-->{q}_,{a}_.", file=f)
+        print(f"go:-q0(Xs,[]),nl,member(X,Xs),write(X),nl,nl,fail.\n", file=f)
+        for _h, bss in rules.items():
+            for t in bss:
+                lt = len(t)
+                if lt == 3:
+                    q, a, q1 = t
+                    q = qsym(q)
+                    a = asym(a)
+                    q1 = qsym(q1)
+                    print(f"{q}-->{q}_,{a}_,{q1}.", file=f)
+                else:
+                    assert lt == 2, t
+                    q, a = t
+                    assert isinstance(a, str), (q, a)
+                    q = qsym(q)
+                    a = asym(a)
+                    print(f"{q}-->{q}_,{a}_.", file=f)
 
         for na, a in enumerate(atable.nums):
             print(f"a{na}_-->[{qt('A: ' + a)}].", file=f)
@@ -205,8 +206,7 @@ def save_rules(rules, fname):
             print(f"q{nq}_-->[{qt('Q: ' + q)}].", file=f)
 
 
-def test_inquisitor(prompter=quest_prompter, lim=5):
-    localize(1)
+def test_inquisitor(prompter=quest_prompter, lim=2, local=0):
     # initiator = "Why do some people think that we live in a simulation?"
     # initiator = "How does finetuning an LLM work?"
     # initiator = "How to teach grammars with Prolog?"
@@ -217,7 +217,7 @@ def test_inquisitor(prompter=quest_prompter, lim=5):
 
     print('INITIATOR:', initiator)
     assert None not in (prompter, initiator, lim)
-    r = QuestExplorer(initiator=initiator, prompter=prompter, lim=lim)
+    r = QuestExplorer(initiator=initiator, prompter=prompter, lim=lim, local=local)
     r.run()
 
 

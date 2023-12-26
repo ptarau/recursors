@@ -19,6 +19,7 @@ def make_agent():
 
     return agent
 
+
 class SymTable:
     def __init__(self):
         self.syms = dict()
@@ -52,11 +53,13 @@ def clean_sent(sent):
 
 def clean_quest(x0, sent, context):
     x = x0.strip()
-    # print('!!! CLEANING:', x)
+    #print('!!! CLEANING:', x)
 
     assert x, ("Empty!!!!", (sent, context))
 
-    assert 'A:' in x or 'Q:' in x, ('MISSING A: or Q:', x)
+    if not ('A:' in x or 'Q:' in x):
+        print('!!!! MISSING A: or Q:', x)
+        return None
 
     if x[0] in ("'", '"'): x = x[1:]
     if x[-1] in ("'", '"'): x = x[0:-1]
@@ -88,34 +91,39 @@ def quest2quests(agent, quest, context, k=3):
     t1 = time.time()
 
     quests_ = to_quests(agent, quest, context, k=k)
+
+    #print('!!!!!! QUESTS FROM LLM:',quests_)
+
     quests0 = quests_.replace('\n\n', '\n').split('\n')
 
     quests = [clean_quest(q, quest, context) for q in quests0]
-    # print('LENS:', len(quests0), len(quests))
-    if len(quests) % 2 != 0:
-        quests = quests[0:-1]  # fix LLM ignoring instruction
-    # assert len(quests) % 2 == 0, (len(quests0), len(quests), quest, quests0)
+
+    #print('!!!!!! CLEANED FROM LLM:', quests_)
+
+    if None in quests: return []  # TODO clean up
+    if len(quests) % 2 == 1: return []
 
     pairs = []
     for j, x in enumerate(quests):
+        m = j % 2
 
         p = x[0:3]
-        assert p in ['Q: ', 'A: ']
+        if m==0:
+            assert p in ['A: '],x
+        else:
+            assert p in ['Q: '],x
         x = x[3:]
         if j % 2 == 0:
-            assert p == "A: ", (p, x)
             a = x  # answers
-
-            q = quests[j + 1]
+            q = quests[j + 1] # quest: next position
             p_ = q[0:3]
-            q = q[3:]  # quest: next position
-            assert p_ == "Q: ", (p_, q)
+            q = q[3:]
             pair = (a, q)
             pairs.append(pair)
 
     t2 = time.time()
-    #print('TIME:', round(t2 - t1, 4))
-    #print('COSTS:', round(agent.dollar_cost(), 4))
+    # print('TIME:', round(t2 - t1, 4))
+    # print('COSTS:', round(agent.dollar_cost(), 4))
     return pairs
 
 
@@ -130,10 +138,17 @@ def one_quest(agent, quest, context, trim_size=3):
 
 def test_questmaker():
     print('TESTING:')
-    localize(0)
+    localize(1)
     agent = make_agent()
-    qs=quest2quests(agent, "What is a neural network?", "", k=3)
-    print(qs)
+    #agent.resume()
+    quest="What is a neural network?"
+    qs = quest2quests(agent,quest, "", k=3)
+    print('QUEST:',quest)
+    for a,q in qs:
+        print('A:',a)
+        print('Q:',q)
+        print()
+    #agent.persist()
 
 
 if __name__ == "__main__":
