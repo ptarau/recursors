@@ -6,27 +6,6 @@ from questmaker import *
 
 
 
-class SymTable:
-    def __init__(self):
-        self.syms = dict()
-        self.nums = []
-
-    def add(self, sym):
-        n = self.syms.get(sym)
-        if n is None:
-            n = len(self.nums)
-            self.syms[sym] = len(self.nums)
-            self.nums.append(sym)
-        return n
-
-    def __contains__(self, sym):
-        return sym in self.syms
-
-    def __len__(self):
-        return len(self.nums)
-
-    def __repr__(self):
-        return str(self.syms)
 
 
 def recursor(initiator, trim_size=4, max_k=3, max_d=2, local=0):

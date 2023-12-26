@@ -19,6 +19,28 @@ def make_agent():
 
     return agent
 
+class SymTable:
+    def __init__(self):
+        self.syms = dict()
+        self.nums = []
+
+    def add(self, sym):
+        n = self.syms.get(sym)
+        if n is None:
+            n = len(self.nums)
+            self.syms[sym] = len(self.nums)
+            self.nums.append(sym)
+        return n
+
+    def __contains__(self, sym):
+        return sym in self.syms
+
+    def __len__(self):
+        return len(self.nums)
+
+    def __repr__(self):
+        return str(self.syms)
+
 
 def clean_sent(sent):
     sent = sent.strip().replace(' .', '.').replace('..', '')
@@ -92,8 +114,8 @@ def quest2quests(agent, quest, context, k=3):
             pairs.append(pair)
 
     t2 = time.time()
-    print('TIME:', round(t2 - t1, 4))
-    print('COSTS:', round(agent.dollar_cost(), 4))
+    #print('TIME:', round(t2 - t1, 4))
+    #print('COSTS:', round(agent.dollar_cost(), 4))
     return pairs
 
 
