@@ -100,7 +100,7 @@ def quest2quests(agent, quest, context, k=3):
 
     quests = [clean_quest(q, quest, context) for q in quests0]
 
-    print('!!!!!! CLEANED FROM LLM:', len(quests))
+    #print('!!!!!! CLEANED FROM LLM:', len(quests))
 
     if None in quests:
         print('*** None in quests', quests)

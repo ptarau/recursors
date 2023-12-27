@@ -148,7 +148,7 @@ class QuestExplorer:
         printer('COSTS', self.costs())
         name = self.name.replace('?', '').lower()
         pro_name = f"./OUT/{self.pname}_{self.lim}_{name}_{self.local}.pl"
-        save_rules(rules, pro_name)
+        save_rules(rules, self.qrings, self.arings, self.opens, pro_name)
         printer('SAVED TO:', pro_name)
 
         jname = f'./OUT/rules_{self.local}.json'
@@ -167,7 +167,7 @@ class QuestExplorer:
         self.unf.persist()
 
 
-def save_rules(rules, fname):
+def save_rules(rules, qrings, arings, opens, fname):
     def qt(x):
         x = x.replace("'", '_').replace('"', '_')
         return f"'{x}'"
@@ -183,6 +183,7 @@ def save_rules(rules, fname):
 
     with open(fname, 'w') as f:
         print(f"go:-q0(Xs,[]),nl,member(X,Xs),write(X),nl,nl,fail.\n", file=f)
+        print('\n% DCG GENERATIVE GRAMMAR RULES:\n', file=f)
         for _h, bss in rules.items():
             for t in bss:
                 lt = len(t)
@@ -200,10 +201,25 @@ def save_rules(rules, fname):
                     a = asym(a)
                     print(f"{q}-->{q}_,{a}_.", file=f)
 
-        for na, a in enumerate(atable.nums):
-            print(f"a{na}_-->[{qt('A: ' + a)}].", file=f)
+        print('\n% QUESTION TERMINALS:\n', file=f)
         for nq, q in enumerate(qtable.nums):
             print(f"q{nq}_-->[{qt('Q: ' + q)}].", file=f)
+
+        print('\n% ANSWER TERMINALS:\n', file=f)
+        for na, a in enumerate(atable.nums):
+            print(f"a{na}_-->[{qt('A: ' + a)}].", file=f)
+
+        print('\n% OPEN QUESTIONS:\n', file=f)
+        for x, c in opens.most_common():
+            print(f"opens({qt(x)},{c}).", file=f)
+
+        print('\n% LOOP TRIGGERING QUESTIONS:\n', file=f)
+        for x, c in qrings.most_common():
+            print(f"qrings({qt(x)},{c}).", file=f)
+
+        print('\n% REPEATED ANSWERS:\n', file=f)
+        for x, c in arings.most_common():
+            print(f"arings({qt(x)},{c}).", file=f)
 
 
 def test_inquisitor(prompter=quest_prompter, lim=5, local=1):
@@ -213,9 +229,9 @@ def test_inquisitor(prompter=quest_prompter, lim=5, local=1):
 
     # initiator = "Where the idea that subject and object are inseparable leads in Heidegger's Zein und Zeit?"
     # initiator="How would you integrate planning elements into the chains of transformer blocks that make up the neural network of an LLM?"
-    #initiator = "How to prove that NP and P are distinct?"
-    #initiator = "How to repair a flat tire?"
-    initiator = "How to recognize qiockly that someone is talking bs?"
+    # initiator = "How to prove that NP and P are distinct?"
+    initiator = "How to repair a flat tire?"
+    #initiator = "How to recognize qiockly that someone is talking bs?"
 
     print('INITIATOR:', initiator)
     assert None not in (prompter, initiator, lim)
