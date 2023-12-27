@@ -43,6 +43,10 @@ class SymTable:
         return str(self.syms)
 
 
+def is_quest(x):
+    return x.endswith('?')
+
+
 def clean_sent(sent):
     sent = sent.strip().replace(' .', '.').replace('..', '')
     sent = sent.replace(' -', '-').replace("'", "_")
@@ -53,7 +57,7 @@ def clean_sent(sent):
 
 def clean_quest(x0, sent, context):
     x = x0.strip()
-    #print('!!! CLEANING:', x)
+    # print('!!! CLEANING:', x)
 
     assert x, ("Empty!!!!", (sent, context))
 
@@ -88,42 +92,52 @@ def to_quests(agent, question, context, k=3):
 
 
 def quest2quests(agent, quest, context, k=3):
-    t1 = time.time()
-
     quests_ = to_quests(agent, quest, context, k=k)
 
-    #print('!!!!!! QUESTS FROM LLM:',quests_)
+    # print('!!!!!! QUESTS FROM LLM:',quests_,'END QUESTS\n\n')
 
     quests0 = quests_.replace('\n\n', '\n').split('\n')
 
     quests = [clean_quest(q, quest, context) for q in quests0]
 
-    #print('!!!!!! CLEANED FROM LLM:', quests_)
+    print('!!!!!! CLEANED FROM LLM:', len(quests))
 
-    if None in quests: return []  # TODO clean up
-    if len(quests) % 2 == 1: return []
+    if None in quests:
+        print('*** None in quests', quests)
+        return []  # TODO clean up
+    if len(quests) % 2 == 1:
+        print('*** Odd number of quests')
+        # for q in quests[-2:]:
+        #    print('!!!',q)
+        bad = quests[-1]
+        # assert not is_quest(bad),bad
+        quests = quests[0:-1]
+        # return []
 
     pairs = []
     for j, x in enumerate(quests):
         m = j % 2
 
         p = x[0:3]
-        if m==0:
-            assert p in ['A: '],x
+        if m == 0:
+            # even A:
+            # assert p in ['A: '],[quest,j,x,len(quests)]
+            if p != 'A: ':
+                return pairs[0:-1]
         else:
-            assert p in ['Q: '],x
+            # odd! Q:
+            # assert p in ['Q: '],[quest,j,x,len(quests)]
+            if p != 'Q: ':
+                return pairs
         x = x[3:]
         if j % 2 == 0:
             a = x  # answers
-            q = quests[j + 1] # quest: next position
+            q = quests[j + 1]  # quest: next position
             p_ = q[0:3]
             q = q[3:]
             pair = (a, q)
             pairs.append(pair)
 
-    t2 = time.time()
-    # print('TIME:', round(t2 - t1, 4))
-    # print('COSTS:', round(agent.dollar_cost(), 4))
     return pairs
 
 
@@ -140,15 +154,15 @@ def test_questmaker():
     print('TESTING:')
     localize(1)
     agent = make_agent()
-    #agent.resume()
-    quest="What is a neural network?"
-    qs = quest2quests(agent,quest, "", k=3)
-    print('QUEST:',quest)
-    for a,q in qs:
-        print('A:',a)
-        print('Q:',q)
+    # agent.resume()
+    quest = "What is a neural network?"
+    qs = quest2quests(agent, quest, "", k=3)
+    print('QUEST:', quest)
+    for a, q in qs:
+        print('A:', a)
+        print('Q:', q)
         print()
-    #agent.persist()
+    # agent.persist()
 
 
 if __name__ == "__main__":

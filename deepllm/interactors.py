@@ -261,6 +261,7 @@ class Agent:
                     model=self.model,
                     messages=mes,
                     temperature=self.temperature,
+                    seed=42,
                     n=self.n
                 )
                 pt = r['usage']['prompt_tokens']

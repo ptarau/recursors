@@ -97,9 +97,13 @@ class QuestExplorer:
                 yield gs
             else:
                 for a, q in self.new_pair(g, gs):
-                    if a in gs:
+                    if q == g or q in gs:
+                        self.qrings[q] += 1
+                        yield gs
+                    elif a in gs:
                         self.arings[a] += 1
                         yield gs
+
                     else:
                         trace = a, (g, gs)
                         yield from step(q, trace, d + 1)
@@ -147,10 +151,10 @@ class QuestExplorer:
         save_rules(rules, pro_name)
         printer('SAVED TO:', pro_name)
 
-        jname=f'./OUT/rules_{self.local}.json'
+        jname = f'./OUT/rules_{self.local}.json'
         printer('JSAVED TO:', jname)
-        jrules=[(k,v) for (k,vs) in rules.items() for v in vs]
-        to_json(jrules,jname)
+        jrules = [(k, v) for (k, vs) in rules.items() for v in vs]
+        to_json(jrules, jname)
 
         self.persist()
 
@@ -161,10 +165,6 @@ class QuestExplorer:
 
     def persist(self):
         self.unf.persist()
-
-
-def is_quest(x):
-    return x.endswith('?')
 
 
 def save_rules(rules, fname):
@@ -206,14 +206,16 @@ def save_rules(rules, fname):
             print(f"q{nq}_-->[{qt('Q: ' + q)}].", file=f)
 
 
-def test_inquisitor(prompter=quest_prompter, lim=2, local=0):
+def test_inquisitor(prompter=quest_prompter, lim=5, local=1):
     # initiator = "Why do some people think that we live in a simulation?"
     # initiator = "How does finetuning an LLM work?"
     # initiator = "How to teach grammars with Prolog?"
 
     # initiator = "Where the idea that subject and object are inseparable leads in Heidegger's Zein und Zeit?"
     # initiator="How would you integrate planning elements into the chains of transformer blocks that make up the neural network of an LLM?"
-    initiator = "How to prove that NP and P are distinct?"
+    #initiator = "How to prove that NP and P are distinct?"
+    #initiator = "How to repair a flat tire?"
+    initiator = "How to recognize qiockly that someone is talking bs?"
 
     print('INITIATOR:', initiator)
     assert None not in (prompter, initiator, lim)
