@@ -133,27 +133,31 @@ class QuestExplorer:
                         rules[q][(q, a)] = True
             printer()
 
-        printer('Q RINGS:')
-        for r in self.qrings.items():
-            printer(r)
-        printer()
-        printer('A RINGS:')
-        for r in self.arings.items():
-            printer(r)
-        printer()
-        printer('OPENS:')
-        for q in self.opens.items():
-            printer(q)
-        printer()
+        if self.qrings:
+            printer('Questions that would have started loops:')
+            for r in self.qrings.items():
+                printer(r)
+            printer()
+        if self.arings:
+            printer('Answers that would repeat proviously seen answers:')
+            for r in self.arings.items():
+                printer(r)
+            printer()
+        if self.opens:
+            printer('Questions left open at depth limit, with counts:')
+            for q in self.opens.items():
+                printer(q)
+            printer()
+
         printer('COSTS', self.costs())
         name = self.name.replace('?', '').lower()
-        pro_name = f"./OUT/{self.pname}_{self.lim}_{name}_{self.local}.pl"
+        pro_name = f"./OUT/{self.pname}_{self.lim}_{name}_{int(self.local)}.pl"
         save_rules(rules, self.qrings, self.arings, self.opens, pro_name)
-        printer('SAVED TO:', pro_name)
 
-        jname = f'./OUT/rules_{self.local}.json'
-        printer('JSAVED TO:', jname)
+        printer('Definite Clause Grammar saved to:', [os.path.basename(pro_name)])
+        jname = f'./OUT/rules_{int(self.local)}.json'
         jrules = [(k, v) for (k, vs) in rules.items() for v in vs]
+        printer('Json version saved to:', [os.path.basename(jname)])
         to_json(jrules, jname)
 
         self.persist()
@@ -223,20 +227,20 @@ def save_rules(rules, qrings, arings, opens, fname):
 
 
 def test_inquisitor(prompter=quest_prompter, lim=5, local=1):
-    #initiator = "Why do some people think that we live in a simulation?"
+    # initiator = "Why do some people think that we live in a simulation?"
     # initiator = "How does finetuning an LLM work?"
     # initiator = "How to teach grammars with Prolog?"
 
-    #initiator = "Where the idea that subject and object are inseparable leads in Heidegger's Zein und Zeit?"
+    # initiator = "Where the idea that subject and object are inseparable leads in Heidegger's Zein und Zeit?"
     # initiator="How would you integrate planning elements into the chains of transformer blocks that make up the neural network of an LLM?"
     # initiator = "How to prove that NP and P are distinct?"
-    #initiator = "How to repair a flat tire?"
+    # initiator = "How to repair a flat tire?"
     initiator = "How to recognize quickly that someone is talking bs?"
 
     print('INITIATOR:', initiator)
     assert None not in (prompter, initiator, lim)
     r = QuestExplorer(initiator=initiator, prompter=prompter, lim=lim, local=local)
-    r.run() #printer=lambda *x:None)
+    r.run()  # printer=lambda *x:None)
 
 
 if __name__ == "__main__":
