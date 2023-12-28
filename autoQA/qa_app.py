@@ -7,7 +7,7 @@ from deepllm.questmaker import make_agent, one_quest
 
 st.set_page_config(layout="wide")
 
-st.sidebar.title(":blue[DeepLLM with Follow-up Question Generator]")
+st.sidebar.title(":blue[[AutoQA](https://github.com/ptarau/recursors/tree/main/autoQA): DeepLLM app with Follow-up Question Generator]")
 
 local = st.sidebar.checkbox('Local LLM?', value=False)
 

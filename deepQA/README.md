@@ -1,4 +1,4 @@
-## DeepQA is a [DeepLLM](https://github.com/ptarau/recursors/tree/main)-based project that explores recursively the "mind-stream" of an LLM via a tree of self-generated follow-up questions.
+## DeepQA is a [DeepLLM](https://github.com/ptarau/recursors/tree/main)-based application that explores recursively the "mind-stream" of an LLM via a tree of self-generated follow-up questions.
 
 Use 
 
