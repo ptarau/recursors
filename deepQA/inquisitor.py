@@ -190,6 +190,7 @@ def save_rules(rules, qrings, arings, opens, fname):
     def asym(a):
         return "a" + str(atable.add(a))
 
+    ensure_path(fname)
     with open(fname, 'w') as f:
         print(f"go:-q0(Xs,[]),nl,member(X,Xs),write(X),nl,nl,fail.\n", file=f)
         print('\n% DCG GENERATIVE GRAMMAR RULES:\n', file=f)
