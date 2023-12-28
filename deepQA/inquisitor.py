@@ -1,6 +1,7 @@
 from collections import Counter
+from deepllm.tools import file2string
 from deepllm.recursors import *
-from questmaker import *
+from deepllm.questmaker import *
 
 quest_prompter = dict(
     name='quest_prompter',
@@ -11,7 +12,6 @@ quest_prompter = dict(
     After returning each answer, suggest a salient follow-up question to your answer, prefixed with "Q:" .
     """
 )
-
 
 class QAUnfolder:
     """
@@ -63,6 +63,7 @@ class QuestExplorer:
         self.lim = lim
         self.unf = QAUnfolder(self.name, prompter, lim)
         self.OUT = None
+        self.pro_name=None
 
     def new_pair(self, g, trace):
         """
@@ -151,16 +152,20 @@ class QuestExplorer:
 
         printer('COSTS', self.costs())
         name = self.name.replace('?', '').lower()
-        pro_name = f"./OUT/{self.pname}_{self.lim}_{name}_{int(self.local)}.pl"
-        save_rules(rules, self.qrings, self.arings, self.opens, pro_name)
+        self.pro_name = f"./OUT/{self.pname}_{self.lim}_{name}_{int(self.local)}.pl"
+        save_rules(rules, self.qrings, self.arings, self.opens, self.pro_name)
 
-        printer('Definite Clause Grammar saved to:', [os.path.basename(pro_name)])
+        printer('Definite Clause Grammar saved to:', [os.path.basename(self.pro_name)])
         jname = f'./OUT/rules_{int(self.local)}.json'
         jrules = [(k, v) for (k, vs) in rules.items() for v in vs]
         printer('Json version saved to:', [os.path.basename(jname)])
         to_json(jrules, jname)
 
         self.persist()
+
+    def show_dcg(self):
+        if self.pro_name is None: return None
+        return file2string(self.pro_name)
 
     # -------- begin overrides -------------
 

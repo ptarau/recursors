@@ -64,3 +64,8 @@ def from_text(text):
             line = line[0:-1]
         res.append(line)
     return res
+
+
+def file2string(fname):
+    with open(fname, 'r') as f:
+        return f.read()

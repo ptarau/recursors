@@ -1,4 +1,3 @@
-import time
 from deepllm.interactors import Agent
 from deepllm.api import *
 
@@ -109,7 +108,7 @@ def quest2quests(agent, quest, context, k=3):
         print('*** Odd number of quests')
         # for q in quests[-2:]:
         #    print('!!!',q)
-        bad = quests[-1]
+        #bad = quests[-1]
         # assert not is_quest(bad),bad
         quests = quests[0:-1]
         # return []
@@ -133,7 +132,7 @@ def quest2quests(agent, quest, context, k=3):
         if j % 2 == 0:
             a = x  # answers
             q = quests[j + 1]  # quest: next position
-            p_ = q[0:3]
+            #p_ = q[0:3]
             q = q[3:]
             pair = (a, q)
             pairs.append(pair)
@@ -152,7 +151,7 @@ def one_quest(agent, quest, context, trim_size=3):
 
 def test_questmaker():
     print('TESTING:')
-    localize(1)
+    localize(0)
     agent = make_agent()
     # agent.resume()
     quest = "What is a neural network?"

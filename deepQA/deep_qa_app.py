@@ -34,9 +34,9 @@ with st.sidebar:
 
     lim = st.slider('Maximum depth', 1, 4, 1)
 
-    trace = st.toggle('Show trace?', value=False)
+    show_dcg = st.toggle('Show generated Definite Clause Grammar?', value=False)
 
-    #initiator = st.text_area("Question to start with:', value='How does a vector db work in hybrid mode with keyword search?")
+    # initiator = st.text_area("Question to start with:', value='How does a vector db work in hybrid mode with keyword search?")
 
     initiator = st.text_area('Question to start with:',
                              value="How can humans align superintelligent LLMs to human goals and values?")
@@ -61,6 +61,14 @@ def do_query():
         local=local)
     qe.run(printer=printer)
 
+    if show_dcg:
+        dcg = qe.show_dcg()
+        assert dcg is not None
+        st.write(":blue[DCG GRAMMAR:]")
+        lines = dcg.split("\n")
+        for line in lines:
+            st.write(":green[" + line + "]")
+
 
 if query_it:
-   do_query()
+    do_query()
