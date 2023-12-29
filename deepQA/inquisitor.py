@@ -243,6 +243,7 @@ def test_inquisitor(prompter=quest_prompter, lim=5, local=1):
     # initiator = "How to repair a flat tire?"
     initiator = "How to recognize quickly that someone is talking bs?"
 
+
     print('INITIATOR:', initiator)
     assert None not in (prompter, initiator, lim)
     r = QuestExplorer(initiator=initiator, prompter=prompter, lim=lim, local=local)

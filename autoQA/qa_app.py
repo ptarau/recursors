@@ -7,7 +7,8 @@ from deepllm.questmaker import make_agent, one_quest
 
 st.set_page_config(layout="wide")
 
-st.sidebar.title(":blue[[AutoQA](https://github.com/ptarau/recursors/tree/main/autoQA): DeepLLM app with Follow-up Question Generator]")
+st.sidebar.title(
+    ":blue[[AutoQA](https://github.com/ptarau/recursors/tree/main/autoQA): DeepLLM app with Follow-up Question Generator]")
 
 local = st.sidebar.checkbox('Local LLM?', value=False)
 
@@ -35,6 +36,8 @@ def clean_quest(text):
     return ' '.join(text.split())
 
 
+chat_name = st.sidebar.text_input('Chat name?', 'autoQA')
+
 question = clean_quest(st.sidebar.text_area("ENTER QUESTION:", key='quest'))
 
 agent = None
@@ -43,7 +46,7 @@ agent = None
 def do_answers():
     global agent
     if agent is None:
-        agent = make_agent()
+        agent = make_agent(name=chat_name)
 
     st.write('\nQ:', question)
 

@@ -12,8 +12,8 @@ def localize(local):
         cheaper_model()
 
 
-def make_agent():
-    agent = Agent(name='QA_generator')
+def make_agent(name='QA_generator'):
+    agent = Agent(name=name)
     agent.resume()
 
     return agent
