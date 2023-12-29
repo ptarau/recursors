@@ -70,7 +70,7 @@ def do_answers():
 def clear_cache():
     global agent
     if agent is None:
-        agent = make_agent()
+        agent = make_agent(name=chat_name)
     st.write('CLEARING CACHE AT:', agent.cache_name())
     agent.clear()
     st.cache_resource.clear()
