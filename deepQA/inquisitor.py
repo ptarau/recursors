@@ -13,6 +13,7 @@ quest_prompter = dict(
     """
 )
 
+
 class QAUnfolder:
     """
     return pair of AND/OR agents
@@ -63,7 +64,7 @@ class QuestExplorer:
         self.lim = lim
         self.unf = QAUnfolder(self.name, prompter, lim)
         self.OUT = None
-        self.pro_name=None
+        self.pro_name = None
 
     def new_pair(self, g, trace):
         """
@@ -87,6 +88,7 @@ class QuestExplorer:
         self.qrings = Counter()
         self.arings = Counter()
         self.opens = Counter()
+        self.rejects = Counter()
 
         def step(g, gs, d):  # gs is the trace so far, g is quest
             if g in gs:
@@ -95,6 +97,9 @@ class QuestExplorer:
             self.persist()
             if d >= self.lim:
                 self.opens[g] += 1
+                yield gs
+            elif not self.apprise(g,gs):
+                self.rejects[g] += 1
                 yield gs
             else:
                 for a, q in self.new_pair(g, gs):
@@ -169,6 +174,9 @@ class QuestExplorer:
 
     # -------- begin overrides -------------
 
+    def apprise(self, _g, _trace):
+        return True
+
     def resume(self):
         self.unf.resume()
 
@@ -242,7 +250,6 @@ def test_inquisitor(prompter=quest_prompter, lim=5, local=1):
     # initiator = "How to prove that NP and P are distinct?"
     # initiator = "How to repair a flat tire?"
     initiator = "How to recognize quickly that someone is talking bs?"
-
 
     print('INITIATOR:', initiator)
     assert None not in (prompter, initiator, lim)
