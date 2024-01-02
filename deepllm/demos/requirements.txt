@@ -1,2 +1,2 @@
-fast_sentence_segment
+sentify
 Wikipedia-API

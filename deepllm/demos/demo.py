@@ -1,5 +1,6 @@
 from deepllm.tests.test_refiners import *
-from wikifetch import run_wikifetch
+from sentify.main import sentify
+from sentify.wikifetch import run_wikifetch,CF
 
 
 def test_truth_rater(goal=None, prompter=None, truth_file=None, threshold=None, lim=None):
@@ -15,9 +16,10 @@ def test_truth_rater(goal=None, prompter=None, truth_file=None, threshold=None, 
     c = r.costs()
     print('COSTS in $:', c)
 
-
 def run_all():
+    CF.DATA=PARAMS().DATA
     run_wikifetch()
+
     test_truth_rater(prompter=sci_prompter, goal='Unification algorithm', truth_file='logic_programming',
                      threshold=0.10, lim=1)
     test_truth_rater(prompter=sci_prompter, goal='Teaching computational thinking with Prolog',
