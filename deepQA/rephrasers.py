@@ -72,26 +72,33 @@ def plain_sent(s):
     return s[0:-1].replace("'", "").replace(',', '').replace(';', '').replace('-', '').replace(' ', '').isalpha()
 
 
-def knn_edges(encs, k=1):
+def knn_edges(encs, k=2, thr=0.20):
     assert k + 1 < len(encs), (k + 1, '<', len(encs))
     cos_scores = torch.from_numpy(cdist(encs, encs, metric='cosine'))
-    top_results = torch.topk(cos_scores, k=k + 1)
+    top_results = torch.topk(cos_scores, largest=False, k=k + 1)
     m = top_results[1]  # indices
     r = top_results[0]  # similarity ranks
     s = m.size()
 
     es = []
     rs = []
+    ws = []
     for i in range(s[0]):
         for j in range(1, s[1] - 1):
             rs.append(r[i, j])
-            e = i, r[i, j], int(m[i, j]),
+            w = r[i, j]
+            ws.append(float(w))
+            e = i, w, int(m[i, j]),
             es.append(e)
+    avg = sum(ws) / len(ws)
+    es = [(s, w, o) for (s, w, o) in es if w < avg]
+
     return es
 
 
 class RelationBuilder(Agent):
-    def relationize(self, kind, source, save=True, show=True):
+
+    def relationize(self, kind, source, so_links=True, save=True, show=True):
         prompter = svos_prompter
         self.spill()
         self.set_pattern(prompter['prompt'])
@@ -102,26 +109,39 @@ class RelationBuilder(Agent):
 
         text = "\n".join(sents)
         jtext = self.ask(text=text)
-        print(jtext)
+        # print(jtext)
+        jterm = json.loads(jtext)
+        assert jterm
         if save:
-            jterm = json.loads(jtext)
-            to_json(jterm, self.outf)
-            svos = [tuple(x.values()) for x in jterm]
 
-            ilinks = [(str(i), '', str(i + 1)) for i in range(len(svos) - 1)]
-            ilinks.append((str(len(svos)-1),'',str(0)))
+            if isinstance(jterm[0], list):
+                svos = [tuple(x) for x in jterm if len(x) == 3 and x[0] != x[2]][1:]
+            else:
+                svos = [tuple(x.values()) for x in jterm if len(x) == 3]
 
-            embedder = Embedder(None)
-            embeddings = embedder.embed(sents)
-            knn_links = [(str(s), '', str(o)) for (s, _, o) in knn_edges(embeddings, k=2)]
+            if so_links:
+                so_set = sorted(set(x for (s, _, o) in svos for x in (s, o)))
+                so_embedder = Embedder(None)
+                so_embeddings = so_embedder.embed(so_set)
+                so_knn_links = [(so_set[s], ':', so_set[o]) for (s, r, o) in knn_edges(so_embeddings, k=2)]
+                svos.extend(so_knn_links)
+            else:
+                # ilinks = [(str(i), '', str(i + 1)) for i in range(len(svos) - 1)]
+                # ilinks.append((str(len(svos) - 1), '', str(0)))
 
-            slinks = [(str(i), 'S:', s[0]) for (i, s) in enumerate(svos)]
-            olinks = [(str(i), 'O:', s[2]) for (i, s) in enumerate(svos)]
+                embedder = Embedder(None)
+                embeddings = embedder.embed(sents)
+                knn_links = [(str(s), '', str(o)) for (s, _, o) in knn_edges(embeddings, k=2)]
 
-            svos.extend(ilinks)
-            svos.extend(knn_links)
-            svos.extend(slinks)
-            svos.extend(olinks)
+                slinks = [(str(i), 'S:', s[0]) for (i, s) in enumerate(svos)]
+                olinks = [(str(i), 'O:', s[2]) for (i, s) in enumerate(svos)]
+
+                svos.extend(knn_links)
+                # svos.extend(ilinks)
+                svos.extend(slinks)
+                svos.extend(olinks)
+
+            to_json(svos, self.outf)
 
             fname = CF.OUT + self.name + "_" + prompter['name']
             visualize_rels(svos, fname=fname, show=show)
@@ -179,6 +199,6 @@ if __name__ == "__main__":
     # test_rephraser()
 
     # local_model()
-    # cheaper_model()
-    smarter_model()
+    cheaper_model()
+    #smarter_model()
     test_relationizer()
