@@ -25,9 +25,8 @@ witt_prompter_txt = dict(
 svos_prompter = dict(
     name="fact_to_svos",
     target='.json',
-    prompt="""Split each sentence in the the following text
-    into an SVO triplets. If the sentence is too complex, split
-    it first into sumple sentences. 
+    prompt="""Split each sentence in the the following text into SVO triplets. 
+    If the sentence is too complex, split it first into simple sentences. 
     When it is clear form the context, replace pronouns with what they refer to.
     Trim down the subject and object parts to their essential noun phrases.
     Return your result as JSON list of ("S:","V:","O:") JSON triplets.
@@ -72,7 +71,7 @@ def plain_sent(s):
     return s[0:-1].replace("'", "").replace(',', '').replace(';', '').replace('-', '').replace(' ', '').isalpha()
 
 
-def knn_edges(encs, k=2, thr=0.20):
+def knn_edges(encs, k=2):
     assert k + 1 < len(encs), (k + 1, '<', len(encs))
     cos_scores = torch.from_numpy(cdist(encs, encs, metric='cosine'))
     top_results = torch.topk(cos_scores, largest=False, k=k + 1)
@@ -91,14 +90,48 @@ def knn_edges(encs, k=2, thr=0.20):
             e = i, w, int(m[i, j]),
             es.append(e)
     avg = sum(ws) / len(ws)
-    es = [(s, w, o) for (s, w, o) in es if w < avg]
+    ws_ = [w for w in ws if w < avg]
+    avg_ = sum(ws_) / len(ws_)
+    es = [(s, w, o) for (s, w, o) in es if w < avg_]
 
     return es
 
 
+def standardize(x):
+    x = x.lower()
+    a, _b, c = str.partition(x, ' ')
+    if a in ['a', 'an', 'the']: x = c
+    return x
+
+
+def good_noun_phrase(x):
+    x = x.lower().replace(' ','')
+    ok=x.isalpha() and x not in {
+        'it', 'they', 'he', 'she',
+        'someone', 'some', 'all', 'any', 'one'
+    }
+    if not ok: print('NO GOOD:',x)
+    return ok
+
+
+def move_prep(x):
+    """When the object starts with an preposition like
+    "to" or "in" move it to the end of the verb."""
+    s,v,o=x
+    (a,sp,b)=str.partition(o,' ')
+    if a in {
+        'to','from','in','at','by','over',
+        'under','on','off','away','through'
+    }:
+        v=v+sp+a
+        o=b
+    return s,v,o
+
+
+
 class RelationBuilder(Agent):
 
-    def relationize(self, kind, source, so_links=True, save=True, show=True):
+    def run(self, kind, source, so_links=True, save=True, show=True, max_sents=30):
         prompter = svos_prompter
         self.spill()
         self.set_pattern(prompter['prompt'])
@@ -106,10 +139,13 @@ class RelationBuilder(Agent):
         self.outf = CF.OUT + self.name + "_" + prompter['name'] + prompter['target']
         sents = sentify(kind, source)
         sents = [s.strip() for s in sents if plain_sent(s)]
+        sents=sents[0:max_sents]
 
         text = "\n".join(sents)
+        if save:
+            text2file(text,CF.OUT + self.name+"_sents.txt")
         jtext = self.ask(text=text)
-        # print(jtext)
+        print('LLM ANSWER:', jtext)
         jterm = json.loads(jtext)
         assert jterm
         if save:
@@ -119,11 +155,16 @@ class RelationBuilder(Agent):
             else:
                 svos = [tuple(x.values()) for x in jterm if len(x) == 3]
 
+            svos = [(standardize(s), v.lower(), standardize(o)) for (s, v, o) in svos if
+                    good_noun_phrase(s) and good_noun_phrase(o)]
+
+            svos = [move_prep(x) for x in svos]
+
             if so_links:
                 so_set = sorted(set(x for (s, _, o) in svos for x in (s, o)))
                 so_embedder = Embedder(None)
                 so_embeddings = so_embedder.embed(so_set)
-                so_knn_links = [(so_set[s], ':', so_set[o]) for (s, r, o) in knn_edges(so_embeddings, k=2)]
+                so_knn_links = [(so_set[s], ':', so_set[o]) for (s, r, o) in knn_edges(so_embeddings, k=4)]
                 svos.extend(so_knn_links)
             else:
                 # ilinks = [(str(i), '', str(i + 1)) for i in range(len(svos) - 1)]
@@ -150,9 +191,10 @@ class RelationBuilder(Agent):
 
 
 def test_relationizer():
-    page = 'horn_clause'
+    #page = 'horn_clause'
+    page = 'logic_programming'
     agent = RelationBuilder(page)
-    text = agent.relationize('wikipage', page)
+    text = agent.run('wikipage', page)
     print(text)
     # text2file(text, agent.outf)
     print(agent.dollar_cost())
