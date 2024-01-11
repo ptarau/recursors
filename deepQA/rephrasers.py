@@ -26,9 +26,23 @@ svos_prompter = dict(
     name="fact_to_svos",
     target='.json',
     prompt="""Split each sentence in the the following text into SVO triplets. 
-    If the sentence is too complex, split it first into simple sentences. 
+    If the sentence is too complex, split it first into simple sentences.
     When it is clear form the context, replace pronouns with what they refer to.
     Trim down the subject and object parts to their essential noun phrases.
+    Return your result as JSON list of ("S:","V:","O:") JSON triplets.
+    Here is the text:     
+    "$text"
+    """
+)
+
+hypernym_prompter = dict(
+    name="np_to_hypernym",
+    target='.json',
+    prompt="""
+    For each of the noun phrases separated by ";" in the folowing text
+    extract, when possible, its one or two words key concept. 
+    Then, using it, generate triplets connecting the concept with an "kind of" link to
+    a salient more general concept or hypernym when available.
     Return your result as JSON list of ("S:","V:","O:") JSON triplets.
     Here is the text:     
     "$text"
@@ -59,6 +73,25 @@ class Factualizer(Agent):
             if not line:
                 continue
             if not line[0].isdigit():
+                continue
+            keepers.append(line)
+        return "\n".join(keepers)
+
+
+class Generalizer(Agent):
+    def generalize(self, nouns):
+        CF = PARAMS()
+        self.set_pattern(hypernym_prompter['prompt'])
+        text = "; ".join(nouns)
+        text = self.ask(text=text)
+        return text
+
+    def post_process(self, _quest, text):
+        lines = text.split('\n')
+        keepers = []
+        for line in lines:
+            line = line.strip()
+            if not line:
                 continue
             keepers.append(line)
         return "\n".join(keepers)
@@ -105,33 +138,50 @@ def standardize(x):
 
 
 def good_noun_phrase(x):
-    x = x.lower().replace(' ','')
-    ok=x.isalpha() and x not in {
+    x = x.lower().replace(' ', '').replace("'", '').replace('-', '')
+    ok = x.isalpha() and x not in {
         'it', 'they', 'he', 'she',
         'someone', 'some', 'all', 'any', 'one'
     }
-    if not ok: print('NO GOOD:',x)
+    if not ok: print('NO GOOD:', x)
     return ok
 
 
 def move_prep(x):
     """When the object starts with an preposition like
     "to" or "in" move it to the end of the verb."""
-    s,v,o=x
-    (a,sp,b)=str.partition(o,' ')
+    s, v, o = x
+    (a, sp, b) = str.partition(o, ' ')
     if a in {
-        'to','from','in','at','by','over',
-        'under','on','off','away','through'
+        'to', 'from', 'in', 'at', 'by', 'over',
+        'under', 'on', 'off', 'away', 'through'
     }:
-        v=v+sp+a
-        o=b
-    return s,v,o
+        v = v + sp + a
+        o = b
+    return s, v, o
 
+
+def as_json(jtext):
+    print('LLM ANSWER:', jtext)
+    jterm = json.loads(jtext)
+    assert jterm
+    return jterm
+
+
+def jterm2svos(jterm):
+    if isinstance(jterm[0], list):
+        svos = [tuple(x) for x in jterm if len(x) == 3 and x[0] != x[2]][1:]
+    else:
+        svos = [tuple(x.values()) for x in jterm if len(x) == 3]
+
+    svos = [(standardize(s), v.lower(), standardize(o)) for (s, v, o) in svos if
+            good_noun_phrase(s) and good_noun_phrase(o)]
+    return svos
 
 
 class RelationBuilder(Agent):
 
-    def run(self, kind, source, so_links=True, save=True, show=True, max_sents=30):
+    def run(self, kind, source, so_links=True, hypernyms=True, save=True, show=True, max_sents=20):
         prompter = svos_prompter
         self.spill()
         self.set_pattern(prompter['prompt'])
@@ -139,25 +189,18 @@ class RelationBuilder(Agent):
         self.outf = CF.OUT + self.name + "_" + prompter['name'] + prompter['target']
         sents = sentify(kind, source)
         sents = [s.strip() for s in sents if plain_sent(s)]
-        sents=sents[0:max_sents]
+        if max_sents:
+            sents = sents[0:max_sents]
 
         text = "\n".join(sents)
         if save:
-            text2file(text,CF.OUT + self.name+"_sents.txt")
+            text2file(text, CF.OUT + self.name + "_sents.txt")
         jtext = self.ask(text=text)
-        print('LLM ANSWER:', jtext)
-        jterm = json.loads(jtext)
-        assert jterm
+        jterm = as_json(jtext)
+
         if save:
 
-            if isinstance(jterm[0], list):
-                svos = [tuple(x) for x in jterm if len(x) == 3 and x[0] != x[2]][1:]
-            else:
-                svos = [tuple(x.values()) for x in jterm if len(x) == 3]
-
-            svos = [(standardize(s), v.lower(), standardize(o)) for (s, v, o) in svos if
-                    good_noun_phrase(s) and good_noun_phrase(o)]
-
+            svos = jterm2svos(jterm)
             svos = [move_prep(x) for x in svos]
 
             if so_links:
@@ -166,6 +209,13 @@ class RelationBuilder(Agent):
                 so_embeddings = so_embedder.embed(so_set)
                 so_knn_links = [(so_set[s], ':', so_set[o]) for (s, r, o) in knn_edges(so_embeddings, k=4)]
                 svos.extend(so_knn_links)
+                if hypernyms:
+                    g = Generalizer(self.name)
+                    hjtext = g.generalize(so_set)
+                    hjterm = as_json(hjtext)
+                    # print('HYPERS:\n', json.dumps(jterm))
+                    hsvos = jterm2svos(hjterm)
+                    svos.extend(hsvos)
             else:
                 # ilinks = [(str(i), '', str(i + 1)) for i in range(len(svos) - 1)]
                 # ilinks.append((str(len(svos) - 1), '', str(0)))
@@ -188,16 +238,6 @@ class RelationBuilder(Agent):
             visualize_rels(svos, fname=fname, show=show)
 
         return jterm
-
-
-def test_relationizer():
-    #page = 'horn_clause'
-    page = 'logic_programming'
-    agent = RelationBuilder(page)
-    text = agent.run('wikipage', page)
-    print(text)
-    # text2file(text, agent.outf)
-    print(agent.dollar_cost())
 
 
 def test_rephraser():
@@ -237,10 +277,21 @@ def test_rephraser3():
     print(agent.dollar_cost())
 
 
+def test_relationizer():
+    # page = 'horn_clause'
+    # page = 'logic_programming'
+    page = "Generative artificial intelligence"
+    agent = RelationBuilder(page)
+    text = agent.run('wikipage', page)
+    # print(text)
+    # text2file(text, agent.outf)
+    print(agent.dollar_cost())
+
+
 if __name__ == "__main__":
     # test_rephraser()
 
     # local_model()
     cheaper_model()
-    #smarter_model()
+    # smarter_model()
     test_relationizer()
