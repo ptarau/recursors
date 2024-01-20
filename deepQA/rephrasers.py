@@ -138,7 +138,7 @@ def standardize(x):
 
 
 def good_noun_phrase(x):
-    x = x.lower().replace(' ', '').replace("'", '').replace('-', '')
+    x = x.lower().replace(' ', '').replace("'", '').replace('-', '').replace('.','')
     ok = x.isalpha() and x not in {
         'it', 'they', 'he', 'she',
         'someone', 'some', 'all', 'any', 'one'
@@ -158,6 +158,7 @@ def move_prep(x):
     }:
         v = v + sp + a
         o = b
+    if v == 'is': v = 'is a'
     return s, v, o
 
 
@@ -186,7 +187,9 @@ class RelationBuilder(Agent):
         self.spill()
         self.set_pattern(prompter['prompt'])
         CF = PARAMS()
-        self.outf = CF.OUT + self.name + "_" + prompter['name'] + prompter['target']
+        self.pname = CF.OUT + self.name + "_" + prompter['name']
+        self.jname = self.pname + prompter['target']
+        self.pname = self.pname + ".pl"
         sents = sentify(kind, source)
         sents = [s.strip() for s in sents if plain_sent(s)]
         if max_sents:
@@ -207,7 +210,7 @@ class RelationBuilder(Agent):
                 so_set = sorted(set(x for (s, _, o) in svos for x in (s, o)))
                 so_embedder = Embedder(None)
                 so_embeddings = so_embedder.embed(so_set)
-                so_knn_links = [(so_set[s], ':', so_set[o]) for (s, r, o) in knn_edges(so_embeddings, k=4)]
+                so_knn_links = [(so_set[s], '~', so_set[o]) for (s, r, o) in knn_edges(so_embeddings, k=4)]
                 svos.extend(so_knn_links)
                 if hypernyms:
                     g = Generalizer(self.name)
@@ -232,7 +235,8 @@ class RelationBuilder(Agent):
                 svos.extend(slinks)
                 svos.extend(olinks)
 
-            to_json(svos, self.outf)
+            to_json(svos, self.jname)
+            to_prolog(svos, self.pname)
 
             fname = CF.OUT + self.name + "_" + prompter['name']
             visualize_rels(svos, fname=fname, show=show)
@@ -240,8 +244,19 @@ class RelationBuilder(Agent):
         return jterm
 
 
-def test_rephraser():
-    page = 'horn_clause'
+def to_prolog(svos, fname):
+    def q(x):
+        x = x.replace("'", ' ')
+        return f"'{x}'"
+
+    with open(fname, 'w') as g:
+        svos=sorted(svos,key=lambda x:x[1])
+        for s, v, o in svos:
+            line = f"rel({q(s)},{q(v)},{q(o)})."
+            print(line, file=g)
+
+
+def test_rephraser( page = 'logic_programming'):
     agent = Factualizer(page)
     text = agent.factify(witt_prompter_txt, 'wikipage', page)
     print(text)
@@ -278,20 +293,19 @@ def test_rephraser3():
 
 
 def test_relationizer():
-    # page = 'horn_clause'
+    page = 'open world assumption'
     # page = 'logic_programming'
-    page = "Generative artificial intelligence"
+    # page = "Generative artificial intelligence"
     agent = RelationBuilder(page)
     text = agent.run('wikipage', page)
     # print(text)
-    # text2file(text, agent.outf)
+    # text2file(text, agent.jname)
     print(agent.dollar_cost())
 
 
 if __name__ == "__main__":
-    # test_rephraser()
-
     # local_model()
-    cheaper_model()
-    # smarter_model()
-    test_relationizer()
+    #cheaper_model()
+    smarter_model()
+    #test_relationizer()
+    test_rephraser()
