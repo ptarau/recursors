@@ -6,7 +6,12 @@ from deepllm.configurator import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-IS_LOCAL_LLM = [False]
+IS_LOCAL_LLM = [True]
+
+#LOCAL_MODEL="vicuna-7b-v1.5"
+LOCAL_MODEL="mistralai/Mistral-7B-Instruct-v0.2"
+LOCAL_URL="http://u.local:8000/v1"  # replace with where the server is
+
 
 GPT_PARAMS = dict(
     TRACE=0,
@@ -18,16 +23,17 @@ GPT_PARAMS = dict(
     OUT='out/',
     # model="gpt-3.5-turbo",
     #model="gpt-4",
-    model='gpt-4-1106-preview',
-    emebedding_model="text-embedding-ada-002",
+    model='gpt-4-turbo-preview',
+    emebedding_model="text-embedding-3-large",
     temperature=0.2,
     n=1,
-    max_toks=4000,
+    max_toks=12000,
     TOP_K=3,
     API_BASE="https://api.openai.com/v1",
     LOCAL_LLM=IS_LOCAL_LLM[0]
 
 )
+
 
 LOCAL_PARAMS = dict(
     TRACE=0,
@@ -36,14 +42,18 @@ LOCAL_PARAMS = dict(
     CACHES="caches/",
     OUT='out/',
     DATA='data/',
-    model="vicuna-7b-v1.5",
-    emebedding_model="vicuna-7b-v1.5",
+
+    model=LOCAL_MODEL,
+    API_BASE=LOCAL_URL,
+
+    #emebedding_model="vicuna-7b-v1.5",
+    emebedding_model="text-embedding-3-large",
+
     temperature=0.2,
     n=1,
-    max_toks=2000,
+    max_toks=12000,
     TOP_K=3,
-    API_BASE="http://u.local:8000/v1",  # replace with where the server is
-    # API_BASE = "http://localhost:8000/v1" # if on the same machine
+
     LOCAL_LLM=IS_LOCAL_LLM[0]
 )
 

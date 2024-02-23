@@ -59,7 +59,7 @@ def clean_quest(x0, sent, context):
     for i in range(1,6):
         x=x.replace(f'A{i}','A').replace(f'Q{i}','Q')
         if x.startswith(f'{i}.'): x=x[3:]
-    print('!!! CLEANING:', x)
+    #print('!!! CLEANING:', x)
 
     assert x, ("Empty!!!!", (sent, context))
 

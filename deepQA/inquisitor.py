@@ -58,7 +58,7 @@ class QuestExplorer:
         self.local = local
         PARAMS()(self)
         self.initiator = " ".join(initiator.replace('.', ' ').strip().split())
-        self.name = self.initiator.lower().strip().replace(' ', '_')
+        self.name = self.initiator.lower().strip().replace(' ', '_')[0:24]
         self.prompter = prompter
         self.pname = prompter['name']
         self.lim = lim

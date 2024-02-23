@@ -63,7 +63,7 @@ def do_answers():
     if agent.initiator is not None:
         st.write('INITIATOR:')
         st.write([agent.initiator])
-    show_mem('SORT_TERM MEMORY:', agent.short_mem)
+    show_mem('SHORT_TERM MEMORY:', agent.short_mem)
     show_mem('LONG_TERM MEMORY:', agent.long_mem)
 
 
@@ -96,3 +96,22 @@ st.sidebar.button("COMPUTE ANSWER", on_click=do_answers)
 st.sidebar.button('CLEAR CACHES', on_click=clear_cache)
 
 # st.sidebar.button('SHOW HISTORY', on_click=show_mem)
+
+"""
+How can Logic Programming enhance Generative AI systems?
+
+How to teach Logic Programming as a first graduate course?
+
+How to best teach Prolog in an undergrad course?
+
+What are the advantages of not using quantifiers explictely  in logic programming languages like Prolog?
+
+What are the advantages of not using quantifiers explicitly in logic programming languages like Prolog?
+
+Can negation as failure be avoided in propositional Horn Clause logic by using 
+integrity constraints (sets of facts that can not be all true at the same time)
+to benefit from the linear complexity of its fixpoint computation?
+
+Would you teach an "Introduction to Prolog" course or an "Introduction to Logic" course
+to help students develop computational thinking?
+"""

@@ -1,8 +1,48 @@
+import os
 from scipy.spatial.distance import cdist
 from sklearn.cluster import KMeans
 import numpy as np
 import openai
-from deepllm.params import to_pickle, from_pickle, PARAMS
+from deepllm.params import to_pickle, from_pickle, PARAMS, ensure_openai_api_key, GPT_PARAMS
+
+
+# LLM API
+
+def llm_embed_old(emebedding_model, sents):
+    response = openai.Embedding.create(
+        input=sents,
+        model=emebedding_model
+    )
+    embeddings = [response['data'][i]['embedding'] for i in range(len(response['data']))]
+    toks = response["usage"]["total_tokens"]
+    return embeddings, toks
+
+
+def llm_embed_new(emebedding_model, sents):
+    CF = PARAMS()
+
+    client = openai.OpenAI(
+        api_key=ensure_openai_api_key(os.getenv("OPENAI_API_KEY")),
+        base_url=GPT_PARAMS['API_BASE']
+    )
+
+    response = client.embeddings.create(
+        input=sents,
+        model=emebedding_model
+    )
+
+    embeddings = [response.data[i].embedding for i in range(len(response.data))]
+    toks = response.usage.total_tokens
+    return embeddings, toks
+
+
+def get_llm_embed_method():
+    try:
+        if int(openai.__version__[0]) > 0:
+            return llm_embed_new
+    except Exception:
+        pass
+    return llm_embed_old
 
 
 class Embedder:
@@ -23,6 +63,13 @@ class Embedder:
         return self.CACHES + self.cache_name + ".pickle"
 
     def embed(self, sents):
+        llm_embed = get_llm_embed_method()
+        embeddings, toks = llm_embed(self.emebedding_model, sents)
+        self.total_toks += toks
+        return embeddings
+
+    """
+    def embed_(self, sents):
         response = openai.Embedding.create(
             input=sents,
             model=self.emebedding_model
@@ -31,6 +78,7 @@ class Embedder:
         toks = response["usage"]["total_tokens"]
         self.total_toks += toks
         return embeddings
+    """
 
     def store(self, sents):
         """
@@ -55,12 +103,30 @@ class Embedder:
         answers = [(sents[i], dm[i]) for (i, _) in rids]
         return answers
 
+    def knns(self, top_k):
+        assert top_k>0,top_k
+        top_k+=1 # as diagonal is excluded
+        sents, embeddings = from_pickle(self.cache())
+        dm = cdist(embeddings, embeddings, metric='cosine')
+        ns = []
+        for i in range(len(sents)):
+            dm_i = [1 - d[i] for d in dm]
+            ids = list(np.argpartition(dm_i, -top_k)[-top_k:])
+            rids = [(j, dm_i[j]) for j in ids]
+            rids.sort(reverse=True, key=lambda x: x[1])
+            knn_i = [(int(j), dm_i[j]) for (j, _) in rids if j!=i]
+            ns.append(knn_i)
+        return ns
+
+    def get_sents(self):
+        return from_pickle(self.cache())[0]
+
     def cluster(self, k=None):
         # Initialize and fit the KMeans model
         sents, embeddings = from_pickle(self.cache())
-        if k is None: k=int(len(sents)**0.55)
+        if k is None: k = int(len(sents) ** 0.55)
         embeddings = np.array(embeddings)
-        sents=np.array(sents)
+        sents = np.array(sents)
         kmeans = KMeans(n_clusters=k, random_state=0, init='k-means++', n_init="auto")
         kmeans.fit(embeddings)
 
@@ -68,7 +134,7 @@ class Embedder:
         labels = kmeans.labels_
 
         # Get the coordinates of the cluster centers
-        cluster_centers = kmeans.cluster_centers_
+        # cluster_centers = kmeans.cluster_centers_
 
         representative_sentences = []
         for i in range(k):
@@ -82,7 +148,7 @@ class Embedder:
             closest_sentence_index = np.argmin(np.linalg.norm(cluster_embeddings - centroid, axis=1))
             representative_sentence = sents[cluster_indices[closest_sentence_index]]
             cluster_sents = [s for s in sents[cluster_indices] if s != representative_sentence]
-            representative_sentences.append((representative_sentence,cluster_sents))
+            representative_sentences.append((representative_sentence, cluster_sents))
 
         return representative_sentences
 
@@ -90,5 +156,5 @@ class Embedder:
         return self.query(quest, top_k)
 
     def dollar_cost(self):
-        if self.LOCAL_LLM: return 0.0
+        # if self.LOCAL_LLM: return 0.0
         return self.total_toks * 0.0004 / 1000

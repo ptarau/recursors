@@ -6,6 +6,72 @@ from deepllm.params import *
 from deepllm.tools import *
 
 
+# LLM interface
+
+def ask_llm_new(model=None, mes=None, temperature=None, n=None):
+    assert None not in (model, mes, temperature, n), (model, mes, temperature, n)
+
+    CF = PARAMS()
+
+    def llm_res(r, i):
+        return r.choices[i].message.content.strip()
+
+    client = openai.OpenAI(
+        api_key=ensure_openai_api_key(os.getenv("OPENAI_API_KEY")),
+        base_url=CF.API_BASE
+    )
+
+    r = client.chat.completions.create(
+        messages=mes,
+        model=model,
+        temperature=temperature,
+        n=n
+    )
+    # print('!!!!>>> OPENAI RESULT:',r)
+
+    results = r.choices
+    pt = r.usage.prompt_tokens
+    ct = r.usage.completion_tokens
+
+    answers = [llm_res(r, i) for i in range(n)]
+
+    return answers, pt, ct
+
+
+def ask_llm_old(model=None, mes=None, temperature=None, n=None):
+    assert None not in (model, mes, temperature, n), (model, mes, temperature, n)
+
+    def llm_res(r, i):
+        return r['choices'][i]['message']['content'].strip()
+
+    r = openai.ChatCompletion.create(
+        model=model,
+        messages=mes,
+        temperature=temperature,
+        seed=42,
+        n=n
+    )
+
+    pt = r['usage']['prompt_tokens']
+    ct = r['usage']['completion_tokens']
+
+    answers = [llm_res(r, i) for i in range(n)]
+
+    return answers, pt, ct
+
+
+def get_ask_llm_method():
+    try:
+        if int(openai.__version__[0]) > 0:
+            return ask_llm_new
+    except Exception:
+        pass
+    return ask_llm_old
+
+
+ask_llm = get_ask_llm_method()
+
+
 # tools
 
 def count_toks(text):
@@ -130,14 +196,13 @@ class Agent:
         self.long_mem = dict()
         self.prompt_toks = 0
         self.compl_toks = 0
-        self.sys_prompt = "I am a helpful assistant."
 
     def to_message(self, quest):
         """
         uses its past interaction in short-term memory
         as context to build the message to be sent to the API
         """
-        mes = [dict(role='system', content=self.sys_prompt)]
+        mes = []
         for (q, a) in self.short_mem.items():
             assert isinstance(q, str), q
             qd = dict(role='user', content=q)
@@ -237,8 +302,6 @@ class Agent:
             assert len(args) == 1, ('BAD args', args)
             quest0 = args[0]
             assert isinstance(quest0, str)
-
-
         else:
             quest0 = h
 
@@ -257,33 +320,32 @@ class Agent:
 
         for attempt in range(max_attempts):
             try:
-                r = openai.ChatCompletion.create(
+                answers, pt, ct = ask_llm(
                     model=self.model,
-                    messages=mes,
+                    mes=mes,
                     temperature=self.temperature,
-                    seed=42,
                     n=self.n
                 )
-                pt = r['usage']['prompt_tokens']
-                ct = r['usage']['completion_tokens']
-
                 break
-            except openai.error.APIConnectionError:
-                raise Exception("Unable to connect to LLM server!")
-
-            except Exception as e:
+            except Exception:
                 if attempt >= max_attempts - 1:
-                    # print('\n\n ***GPT exception:', e)
-                    raise Exception('LLM exception')
+                          print('\n\n ***GPT exception:')
+                          print("LOCAL:",IS_LOCAL_LLM[0])
+                          print('API_BASE:', PARAMS().API_BASE)
+                          print('MODEL:',self.model)
+
+                          #raise Exception('LLM exception')
+                          exit(1)
                 else:
                     print('retrying: ', attempt)
                     time.sleep(0.5)
 
-        def res(i):
-            assert isinstance(i, int), i
-            return r['choices'][i]['message']['content'].strip()
+        # def res(i):
+        #    assert isinstance(i, int), i
+        #    return r['choices'][i]['message']['content'].strip()
 
-        answers = [res(i) for i in range(self.n)]
+        # answers = [llm_res(r,i) for i in range(self.n)]
+
         if self.n > 1:
             answer = "\n".join([spacer(a) for a in answers])  # one answer per line
         else:
@@ -319,6 +381,6 @@ class Agent:
             return (self.prompt_toks * 0.03 + self.compl_toks * 0.06) / 1000
         if self.model == 'gpt-4-32k':
             return (self.prompt_toks * 0.06 + self.compl_toks * 0.12) / 1000
-        if self.model == 'gpt-4-1106-preview':
+        if self.model == 'gpt-4-turbo-preview':
             return (self.prompt_toks * 0.01 + self.compl_toks * 0.03) / 1000
         return 0.0  # case of local LLM

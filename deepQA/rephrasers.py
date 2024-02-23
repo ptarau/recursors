@@ -138,7 +138,7 @@ def standardize(x):
 
 
 def good_noun_phrase(x):
-    x = x.lower().replace(' ', '').replace("'", '').replace('-', '').replace('.','')
+    x = x.lower().replace(' ', '').replace("'", '').replace('-', '').replace('.', '')
     ok = x.isalpha() and x not in {
         'it', 'they', 'he', 'she',
         'someone', 'some', 'all', 'any', 'one'
@@ -250,13 +250,13 @@ def to_prolog(svos, fname):
         return f"'{x}'"
 
     with open(fname, 'w') as g:
-        svos=sorted(svos,key=lambda x:x[1])
+        svos = sorted(svos, key=lambda x: x[1])
         for s, v, o in svos:
             line = f"rel({q(s)},{q(v)},{q(o)})."
             print(line, file=g)
 
 
-def test_rephraser( page = 'logic_programming'):
+def test_rephraser(page='logic_programming'):
     agent = Factualizer(page)
     text = agent.factify(witt_prompter_txt, 'wikipage', page)
     print(text)
@@ -293,8 +293,9 @@ def test_rephraser3():
 
 
 def test_relationizer():
-    page = 'open world assumption'
-    # page = 'logic_programming'
+    #page = 'open world assumption'
+    #page = 'logic_programming'
+    page = 'enshittification'
     # page = "Generative artificial intelligence"
     agent = RelationBuilder(page)
     text = agent.run('wikipage', page)
@@ -305,7 +306,7 @@ def test_relationizer():
 
 if __name__ == "__main__":
     # local_model()
-    #cheaper_model()
+    # cheaper_model()
     smarter_model()
-    #test_relationizer()
-    test_rephraser()
+    test_relationizer()
+    #test_rephraser()

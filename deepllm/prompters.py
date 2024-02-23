@@ -143,6 +143,13 @@ rater_oracle = dict(
     """
 )
 
+summary_maker = dict(
+    name='summary_maker',
+    sum_p="""
+    Make a summary of about $sum_size sentences of the following text and extract $kwd_count keyphrases from the text. Here is the text: $text 
+    """
+)
+
 sci_abstract_maker = dict(
     name='title_and_abstract_maker',
     writer_p="""

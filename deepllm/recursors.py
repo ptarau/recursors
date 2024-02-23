@@ -1,17 +1,16 @@
 from collections import defaultdict
-import json
-
 from deepllm.params import *
 from deepllm.interactors import Agent, clean_up, to_list, from_text
 from deepllm.horn_prover import qprove
 from deepllm.tools import in_stack
 from deepllm.prompters import *
-from deepllm.vis import visualize_rels,browse
+from deepllm.vis import visualize_rels
 
 
 def ask_for_clean(agent, g, context):
     answer = agent.ask(g=g, context=context)
     agent.spill()
+    print('ANSWER:',answer)
 
     xs = from_text(answer)
     res = clean_up(xs)
@@ -147,8 +146,10 @@ class AndOrExplorer:
     def save_results(self):
         pro_name = f'{self.OUT}{self.name}_{self.pname}_{self.lim}'
         mo_name = pro_name + "_model"
+        json_name = pro_name + ".json"
 
         to_prolog(self.clauses, pro_name)
+        to_json(self.clauses,json_name)
 
         if self.logic_model is None:
             self.logic_model = []
@@ -222,6 +223,7 @@ def run_explorer(goal=None, prompter=None, lim=None):
 
 
 def quote(x):
+    x=x.replace('\\','')
     return "'" + x + "'"
 
 
@@ -274,20 +276,20 @@ class SvoMaker:
         try:
             answer = json.loads(answer)
             answer = [x.lower() for x in answer.values()]
-        except Exception as ex:
+        except Exception:
             # print(ex)
             answer = None
         # print('>>>', answer)
         if not answer or (answer and len(answer) != 3):
             answer = ['this', 'is about', sentence.lower()]
-        s,v,o=answer
+        s, v, o = answer
         if not s or not v or not o:
-            answer=['this', 'is about', sentence.lower()]
+            answer = ['this', 'is about', sentence.lower()]
         return answer
 
     def to_svos(self, facts, clauses):
 
-        #jpp(clauses)
+        # jpp(clauses)
         svos = []
         self.resume()
         for fact in facts:
@@ -296,7 +298,7 @@ class SvoMaker:
                 svos.append(('this', 'is mentioned', fact))
                 continue
             svos.append(svo)
-            #print("SVO:", svo)
+            # print("SVO:", svo)
             self.agent.spill()
             s, v, o = svo
             svos.append((fact, 'is about', s))
@@ -309,7 +311,7 @@ class SvoMaker:
                     svos.append((fact, 'depends on', and_))
 
         self.persist()
-        #jpp(svos)
+        # jpp(svos)
         return svos
 
     def resume(self):

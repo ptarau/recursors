@@ -60,7 +60,7 @@ class Rater(AndOrExplorer):
         try:
             f = float(rating)
         except Exception:
-            print('*** UNPARSED RATING:', rating)
+            print('*** UNPARSED RATING:', advice)
             f = 5
         f = f / 100.0
 
@@ -124,6 +124,7 @@ class TruthRater(AndOrExplorer):
         for sent, r in sents_rs: tprint(sent, '->', round(r, 4))
         return ok
 
+
 class AbstractMaker:
     def __init__(self, topic=None, keywords=None):
         assert None not in (topic, keywords)
@@ -138,3 +139,25 @@ class AbstractMaker:
 
     def run(self):
         return ask_for_clean(self.agent, g=self.topic, context=self.keywords)
+
+
+class SummaryMaker:
+    def __init__(self, text, sum_size=8, kwd_count=6, tname=None):
+        self.text = text
+        self.sum_size = sum_size
+        self.kwd_count = kwd_count
+        prompter = summary_maker
+        pname = prompter['name']
+        if tname is None:
+            tname = text[0:20].replace(' ', '_')
+        self.agent = Agent(f'{tname}_{pname}')
+        self.agent.set_pattern(prompter['sum_p'])
+        PARAMS()(self)
+
+    def run(self):
+        answer = self.agent.ask(
+            text=self.text,
+            sum_size=self.sum_size,
+            kwd_count=self.kwd_count
+        )
+        return str(answer)
