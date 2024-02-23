@@ -68,18 +68,6 @@ class Embedder:
         self.total_toks += toks
         return embeddings
 
-    """
-    def embed_(self, sents):
-        response = openai.Embedding.create(
-            input=sents,
-            model=self.emebedding_model
-        )
-        embeddings = [response['data'][i]['embedding'] for i in range(len(response['data']))]
-        toks = response["usage"]["total_tokens"]
-        self.total_toks += toks
-        return embeddings
-    """
-
     def store(self, sents):
         """
         embeds and caches the sentences
@@ -104,8 +92,8 @@ class Embedder:
         return answers
 
     def knns(self, top_k):
-        assert top_k>0,top_k
-        top_k+=1 # as diagonal is excluded
+        assert top_k > 0, top_k
+        top_k += 1  # as diagonal is excluded
         sents, embeddings = from_pickle(self.cache())
         dm = cdist(embeddings, embeddings, metric='cosine')
         ns = []
@@ -114,7 +102,7 @@ class Embedder:
             ids = list(np.argpartition(dm_i, -top_k)[-top_k:])
             rids = [(j, dm_i[j]) for j in ids]
             rids.sort(reverse=True, key=lambda x: x[1])
-            knn_i = [(int(j), dm_i[j]) for (j, _) in rids if j!=i]
+            knn_i = [(int(j), dm_i[j]) for (j, _) in rids if j != i]
             ns.append(knn_i)
         return ns
 

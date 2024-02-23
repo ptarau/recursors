@@ -158,7 +158,8 @@ STATE_LOCAL/
 STATE_SMARTER/
 scratch/
 deepllm/apps/*.html
-docprover/
-deepllm/qgen/
 deepQA/OUT/
+docdiver/in
+docdiver/docs
+
 

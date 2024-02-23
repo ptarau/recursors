@@ -1,2 +1,4 @@
+torch
 streamlit
+sentify
 deepllm
