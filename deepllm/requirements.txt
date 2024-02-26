@@ -4,3 +4,4 @@ scikit-learn
 openai
 tiktoken
 pyvis
+sentence-transformers
