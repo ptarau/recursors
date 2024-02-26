@@ -161,3 +161,20 @@ class SummaryMaker:
             kwd_count=self.kwd_count
         )
         return str(answer)
+
+class PaperReviewer:
+    def __init__(self, text, tname=None):
+        self.text = text
+        prompter = paper_reviewer
+        pname = prompter['name']
+        if tname is None:
+            tname = text[0:20].replace(' ', '_')
+        self.agent = Agent(f'{tname}_{pname}')
+        self.agent.set_pattern(prompter['rev_p'])
+        PARAMS()(self)
+
+    def run(self):
+        answer = self.agent.ask(
+            text=self.text,
+        )
+        return str(answer)

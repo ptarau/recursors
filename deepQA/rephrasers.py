@@ -293,10 +293,12 @@ def test_rephraser3():
 
 
 def test_relationizer():
+    smarter_model() # only GPT4 works!!!
     #page = 'open world assumption'
     #page = 'logic_programming'
-    page = 'enshittification'
+    # page = 'enshittification'
     # page = "Generative artificial intelligence"
+    page='Artificial general intelligence'
     agent = RelationBuilder(page)
     text = agent.run('wikipage', page)
     # print(text)
@@ -305,8 +307,8 @@ def test_relationizer():
 
 
 if __name__ == "__main__":
-    # local_model()
-    # cheaper_model()
-    smarter_model()
+    #local_model()
+    #cheaper_model()
+    #smarter_model()
     test_relationizer()
     #test_rephraser()

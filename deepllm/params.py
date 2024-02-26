@@ -87,10 +87,11 @@ def set_openai_api_key(key):
     assert key
     assert len(key) > 40
     openai.api_key = key
+    os.environ["OPENAI_API_KEY"]=key
 
 
 def ensure_openai_api_key(key):
-    if IS_LOCAL_LLM[0]: return
+    #if IS_LOCAL_LLM[0]: return
     if not openai.api_key:
         set_openai_api_key(key)
 

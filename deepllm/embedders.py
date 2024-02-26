@@ -1,9 +1,19 @@
 import os
+from time import time
 from scipy.spatial.distance import cdist
 from sklearn.cluster import KMeans
 import numpy as np
 import openai
 from deepllm.params import to_pickle, from_pickle, PARAMS, ensure_openai_api_key, GPT_PARAMS
+from sentence_transformers import SentenceTransformer
+
+
+# SBERT API
+
+def sbert_embed(sents):
+    model = SentenceTransformer("all-MiniLM-L6-v2")
+    embeddings = model.encode(sents)
+    return embeddings
 
 
 # LLM API
@@ -60,12 +70,22 @@ class Embedder:
         PARAMS()(self)
 
     def cache(self):
-        return self.CACHES + self.cache_name + ".pickle"
+        loc=""
+        if self.LOCAL_LLM:
+            loc="_local"
+
+        return self.CACHES + self.cache_name + loc + ".pickle"
 
     def embed(self, sents):
-        llm_embed = get_llm_embed_method()
-        embeddings, toks = llm_embed(self.emebedding_model, sents)
-        self.total_toks += toks
+        t1 = time()
+        if self.LOCAL_LLM:
+            embeddings = sbert_embed(sents)
+        else:
+            llm_embed = get_llm_embed_method()
+            embeddings, toks = llm_embed(self.emebedding_model, sents)
+            self.total_toks += toks
+        t2 = time()
+        print('TIME embed:', round(t2 - t1, 2))
         return embeddings
 
     def store(self, sents):
@@ -93,9 +113,11 @@ class Embedder:
 
     def knns(self, top_k):
         assert top_k > 0, top_k
+        t1 = time()
         top_k += 1  # as diagonal is excluded
         sents, embeddings = from_pickle(self.cache())
         dm = cdist(embeddings, embeddings, metric='cosine')
+        t2 = time()
         ns = []
         for i in range(len(sents)):
             dm_i = [1 - d[i] for d in dm]
@@ -104,6 +126,8 @@ class Embedder:
             rids.sort(reverse=True, key=lambda x: x[1])
             knn_i = [(int(j), dm_i[j]) for (j, _) in rids if j != i]
             ns.append(knn_i)
+        t3 = time()
+        print('TIME cdist:', round(t2 - t1, 2), 'sorted knns:', round(t3 - t2))
         return ns
 
     def get_sents(self):

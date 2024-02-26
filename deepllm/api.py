@@ -2,7 +2,7 @@ from deepllm.prompters import *
 from deepllm.params import *
 from deepllm.recursors import AndOrExplorer, show_clauses, show_model, show_svos,vis_svos
 from deepllm.vis import browse
-from deepllm.refiners import Advisor, Rater, TruthRater, AbstractMaker
+from deepllm.refiners import Advisor, Rater, TruthRater, AbstractMaker, SummaryMaker, PaperReviewer
 
 
 def activate_svos():
@@ -16,8 +16,8 @@ def deactivate_svos():
 
 def smarter_model():
     IS_LOCAL_LLM[0] = False
-    GPT_PARAMS['model'] = "gpt-4"
-    #GPT_PARAMS['model'] ='gpt-4-turbo-preview'
+    #GPT_PARAMS['model'] = "gpt-4"
+    GPT_PARAMS['model'] ='gpt-4-turbo-preview'
     openai.api_base = GPT_PARAMS['API_BASE']
     GPT_PARAMS['ROOT'] = "./STATE_SMARTER/"
     PARAMS()

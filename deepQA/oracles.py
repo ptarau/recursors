@@ -41,7 +41,7 @@ class TruthJudge(QuestExplorer):
             for sent, r in sents_rs: tprint(sent, '->', round(r, 4))
             return ok
 
-def test_oracles():
+def test_oracles1():
     tg=TruthJudge(
         initiator="What is SLD resolution?",
         prompter=quest_prompter,
@@ -54,6 +54,21 @@ def test_oracles():
     )
     tg.run()
 
+def test_oracles():
+    local_model()
+    smarter_model()
+    tg=TruthJudge(
+        initiator="Why are stable models useful in Logic Programming?",
+        prompter=quest_prompter,
+        file_type='wikipage',
+        truth_file='Stable model semantics',
+        top_k=3,
+        threshold=0.50,
+        lim=2,
+        local=0
+    )
+    tg.run()
 
 if __name__=="__main__":
+
     test_oracles()

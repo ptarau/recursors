@@ -146,7 +146,21 @@ rater_oracle = dict(
 summary_maker = dict(
     name='summary_maker',
     sum_p="""
-    Make a summary of about $sum_size sentences of the following text and extract $kwd_count keyphrases from the text. Here is the text: $text 
+    You are an expert in understanding documents and summarizing them.
+    Make a summary of $sum_size sentences and extract $kwd_count keyphrases from the following text.
+       
+    $text 
+    """
+)
+
+paper_reviewer = dict(
+    name='paper_reviewer',
+    rev_p="""
+    You are an expert in in the research field of the following scientific paper given to you by a colleague who needs honest feedback about the strength and the weaknesses of the paper.
+    Make a thorough and detailed review of the paper and recommend improvements to it, based on your extensive expertise in its research field.
+    Here is the text of the paper.
+
+    $text 
     """
 )
 
