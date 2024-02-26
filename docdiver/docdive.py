@@ -47,7 +47,7 @@ with st.sidebar:
     else:
         doc_name = st.text_input('Link to document name?', value="")
 
-    sent_count = st.slider('Number of salient sentences to work with?', min_value=4, max_value=400, value=40)
+    sent_count = st.slider('Number of salient sentences to work with?', min_value=3, max_value=300, value=30)
 
     choice = st.sidebar.radio('LLM?', ['GPT-4', 'GPT-3.5', 'Local LLM'], horizontal=True)
 
@@ -90,7 +90,7 @@ def process_it():
         result = sd.summarize(best_k=sent_count)
     elif processing == 'Salient sentences':
         result = dict(
-            (i,s.strip()) for (i,s) in sd.extract_summary(best_k=sent_count)
+            (i, s.strip()) for (i, s) in sd.extract_summary(best_k=sent_count)
         )
     else:
         assert processing == 'Review', processing
