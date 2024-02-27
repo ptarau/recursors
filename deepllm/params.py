@@ -8,10 +8,9 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 IS_LOCAL_LLM = [True]
 
-#LOCAL_MODEL="vicuna-7b-v1.5"
-LOCAL_MODEL="mistralai/Mistral-7B-Instruct-v0.2"
-LOCAL_URL="http://u.local:8000/v1"  # replace with where the server is
-
+# LOCAL_MODEL="vicuna-7b-v1.5"
+LOCAL_MODEL = "mistralai/Mistral-7B-Instruct-v0.2"
+LOCAL_URL = "http://u.local:8000/v1"  # replace with where the server is
 
 GPT_PARAMS = dict(
     TRACE=0,
@@ -22,7 +21,7 @@ GPT_PARAMS = dict(
     DATA="data/",
     OUT='out/',
     # model="gpt-3.5-turbo",
-    #model="gpt-4",
+    # model="gpt-4",
     model='gpt-4-turbo-preview',
     emebedding_model="text-embedding-3-large",
     temperature=0.2,
@@ -33,7 +32,6 @@ GPT_PARAMS = dict(
     LOCAL_LLM=IS_LOCAL_LLM[0]
 
 )
-
 
 LOCAL_PARAMS = dict(
     TRACE=0,
@@ -46,7 +44,7 @@ LOCAL_PARAMS = dict(
     model=LOCAL_MODEL,
     API_BASE=LOCAL_URL,
 
-    #emebedding_model="vicuna-7b-v1.5",
+    # emebedding_model="vicuna-7b-v1.5",
     emebedding_model="text-embedding-3-large",
 
     temperature=0.2,
@@ -70,10 +68,7 @@ def PARAMS():
 
     if not LOCAL_LLM:
         d = GPT_PARAMS
-        #openai.api_base = GPT_PARAMS['API_BASE']
     else:
-        import openai
-        #openai.api_base = LOCAL_PARAMS['API_BASE']
         d = LOCAL_PARAMS
 
     ld = dict((k, d[locations[0]] + v) for (k, v) in d.items() if k in locations[1:])
@@ -83,17 +78,21 @@ def PARAMS():
     return attribute_overrider
 
 
+API_KEY = [os.getenv("OPENAI_API_KEY")]
+
+
 def set_openai_api_key(key):
     assert key
     assert len(key) > 40
-    openai.api_key = key
-    os.environ["OPENAI_API_KEY"]=key
+    API_KEY[0] = key
+    return key
 
 
-def ensure_openai_api_key(key):
-    #if IS_LOCAL_LLM[0]: return
-    if not openai.api_key:
-        set_openai_api_key(key)
+def ensure_openai_api_key():
+    if IS_LOCAL_LLM[0]:
+        return "EMPTY"
+    else:
+        return API_KEY[0]
 
 
 def spacer(text):

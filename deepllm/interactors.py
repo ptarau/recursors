@@ -17,7 +17,7 @@ def ask_llm_new(model=None, mes=None, temperature=None, n=None):
         return r.choices[i].message.content.strip()
 
     client = openai.OpenAI(
-        api_key=ensure_openai_api_key(os.getenv("OPENAI_API_KEY")),
+        api_key=ensure_openai_api_key(),
         base_url=CF.API_BASE
     )
 
@@ -102,7 +102,7 @@ class Agent:
     """
 
     def __init__(self, name):
-        ensure_openai_api_key(os.getenv("OPENAI_API_KEY"))
+        ensure_openai_api_key()
         self.tracker()
         self.cacher()
         self.tuner()

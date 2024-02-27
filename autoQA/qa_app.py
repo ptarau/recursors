@@ -16,7 +16,7 @@ if local:
     LOCAL_PARAMS['API_BASE'] = st.sidebar.text_input('Local LLM server:', value=LOCAL_PARAMS['API_BASE'])
     local_model()
 else:
-    key = os.getenv("OPENAI_API_KEY")
+    key = API_KEY[0]
     if not key:
         key = st.text_input("Enter your OPENAI_API_KEY:", "", type="password")
         if not key:

@@ -32,7 +32,7 @@ def llm_embed_new(emebedding_model, sents):
     CF = PARAMS()
 
     client = openai.OpenAI(
-        api_key=ensure_openai_api_key(os.getenv("OPENAI_API_KEY")),
+        api_key=ensure_openai_api_key(),
         base_url=GPT_PARAMS['API_BASE']
     )
 

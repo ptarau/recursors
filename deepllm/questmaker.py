@@ -6,7 +6,7 @@ def localize(local):
     if local:
         local_model()
     else:
-        key = os.getenv("OPENAI_API_KEY")
+        key = API_KEY[0]
         set_openai_api_key(key)
         # smarter_model()
         cheaper_model()

@@ -23,7 +23,7 @@ with st.sidebar:
             smarter_model()
         else:
             cheaper_model()
-        key = os.getenv("OPENAI_API_KEY")
+        key = API_KEY[0]
         if not key or key == 'EMPTY':
             key = st.text_input("Enter your OPENAI_API_KEY:", "", type="password")
             if not key:
