@@ -23,7 +23,7 @@ def collect_key():
     if not key and not IS_LOCAL_LLM[0]:
         key = st.text_input("Enter your OPENAI_API_KEY:", "", type="password")
         if not key:
-            st.write('Please enter your OPENAI_API_KEY!')
+            st.write('And do not forget to clear it when done with the app!')
             exit(0)
         else:
             set_openai_api_key(key)
