@@ -13,7 +13,7 @@ LOCAL_MODEL = "mistralai/Mistral-7B-Instruct-v0.2"
 LOCAL_URL = "http://u.local:8000/v1"  # replace with where the server is
 
 GPT_PARAMS = dict(
-    TRACE=0,
+    TRACE=1,
     TO_SVOS=False,
     # ROOT="./STATE/",
     ROOT="./STATE_SMARTER/",

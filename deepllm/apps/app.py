@@ -10,6 +10,22 @@ st.title('Streamlit-based [DeepLLM](https://github.com/ptarau/recursors) Demo Cl
 
 prompters = prompter_dict()
 
+def clear_key():
+    API_KEY[0]=""
+
+def collect_key():
+    key = os.getenv("OPENAI_API_KEY")
+    if key and len(key)>40:
+        set_openai_api_key(key)
+    key=ensure_openai_api_key()
+    if not key and not IS_LOCAL_LLM[0]:
+        key = st.text_input("Enter your OPENAI_API_KEY:", "", type="password")
+        if not key:
+            st.write('Please enter your OPENAI_API_KEY!')
+            exit(0)
+        else:
+            set_openai_api_key(key)
+
 with st.sidebar:
     local = st.sidebar.checkbox('Local LLM?', value=False)
 
@@ -23,14 +39,7 @@ with st.sidebar:
             smarter_model()
         else:
             cheaper_model()
-        key = API_KEY[0]
-        if not key or key == 'EMPTY':
-            key = st.text_input("Enter your OPENAI_API_KEY:", "", type="password")
-            if not key:
-                st.write('Please enter your OPENAI_API_KEY!')
-                exit(0)
-            else:
-                set_openai_api_key(key)
+        collect_key()
 
     recursor = st.select_slider('LLM Agent', options=('Advisor', 'Recursor', 'Rater'), value='Recursor')
 
@@ -66,11 +75,6 @@ def visualize(data, new_tab=False):
 
 
 def do_query():
-    if not local and not key:
-        st.write('Please enter your OPENAI_API_KEY!')
-        assert key
-        assert len(key) > 40
-        set_openai_api_key(key)
 
     if svos:
         activate_svos()
@@ -118,3 +122,6 @@ if st.session_state.svo_data is not None and (show_it or browse_it):
     if browse_it:
         new_tab = True
     visualize(st.session_state.svo_data, new_tab=new_tab)
+
+if not IS_LOCAL_LLM[0]:
+    st.sidebar.button('Clear OpenAI key!', on_click=clear_key)

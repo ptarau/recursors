@@ -12,24 +12,32 @@ st.sidebar.title(
 
 local = st.sidebar.checkbox('Local LLM?', value=False)
 
-if local:
-    LOCAL_PARAMS['API_BASE'] = st.sidebar.text_input('Local LLM server:', value=LOCAL_PARAMS['API_BASE'])
-    local_model()
-else:
-    key = API_KEY[0]
-    if not key:
+def clear_key():
+    API_KEY[0]=""
+
+def collect_key():
+    key = os.getenv("OPENAI_API_KEY")
+    if key and len(key)>40:
+        set_openai_api_key(key)
+    key=ensure_openai_api_key()
+    if not key and not IS_LOCAL_LLM[0]:
         key = st.text_input("Enter your OPENAI_API_KEY:", "", type="password")
         if not key:
-            # st.write('Please enter your OPENAI_API_KEY!')
+            st.write('Please enter your OPENAI_API_KEY!')
             exit(0)
         else:
             set_openai_api_key(key)
 
+if local:
+    LOCAL_PARAMS['API_BASE'] = st.sidebar.text_input('Local LLM server:', value=LOCAL_PARAMS['API_BASE'])
+    local_model()
+else:
     choice = st.sidebar.radio('OpenAI LLM', ['GPT-4', 'GPT-3.5'])
     if choice == 'GPT-4':
         smarter_model()
     else:
         cheaper_model()
+    collect_key()
 
 
 def clean_quest(text):
@@ -40,8 +48,7 @@ chat_name = st.sidebar.text_input('Chat name?', 'autoQA')
 
 question = clean_quest(st.sidebar.text_area("ENTER QUESTION:", key='quest'))
 
-agent = None
-
+agent=None
 
 def do_answers():
     global agent
@@ -59,7 +66,7 @@ def do_answers():
 
     st.session_state.quest = new_question
 
-    mem_stats()
+    mem_stats(agent)
     if agent.initiator is not None:
         st.write('INITIATOR:')
         st.write([agent.initiator])
@@ -76,7 +83,7 @@ def clear_cache():
     st.cache_resource.clear()
 
 
-def mem_stats():
+def mem_stats(agent):
     st.write('SHORT_TERM_MEMORY SIZE:',
              len(agent.short_mem),
              'LONG_TERM_MEMORY SIZE:',
@@ -94,6 +101,9 @@ def show_mem(name, mem):
 st.sidebar.button("COMPUTE ANSWER", on_click=do_answers)
 
 st.sidebar.button('CLEAR CACHES', on_click=clear_cache)
+
+if not IS_LOCAL_LLM[0]:
+    st.sidebar.button('Clear OpenAI key!', on_click=clear_key)
 
 
 # st.sidebar.button('SHOW HISTORY', on_click=show_mem)
