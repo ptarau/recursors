@@ -111,7 +111,7 @@ class Agent:
         self.CACHES = None
         self.TRACE = None
         self.initiator = None
-        PARAMS()(self)
+        PARAMS()(self) # overrides defaults from global params
         # print('AGENT !!!!',self.__dict__)
 
     def tuner(self,
@@ -147,7 +147,7 @@ class Agent:
         if self.name is None: return
         if not self.short_mem and not self.long_mem: return
 
-        if self.TRACE: print('PERSISTING:', self.cache_name())
+        print('PERSISTING:', self.cache_name())
 
         kvs = []
         d = self.__dict__
@@ -196,6 +196,7 @@ class Agent:
         self.long_mem = dict()
         self.prompt_toks = 0
         self.compl_toks = 0
+        self.processing_time=0
 
     def to_message(self, quest):
         """
@@ -296,7 +297,7 @@ class Agent:
         while memoizing the prompt-answer pair and
         computing the token costs
         """
-
+        t1=time.time()
         h = tuple(kwargs.items())
         if not h:
             assert len(args) == 1, ('BAD args', args)
@@ -359,6 +360,8 @@ class Agent:
 
         self.short_mem[quest] = answer
         assert isinstance(answer, str), answer
+        t2=time.time()
+        self.processing_time=round(t2-t1,2)
         return answer
 
     def post_process(self, _quest0, answer):

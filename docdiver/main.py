@@ -1,7 +1,6 @@
 from time import time
 import networkx as nx
 from deepllm.embedders import Embedder
-from deepllm.refiners import SummaryMaker,PaperReviewer
 from deepllm.api import *
 from sentify.main import sentify
 
@@ -31,6 +30,8 @@ class SourceDoc:
         assert top_k > 0, top_k
         self.top_k = top_k
         self.trace = trace
+        self.costs=0
+        self.time=0
         self.saved_file_name = as_local_file_name(
             self.doc_type,
             self.doc_name,
@@ -43,6 +44,7 @@ class SourceDoc:
         )
         self.emb = Embedder('out/' + doc_name)
         self.emb.store(sents)
+
 
     def get_sents(self):
         return self.emb.get_sents()
@@ -65,6 +67,7 @@ class SourceDoc:
         sents = self.get_sents()
         t3 = time()
         print('TIME knns:', round(t2 - t1, 2), 'ranking:', round(t3 - t2, 2))
+        self.time=round(t3-t1,2)
         return [(i, sents[i]) for i in best_ids]
 
     def summarize(self, best_k=8):
@@ -80,6 +83,8 @@ class SourceDoc:
         sm = SummaryMaker(text, sum_size=best_k, kwd_count=8)
         text = sm.run()
         if text.startswith('Summary'): return text
+        self.costs += sm.dollar_cost()
+        self.time+=sm.agent.processing_time
         return 'Summary: ' + text
 
     def review(self, best_k=200):
@@ -94,12 +99,30 @@ class SourceDoc:
         text = " ".join(sents)
         pr = PaperReviewer(text)
         text = pr.run()
+        self.costs += pr.dollar_cost()
+        self.time+= pr.agent.processing_time
         return 'Review: ' + text
 
-    def ask(self, query):
-        sents_rs = self.emb.query(query, self.top_k)
-        print('COSTS:', self.emb.dollar_cost())
+    def retrieve(self, query, top_k=None):
+        if top_k is None: top_k = self.top_k
+
+        sents_rs = self.emb.query(query, top_k)
+        print('EMBEDDING COSTS:', self.emb.dollar_cost())
         return [sent for (sent, r) in sents_rs]
+
+    def ask(self, quest, top_k=20):
+        t1=time()
+        sents = self.retrieve(quest, top_k=top_k)
+        text = " ".join(sents)
+        agent = Retrievalrefiner(text, quest, tname=self.saved_file_name)
+        answer_plus = agent.run()
+        answer,follow_up=answer_plus.split('==>')
+        answer=answer.strip()
+        follow_up=follow_up.strip().replace('Follow-up question:','')
+        self.costs+=agent.dollar_cost()
+        t2=time()
+        self.time=round(t2-t1,2)
+        return answer,follow_up
 
     def heads(self):
         centers = self.emb.cluster()
@@ -107,16 +130,13 @@ class SourceDoc:
         return centers
 
 
-def test_quest(doc='red.txt', quest='Who concealed his visage?'):
-    sd = SourceDoc(doc_type='txt', doc_name=doc, threshold=0.5, top_k=3)
-    a = sd.ask(quest)
-    print('Q:', quest)
-    print('A:', a)
-    print('---------\n')
-    for x in sd.heads(): jpp(x)
+    def dollar_cost(self):
+        self.costs+=self.emb.dollar_cost()
+        return self.costs
 
 
-def test_main(doc='https://arxiv.org/pdf/2306.14077.pdf'):
+
+def test_main1(doc='https://arxiv.org/pdf/2306.14077.pdf'):
     # smarter_model()
     # cheaper_model()
     local_model()
@@ -125,7 +145,28 @@ def test_main(doc='https://arxiv.org/pdf/2306.14077.pdf'):
     print(sents)
 
 
+def test_main(
+    doc='https://arxiv.org/pdf/2306.14077.pdf',
+    quest='How is Horn Clause logic used to refine interaction with LLM dialog threads?'
+):
+    print("DOC:",doc)
+    print('QUEST:',quest)
+    #smarter_model()
+    cheaper_model()
+    # local_model()
+    sd = SourceDoc(doc_type='url', doc_name=doc, threshold=0.5, top_k=3)
+    sents = sd.retrieve(quest, top_k=20)
+    print('RELEVANT SENTENCES:\n',len(sents))
+    for s in sents:
+        print(s)
+    print('-'*20,'\n')
+    answer,follow_up = sd.ask(quest, top_k=20)
+    print('ANSWER:\n', answer)
+    print()
+    print('FOLLOW_UP QUESTION:\n', follow_up)
+    print()
+    print("COSTS: $",round(sd.dollar_cost(),4))
+
+
 if __name__ == "__main__":
     test_main()
-    # test_quest(doc='summarize.txt', quest='How is text graph built and ranked?')
-    # test_main(doc='sein.txt', quest="Where the idea that subject and object are inseparable leads in Heidegger's Zein und Zeit?")

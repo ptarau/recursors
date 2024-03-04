@@ -95,9 +95,11 @@ st.sidebar.button("COMPUTE ANSWER", on_click=do_answers)
 
 st.sidebar.button('CLEAR CACHES', on_click=clear_cache)
 
+
 # st.sidebar.button('SHOW HISTORY', on_click=show_mem)
 
-"""
+def examples():
+    return """
 How can Logic Programming enhance Generative AI systems?
 
 How to teach Logic Programming as a first graduate course?

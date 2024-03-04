@@ -137,15 +137,19 @@ class AbstractMaker:
         self.agent.set_pattern(prompter['writer_p'])
         PARAMS()(self)
 
+    def dollar_cost(self):
+        return self.agent.dollar_cost()
+
     def run(self):
         return ask_for_clean(self.agent, g=self.topic, context=self.keywords)
 
 
 class SummaryMaker:
-    def __init__(self, text, sum_size=8, kwd_count=6, tname=None):
+    def __init__(self, text, sum_size=8, kwd_count=6, tname=None, cache=True):
         self.text = text
         self.sum_size = sum_size
         self.kwd_count = kwd_count
+        self.cache = cache
         prompter = summary_maker
         pname = prompter['name']
         if tname is None:
@@ -153,6 +157,10 @@ class SummaryMaker:
         self.agent = Agent(f'{tname}_{pname}')
         self.agent.set_pattern(prompter['sum_p'])
         PARAMS()(self)
+        if self.cache: self.agent.resume()
+
+    def dollar_cost(self):
+        return self.agent.dollar_cost()
 
     def run(self):
         answer = self.agent.ask(
@@ -160,11 +168,13 @@ class SummaryMaker:
             sum_size=self.sum_size,
             kwd_count=self.kwd_count
         )
+        if self.cache: self.agent.persist()
         return str(answer)
 
 class PaperReviewer:
-    def __init__(self, text, tname=None):
+    def __init__(self, text, tname=None, cache=True):
         self.text = text
+        self.cache = cache
         prompter = paper_reviewer
         pname = prompter['name']
         if tname is None:
@@ -172,9 +182,39 @@ class PaperReviewer:
         self.agent = Agent(f'{tname}_{pname}')
         self.agent.set_pattern(prompter['rev_p'])
         PARAMS()(self)
+        if self.cache: self.agent.resume()
+
+    def dollar_cost(self):
+        return self.agent.dollar_cost()
 
     def run(self):
         answer = self.agent.ask(
             text=self.text,
         )
+        if self.cache: self.agent.persist()
+        return str(answer)
+
+class Retrievalrefiner:
+    def __init__(self, text, quest, tname=None, cache=True):
+        self.text = text
+        self.quest=quest
+        self.cache=cache
+        prompter = retrieval_refiner
+        pname = prompter['name']
+        if tname is None:
+            tname = text[0:20].replace(' ', '_')
+        self.agent = Agent(f'{tname}_{pname}')
+        self.agent.set_pattern(prompter['rev_p'])
+        PARAMS()(self)
+        if self.cache: self.agent.resume()
+
+    def dollar_cost(self):
+        return self.agent.dollar_cost()
+
+    def run(self):
+        answer = self.agent.ask(
+            text=self.text,
+            quest=self.quest
+        )
+        if self.cache: self.agent.persist()
         return str(answer)

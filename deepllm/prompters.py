@@ -164,6 +164,24 @@ paper_reviewer = dict(
     """
 )
 
+
+retrieval_refiner = dict(
+    name='retrieval_refiner',
+    rev_p="""
+    You are given a text containing sentences extracted from a document, all related to a question "$quest?" .
+    Read the text carefully with the question in mind.
+     
+    Here is the text of the paper, ending with ||.
+
+    $text||
+    
+    Once more, here is the question "$quest" that you will need to answer, together with a follow-up question
+    about the text that comes to your mind. Separate your answer and your follow-up question with the string "==>". 
+    """
+)
+
+
+
 sci_abstract_maker = dict(
     name='title_and_abstract_maker',
     writer_p="""
