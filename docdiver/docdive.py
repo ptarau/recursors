@@ -84,15 +84,23 @@ with st.sidebar:
 
     quest = st.text_area(label='Question', value="", key='quest')
 
-key = os.getenv("OPENAI_API_KEY")
-if not key or key == 'EMPTY':
-    key = st.text_input("Enter your OPENAI_API_KEY:", "", type="password")
-    if not key:
-        st.write('Please enter your OPENAI_API_KEY!')
-        exit(0)
-    else:
-        set_openai_api_key(key)
+def clear_key():
+    API_KEY[0]=""
 
+def collect_key():
+    key = os.getenv("OPENAI_API_KEY")
+    if key and len(key)>40:
+        set_openai_api_key(key)
+    key=ensure_openai_api_key()
+    if not key and not IS_LOCAL_LLM[0]:
+        key = st.text_input("Enter your OPENAI_API_KEY:", "", type="password")
+        if not key:
+            st.write('Please enter your OPENAI_API_KEY!')
+            exit(0)
+        else:
+            set_openai_api_key(key)
+
+collect_key()
 
 def process_it():
     global history
@@ -105,7 +113,7 @@ def process_it():
         return
 
     sd = SourceDoc(doc_type=doc_type, doc_name=doc_name, threshold=0.5, top_k=3)
-    result=""
+    result = ""
 
     if processing == 'Show history':
         for k, v in history.items():
@@ -147,3 +155,5 @@ def process_it():
 
 
 st.sidebar.button('Proceed!', on_click=process_it)
+if not IS_LOCAL_LLM[0]:
+    st.sidebar.button('Clear OpenAI key!', on_click=clear_key)
