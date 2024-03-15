@@ -20,5 +20,6 @@ def run_all():
 
 if __name__ == "__main__":
     #smarter_model()
-    local_model()
+    cheaper_model()
+    #local_model()
     run_all()
