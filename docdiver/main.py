@@ -117,6 +117,7 @@ class SourceDoc:
     def retrieve(self, query, top_k=None):
         if top_k is None: top_k = self.top_k
 
+        print('!!! QUERY:',query)
         sents_rs = self.emb.query(query, top_k)
         print('EMBEDDING COSTS:', self.emb.dollar_cost())
         return [sent for (sent, r) in sents_rs]
@@ -147,8 +148,8 @@ class SourceDoc:
 
 def test_main1(doc='https://arxiv.org/pdf/2306.14077.pdf'):
     # smarter_model()
-    # cheaper_model()
-    local_model()
+    cheaper_model()
+    # local_model()
     sd = SourceDoc(doc_type='url', doc_name=doc, threshold=0.5, top_k=3)
     sents = sd.summarize(best_k=20)
     print(sents)
@@ -178,4 +179,4 @@ def test_main(
 
 
 if __name__ == "__main__":
-    test_main()
+    test_main1()

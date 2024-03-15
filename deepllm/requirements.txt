@@ -1,7 +1,7 @@
 numpy
 scipy
-scikit-learn
 openai
 tiktoken
 pyvis
 sentence-transformers
+vecstore
