@@ -1,3 +1,4 @@
 deepllm
 sentify
+vecstore
 streamlit
