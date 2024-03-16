@@ -55,7 +55,7 @@ with st.sidebar:
         doc_name = st.text_input('Link to document name?', value="")
 
     sent_count = st.slider('Number of salient sentences to work with?',
-                           min_value=3, max_value=300, value=30)
+                           min_value=3, max_value=300, value=100)
 
     choice = st.sidebar.radio('LLM?', ['GPT-4', 'GPT-3.5', 'Local LLM'], horizontal=True)
 
@@ -76,8 +76,7 @@ with st.sidebar:
                                    'Extract salient sentences',
                                    'Review',
                                    'Talk about the document',
-                                   'Show history',
-                                   'Clear history'
+                                   'Show history'
                                    ],
                                   horizontal=True
                                   )
@@ -106,6 +105,20 @@ def collect_key():
 collect_key()
 
 
+def clear_it():
+    global history
+    if clearing == 'History':
+        history = dict()
+        st.session_state.history = history
+        st.write('Cleared history')
+    elif clearing == 'Caches':
+        dirs = clear_caches()
+        st.write('REMOVED:', dirs)
+    elif clearing == 'Openai key':
+        clear_key()
+        st.write('Cleared key')
+
+
 def process_it():
     global history
     if not doc_name:
@@ -124,12 +137,6 @@ def process_it():
             st.write(k)
             st.write(v)
             st.write()
-
-    elif processing == 'Clear history':
-        history = dict()
-        st.session_state.history = history
-
-
     elif processing == 'Summary':
         result = sd.summarize(best_k=sent_count)
         history[processing] = result
@@ -154,9 +161,17 @@ def process_it():
 
     st.session_state.history = history
     st.write(result)
-    st.write(f'COSTS: ${round(sd.dollar_cost(), 4)},  TIME: {sd.time} seconds')
+    st.write(f'COSTS: ${round(sd.dollar_cost(), 4)}')
+    st.write('TIMES:', sd.times)
 
 
 st.sidebar.button('Proceed!', on_click=process_it)
-if not IS_LOCAL_LLM[0]:
-    st.sidebar.button('Clear OpenAI key!', on_click=clear_key)
+clearing = st.sidebar.radio('What to clear?',
+                            [
+                                'History',
+                                'Caches',
+                                'Openai key'
+                            ],
+                            horizontal=True
+                            )
+st.sidebar.button('Clear!', on_click=clear_it)

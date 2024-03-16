@@ -1,5 +1,6 @@
 import os
 from time import time
+from collections import Counter
 import openai
 from deepllm.params import to_pickle, from_pickle, PARAMS, ensure_openai_api_key, GPT_PARAMS
 from sentence_transformers import SentenceTransformer
@@ -66,6 +67,7 @@ class Embedder:
         self.emebedding_model = None
         self.LOCAL_LLM = None
         self.vstore = None
+        self.times = Counter()
         PARAMS()(self)
 
     def cache(self, ending='.pickle'):
@@ -79,12 +81,15 @@ class Embedder:
         t1 = time()
         if self.LOCAL_LLM:
             embeddings = sbert_embed(sents)
+            kind = 'sbert'
         else:
             llm_embed = get_llm_embed_method()
             embeddings, toks = llm_embed(self.emebedding_model, sents)
             self.total_toks += toks
+            kind = 'llm'
         t2 = time()
-        print('TIME embed:', round(t2 - t1, 2))
+
+        self.times[kind + '_embed'] += t2 - t1
         return embeddings
 
     def store(self, sents):
@@ -98,7 +103,8 @@ class Embedder:
         if self.vstore is None:
             self.vstore = VecStore(fb, dim=dim)
         self.vstore.add(embeddings)
-        #print('!!! SAVING SOTORE TO:', f, fb)
+        self.times = self.times + self.vstore.times
+
         to_pickle((dim, sents), f)
         self.vstore.save()
 
@@ -108,6 +114,7 @@ class Embedder:
         dim, sents = from_pickle(f)
         self.vstore = VecStore(fb, dim=dim)
         self.vstore.load()
+
         return sents
 
     def query(self, query_sent, top_k):
@@ -117,23 +124,19 @@ class Embedder:
         sents = self.load()
         query_embeddings = self.embed([query_sent])
         knn_pairs = self.vstore.query_one(query_embeddings[0], k=top_k)
+        self.times = self.times + self.vstore.times
 
-        print('!!! KNN PAIRS:', knn_pairs)
+
         answers = [(sents[i], r) for (i, r) in knn_pairs]
         return answers
 
     def knns(self, top_k):
-
         assert top_k > 0, top_k
-        t1 = time()
         self.load()
-        t2 = time()
         assert self.vstore is not None
-        print('VSTORE:',self.vstore,type(self.vstore))
         knn_pairs = self.vstore.all_knns(k=top_k)
+        self.times = self.times + self.vstore.times
 
-        t3 = time()
-        print('TIME knn_pairs:', round(t2 - t1, 2), 'sorted knns:', round(t3 - t2))
         return knn_pairs
 
     def get_sents(self):

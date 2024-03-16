@@ -15,6 +15,7 @@ def test_embedders():
     rs = e(q, 2)
     for r in rs: print(r)
     print('COST:', e.dollar_cost())
+    print('TIMES:',e.times)
     return True
 
 

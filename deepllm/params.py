@@ -1,4 +1,5 @@
 import os
+import shutil
 import pickle
 import json
 import openai
@@ -15,7 +16,7 @@ LOCAL_URL = "http://u.local:8000/v1"  # replace with where the server is
 GPT_PARAMS = dict(
     TRACE=0,
     TO_SVOS=False,
-    # ROOT="./STATE/",
+    ROOT_="./STATE/",
     ROOT="./STATE_SMARTER/",
     CACHES="caches/",
     DATA="data/",
@@ -115,6 +116,26 @@ def exists_file(fname):
 
 def remove_file(fname):
     return os.remove(fname)
+
+
+def remove_dir(dname):
+    if exists_file(dname):
+        shutil.rmtree(dname)
+
+
+def copy_file(src, dst):
+    return shutil.copyfile(src, dst)
+
+
+def clear_caches():
+    dirs=[
+        GPT_PARAMS['ROOT'],
+        GPT_PARAMS['ROOT_'],
+        LOCAL_PARAMS['ROOT']
+    ]
+    for d in dirs:
+        remove_dir(d)
+    return dirs
 
 
 def to_json(obj, fname, indent=2):

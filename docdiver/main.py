@@ -1,4 +1,5 @@
 from time import time
+from collections import Counter
 import networkx as nx
 from deepllm.embedders import Embedder
 from deepllm.api import *
@@ -31,31 +32,38 @@ class SourceDoc:
         self.top_k = top_k
         self.trace = trace
         self.costs = 0
-        self.time = 0
+        self.times = Counter()
         self.saved_file_name = as_local_file_name(
             self.doc_type,
             self.doc_name,
             saved_file_name
         )
+        t1 = time()
         sents = sentify(
             doc_type,
             doc_name,
             store='in/' + self.saved_file_name
         )
+        t2 = time()
         self.emb = Embedder('out/' + doc_name)
+        self.times = Counter()
         self.emb.store(sents)
+        self.times['sentify'] += t2 - t1
 
     def get_sents(self):
-        return self.emb.get_sents()
+        res = self.emb.get_sents()
+        self.times = self.times + self.emb.times
+        return res
 
     def get_knns(self):
-        return self.emb.knns(self.top_k)
+        res = self.emb.knns(self.top_k)
+        self.times = self.times + self.emb.times
+        return res
 
     def extract_summary(self, best_k=10):
-        t1 = time()
         knns = self.get_knns()
-        t2 = time()
         g = nx.DiGraph()
+        t1 = time()
         for i, ns in enumerate(knns):
             for (n, r) in ns:
                 g.add_edge(i, n, weight=r)
@@ -64,10 +72,11 @@ class SourceDoc:
         ranked = ranked[0:best_k]
         best_ids = sorted(i for (i, _) in ranked)
         sents = self.get_sents()
-        t3 = time()
-        print('TIME knns:', round(t2 - t1, 2), 'ranking:', round(t3 - t2, 2))
-        self.time = round(t3 - t1, 2)
-        return [(i, sents[i]) for i in best_ids]
+        res = [(i, sents[i]) for i in best_ids]
+        t2 = time()
+        self.times['extract_summary'] = t2 - t1
+        print('SALIENT SENTENCES:', len(res), 'out of:', len(sents))
+        return res
 
     def summarize(self, best_k=8, mark=1):
         def emphasize(w, important):
@@ -75,7 +84,6 @@ class SourceDoc:
             return f":green[{w}]"
 
         id_sents = self.extract_summary(best_k=best_k)
-        print('RAW_SENTS:', len(id_sents))
 
         if self.trace:
             for x in id_sents:
@@ -87,20 +95,19 @@ class SourceDoc:
         sm = SummaryMaker(text, sum_size=best_k, kwd_count=8)
         text = sm.run()
         self.costs += sm.dollar_cost()
-        self.time += sm.agent.processing_time
+        self.times['llm_summary_maker_agent'] += sm.agent.processing_time
         source_words = set(w.lower() for s in sents for w in s.split())
         target_words = text.split()
         if mark:
             target_words = [emphasize(w, source_words) for w in target_words]
             text = " ".join(target_words)
-            #text = text.replace(' .', '. ').replace(' ?', '? ')
+            # text = text.replace(' .', '. ').replace(' ?', '? ')
             text = text.replace('Keyphrases:', '\n\nKeyphrases:')
         if text.startswith('Summary'): return text
         return 'Summary: ' + text
 
     def review(self, best_k=200):
         id_sents = self.extract_summary(best_k)
-        print('RAW_SENTS:', len(id_sents))
 
         if self.trace:
             for x in id_sents:
@@ -111,15 +118,15 @@ class SourceDoc:
         pr = PaperReviewer(text)
         text = pr.run()
         self.costs += pr.dollar_cost()
-        self.time += pr.agent.processing_time
+        self.times['llm_reviewer_agent'] += pr.agent.processing_time
         return 'Review: ' + text
 
     def retrieve(self, query, top_k=None):
         if top_k is None: top_k = self.top_k
 
-        print('!!! QUERY:',query)
         sents_rs = self.emb.query(query, top_k)
-        print('EMBEDDING COSTS:', self.emb.dollar_cost())
+        self.times = self.times + self.emb.times
+
         return [sent for (sent, r) in sents_rs]
 
     def ask(self, quest, top_k=20):
@@ -133,13 +140,8 @@ class SourceDoc:
         follow_up = follow_up.strip().replace('Follow-up question:', '')
         self.costs += agent.dollar_cost()
         t2 = time()
-        self.time = round(t2 - t1, 2)
+        self.times['llm_query_agent'] = t2 - t1
         return answer, follow_up
-
-    def heads(self):
-        centers = self.emb.cluster()
-        # print("!!!!",centers)
-        return centers
 
     def dollar_cost(self):
         self.costs += self.emb.dollar_cost()
@@ -156,9 +158,11 @@ def test_main1(doc='https://arxiv.org/pdf/2306.14077.pdf'):
 
 
 def test_main(
+
     doc='https://arxiv.org/pdf/2306.14077.pdf',
     quest='How is Horn Clause logic used to refine interaction with LLM dialog threads?'
 ):
+    clear_caches()
     print("DOC:", doc)
     print('QUEST:', quest)
     # smarter_model()
@@ -176,7 +180,10 @@ def test_main(
     print('FOLLOW_UP QUESTION:\n', follow_up)
     print()
     print("COSTS: $", round(sd.dollar_cost(), 4))
+    print("TIMES:")
+    for k, v in sd.times.items():
+        print(k, '=', v)
 
 
 if __name__ == "__main__":
-    test_main1()
+    test_main()
