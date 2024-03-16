@@ -1,4 +1,5 @@
+streamlit
 deepllm
 sentify
 vecstore
-streamlit
+
