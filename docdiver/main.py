@@ -38,17 +38,19 @@ class SourceDoc:
             self.doc_name,
             saved_file_name
         )
-        t1 = time()
-        sents = sentify(
+
+        sents,t_convert,t_segment = sentify(
             doc_type,
             doc_name,
-            store='in/' + self.saved_file_name
+            store='in/' + self.saved_file_name,
+            return_timings=True
         )
-        t2 = time()
+
         self.emb = Embedder('out/' + doc_name)
         self.times = Counter()
         self.emb.store(sents)
-        self.times['sentify'] += t2 - t1
+        self.times['sentify_conversion'] +=t_convert
+        self.times['sentify_segmentation'] += t_segment
 
     def get_sents(self):
         res = self.emb.get_sents()

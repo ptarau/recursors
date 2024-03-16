@@ -35,7 +35,7 @@ def save_uploaded_file():
 
 with st.sidebar:
     st.write('**DocDiver is a DeepLLM application**')
-    doc_type = st.radio('Document type?', ('url', 'local pdf or txt file'), index=0, horizontal=True)
+    doc_type = st.radio('Document type?', ('local pdf or txt file','url'), index=0, horizontal=True)
 
     if doc_type == 'local pdf or txt file':
         st.session_state.uploaded_file = st.file_uploader(
