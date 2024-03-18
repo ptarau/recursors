@@ -90,8 +90,11 @@ class Embedder:
             kind = 'llm'
         t2 = time()
 
-        self.times[kind + '_embed'] += t2 - t1
+        self.times[kind + '_embed'] = t2 - t1
         return embeddings
+
+    def get_times(self):
+        return self.times | self.vstore.times
 
     def store(self, sents):
         """
@@ -104,7 +107,6 @@ class Embedder:
         if self.vstore is None:
             self.vstore = VecStore(fb, dim=dim)
         self.vstore.add(embeddings)
-        self.times = self.times + self.vstore.times
 
         to_pickle((dim, sents), f)
         self.vstore.save()
@@ -125,8 +127,6 @@ class Embedder:
         sents = self.load()
         query_embeddings = self.embed([query_sent])
         knn_pairs = self.vstore.query_one(query_embeddings[0], k=top_k)
-        self.times = self.times + self.vstore.times
-
 
         answers = [(sents[i], r) for (i, r) in knn_pairs]
         return answers
@@ -136,7 +136,6 @@ class Embedder:
         self.load()
         assert self.vstore is not None
         knn_pairs = self.vstore.all_knns(k=top_k)
-        self.times = self.times + self.vstore.times
 
         return knn_pairs
 

@@ -262,7 +262,7 @@ def to_prolog(svos, fname):
             print(line, file=g)
 
 
-def test_rephraser(page='logic_programming'):
+def test_factualizer1(page='logic_programming'):
     agent = Factualizer(page)
     text = agent.factify(witt_prompter_txt, 'wikipage', page)
     print(text)
@@ -270,7 +270,7 @@ def test_rephraser(page='logic_programming'):
     print('COST:', agent.dollar_cost())
 
 
-def test_rephraser1():
+def test_factualizer2():
     page = 'logic_programming'
     agent = Factualizer(page)
     text = agent.factify(witt_prompter_txt, 'wikipage', page)
@@ -279,7 +279,7 @@ def test_rephraser1():
     print('COST:', agent.dollar_cost())
 
 
-def test_rephraser2():
+def test_factualizer3():
     # url = 'https://arxiv.org/pdf/1904.11694.pdf'
     url = 'https://arxiv.org/pdf/1912.10824.pdf'
     agent = Factualizer('url_dif')

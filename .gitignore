@@ -156,10 +156,11 @@ cython_debug/
 STATE/
 STATE_LOCAL/
 STATE_SMARTER/
+UPLOAD_DIR/
+SENT_CACHE/
 scratch/
 deepllm/apps/*.html
 deepQA/OUT/
-docdiver/in
 docdiver/docs
 
 

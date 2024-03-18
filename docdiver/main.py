@@ -5,6 +5,8 @@ from deepllm.embedders import Embedder
 from deepllm.api import *
 from sentify.main import sentify
 
+SENT_CACHE = './SENT_CACHE/'
+
 
 def as_local_file_name(doc_type, doc_name, saved_file_name):
     if not saved_file_name:
@@ -33,6 +35,7 @@ class SourceDoc:
         self.trace = trace
         self.costs = 0
         self.times = Counter()
+
         self.saved_file_name = as_local_file_name(
             self.doc_type,
             self.doc_name,
@@ -42,24 +45,21 @@ class SourceDoc:
         sents, t_convert, t_segment = sentify(
             doc_type,
             doc_name,
-            store='in/' + self.saved_file_name,
+            store=SENT_CACHE + self.saved_file_name,
             return_timings=True
         )
 
-        self.emb = Embedder('out/' + doc_name)
-        self.times = Counter()
+        self.emb = Embedder(doc_name)
         self.emb.store(sents)
-        self.times['sentify_conversion'] += t_convert
-        self.times['sentify_segmentation'] += t_segment
+        self.times['sentify_conversion'] = t_convert
+        self.times['sentify_segmentation'] = t_segment
 
     def get_sents(self):
         res = self.emb.get_sents()
-        self.times = self.times + self.emb.times
         return res
 
     def get_knns(self):
         res = self.emb.knns(self.top_k)
-        self.times = self.times + self.emb.times
         return res
 
     def extract_summary(self, best_k=10):
@@ -76,7 +76,7 @@ class SourceDoc:
         sents = self.get_sents()
         res = [(i, sents[i]) for i in best_ids]
         t2 = time()
-        self.times['extract_summary'] = t2 - t1
+        self.times['extract_summary'] += t2 - t1
         print('SALIENT SENTENCES:', len(res), 'out of:', len(sents))
         return res
 
@@ -120,14 +120,13 @@ class SourceDoc:
         pr = PaperReviewer(text)
         text = pr.run()
         self.costs += pr.dollar_cost()
-        self.times['llm_reviewer_agent'] += pr.agent.processing_time
+        self.times['llm_reviewer_agent'] = pr.agent.processing_time
         return 'Review: ' + text
 
     def retrieve(self, query, top_k=None):
         if top_k is None: top_k = self.top_k
 
         sents_rs = self.emb.query(query, top_k)
-        self.times = self.times + self.emb.times
 
         return [sent for (sent, r) in sents_rs]
 
@@ -142,8 +141,11 @@ class SourceDoc:
         follow_up = follow_up.strip().replace('Follow-up question:', '')
         self.costs += agent.dollar_cost()
         t2 = time()
-        self.times['llm_query_agent'] = t2 - t1
+        self.times['llm_query_agent'] += t2 - t1
         return answer, follow_up
+
+    def get_times(self):
+        return self.times | self.emb.get_times()
 
     def dollar_cost(self):
         self.costs += self.emb.dollar_cost()
@@ -165,6 +167,8 @@ def test_main(
     quest='How is Horn Clause logic used to refine interaction with LLM dialog threads?'
 ):
     clear_caches()
+    remove_dir(SENT_CACHE)
+
     print("DOC:", doc)
     print('QUEST:', quest)
     # smarter_model()
@@ -183,7 +187,7 @@ def test_main(
     print()
     print("COSTS: $", round(sd.dollar_cost(), 4))
     print("TIMES:")
-    for k, v in sd.times.items():
+    for k, v in sd.get_times().items():
         print(k, '=', v)
 
 

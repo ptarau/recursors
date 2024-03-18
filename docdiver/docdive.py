@@ -1,6 +1,9 @@
 import streamlit as st
+from time import time
 from deepllm.api import *
-from main import SourceDoc
+from main import SourceDoc,SENT_CACHE
+
+UPLOAD_DIR='./UPLOAD_DIR/'
 
 if 'history' in st.session_state:
     history = st.session_state.history
@@ -22,7 +25,7 @@ def handle_uploaded():
 
 
 def save_uploaded_file():
-    upload_dir = './docs/'
+    upload_dir = UPLOAD_DIR
     fname = st.session_state.uploaded_file.name
     fpath = os.path.join(upload_dir, fname)
     if exists_file(fpath):
@@ -112,7 +115,10 @@ def clear_it():
         st.session_state.history = history
         st.write('Cleared history')
     elif clearing == 'Caches':
-        dirs = clear_caches()
+        dirs = clear_caches()+[SENT_CACHE,UPLOAD_DIR]
+        remove_dir(SENT_CACHE)
+        remove_dir(UPLOAD_DIR)
+        st.cache_data.clear()
         st.write('REMOVED:', dirs)
     elif clearing == 'Openai key':
         clear_key()
@@ -120,6 +126,7 @@ def clear_it():
 
 
 def process_it():
+    t1=time()
     global history
     if not doc_name:
         if doc_type == 'url':
@@ -162,7 +169,11 @@ def process_it():
     st.session_state.history = history
     st.write(result)
     st.write(f'COSTS: ${round(sd.dollar_cost(), 4)}')
-    st.write('TIMES:', sd.times)
+    st.write('TIMES:', sd.get_times())
+    total_time=sd.get_times().total()
+    st.write('TOTAL API TIME:', round(total_time,2), 'seconds')
+    t2=time()
+    st.write('TOTAL APP TIME:', round(t2-t1, 2), 'seconds')
 
 
 st.sidebar.button('Proceed!', on_click=process_it)
