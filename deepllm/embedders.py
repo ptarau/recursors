@@ -61,6 +61,7 @@ class Embedder:
     """
 
     def __init__(self, cache_name):
+        assert cache_name is not None
         self.total_toks = 0
         self.cache_name = cache_name
         self.CACHES = None

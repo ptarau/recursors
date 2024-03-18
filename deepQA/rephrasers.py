@@ -98,6 +98,11 @@ class Generalizer(Agent):
 
 
 def plain_sent(s):
+    if isinstance(s,list):
+        s=" ".join(map(str,s))
+    else:
+        s=str(s)
+    #print("PLAIN:",s)
     s = s.strip()
     if not s.endswith("."):
         return False
@@ -164,6 +169,7 @@ def move_prep(x):
 
 def as_json(jtext):
     print('LLM ANSWER:', jtext)
+    jtext=jtext.replace("```json",'').replace("```",'')
     jterm = json.loads(jtext)
     assert jterm
     return jterm
@@ -208,7 +214,7 @@ class RelationBuilder(Agent):
 
             if so_links:
                 so_set = sorted(set(x for (s, _, o) in svos for x in (s, o)))
-                so_embedder = Embedder(None)
+                so_embedder = Embedder('so_embedder_'+self.name)
                 so_embeddings = so_embedder.embed(so_set)
                 so_knn_links = [(so_set[s], '~', so_set[o]) for (s, r, o) in knn_edges(so_embeddings, k=4)]
                 svos.extend(so_knn_links)
@@ -223,7 +229,7 @@ class RelationBuilder(Agent):
                 # ilinks = [(str(i), '', str(i + 1)) for i in range(len(svos) - 1)]
                 # ilinks.append((str(len(svos) - 1), '', str(0)))
 
-                embedder = Embedder(None)
+                embedder = Embedder('rel_builder_embedder_'+self.name)
                 embeddings = embedder.embed(sents)
                 knn_links = [(str(s), '', str(o)) for (s, _, o) in knn_edges(embeddings, k=2)]
 
@@ -283,7 +289,7 @@ def test_rephraser2():
     print(agent.dollar_cost())
 
 
-def test_rephraser3():
+def test_factualizer():
     txt = './data/gpl.txt'
     agent = Factualizer('txt_gpl')
     text = agent.factify(witt_prompter_txt, 'txt', txt)
@@ -293,7 +299,7 @@ def test_rephraser3():
 
 
 def test_relationizer():
-    smarter_model() # only GPT4 works!!!
+    #smarter_model() # only GPT4 works? GPT3.5 seems ok!
     #page = 'open world assumption'
     #page = 'logic_programming'
     # page = 'enshittification'
@@ -308,7 +314,8 @@ def test_relationizer():
 
 if __name__ == "__main__":
     #local_model()
-    #cheaper_model()
+    cheaper_model()
     #smarter_model()
     test_relationizer()
     #test_rephraser()
+    #test_factualizer()
