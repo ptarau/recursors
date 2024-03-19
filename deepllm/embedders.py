@@ -1,4 +1,5 @@
 from time import time
+import numpy as np
 from collections import Counter
 import openai
 from deepllm.params import to_pickle, from_pickle, PARAMS, ensure_openai_api_key, GPT_PARAMS, IS_LOCAL_LLM
@@ -23,7 +24,7 @@ def llm_embed_old(emebedding_model, sents):
     )
     embeddings = [response['data'][i]['embedding'] for i in range(len(response['data']))]
     toks = response["usage"]["total_tokens"]
-    return embeddings, toks
+    return np.array(embeddings), toks
 
 
 def llm_embed_new(emebedding_model, sents):
@@ -41,7 +42,7 @@ def llm_embed_new(emebedding_model, sents):
 
     embeddings = [response.data[i].embedding for i in range(len(response.data))]
     toks = response.usage.total_tokens
-    return embeddings, toks
+    return np.array(embeddings), toks
 
 
 def get_llm_embed_method():
@@ -59,8 +60,9 @@ class Embedder:
     and store them into a vector store
     """
 
-    def __init__(self, cache_name):
+    def __init__(self, cache_name, FORCE_SBERT=True):
         assert cache_name is not None
+        self.FORCE_SBERT=FORCE_SBERT
         self.total_toks = 0
         self.cache_name = cache_name
         self.CACHES = None
@@ -79,7 +81,7 @@ class Embedder:
 
     def embed(self, sents):
         t1 = time()
-        if self.LOCAL_LLM:
+        if self.LOCAL_LLM or self.FORCE_SBERT:
             embeddings = sbert_embed(sents)
             kind = 'sbert'
         else:
