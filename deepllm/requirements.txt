@@ -3,4 +3,5 @@ openai
 tiktoken
 pyvis
 sentence-transformers
+torch
 vecstore

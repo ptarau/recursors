@@ -3,6 +3,7 @@ import numpy as np
 from collections import Counter
 import openai
 from deepllm.params import to_pickle, from_pickle, PARAMS, ensure_openai_api_key, GPT_PARAMS, IS_LOCAL_LLM
+import torch
 from sentence_transformers import SentenceTransformer
 from vecstore.vecstore import VecStore
 
@@ -10,7 +11,8 @@ from vecstore.vecstore import VecStore
 # SBERT API
 
 def sbert_embed(sents):
-    model = SentenceTransformer("all-MiniLM-L6-v2")
+    device='cuda' if torch.cuda.is_available() else 'cpu'
+    model = SentenceTransformer("all-MiniLM-L6-v2",device=device)
     embeddings = model.encode(sents)
     return embeddings
 
