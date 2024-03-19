@@ -170,7 +170,7 @@ def process_it():
     st.write(result)
     st.write(f'COSTS: ${round(sd.dollar_cost(), 4)}')
     st.write('TIMES:', sd.get_times())
-    total_time=sd.get_times().total()
+    total_time=sum(sd.get_times().values())
     st.write('TOTAL API TIME:', round(total_time,2), 'seconds')
     t2=time()
     st.write('TOTAL APP TIME:', round(t2-t1, 2), 'seconds')

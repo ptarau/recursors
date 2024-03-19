@@ -1,8 +1,7 @@
-import os
 from time import time
 from collections import Counter
 import openai
-from deepllm.params import to_pickle, from_pickle, PARAMS, ensure_openai_api_key, GPT_PARAMS
+from deepllm.params import to_pickle, from_pickle, PARAMS, ensure_openai_api_key, GPT_PARAMS, IS_LOCAL_LLM
 from sentence_transformers import SentenceTransformer
 from vecstore.vecstore import VecStore
 
@@ -66,7 +65,7 @@ class Embedder:
         self.cache_name = cache_name
         self.CACHES = None
         self.emebedding_model = None
-        self.LOCAL_LLM = None
+        self.LOCAL_LLM = IS_LOCAL_LLM[0]
         self.vstore = None
         self.times = Counter()
         PARAMS()(self)

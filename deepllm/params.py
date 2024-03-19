@@ -7,7 +7,7 @@ from deepllm.configurator import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-IS_LOCAL_LLM = [True]
+IS_LOCAL_LLM = [False]
 
 # LOCAL_MODEL="vicuna-7b-v1.5"
 LOCAL_MODEL = "mistralai/Mistral-7B-Instruct-v0.2"
