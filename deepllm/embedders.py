@@ -2,7 +2,7 @@ from time import time
 import numpy as np
 from collections import Counter
 import openai
-from deepllm.params import to_pickle, from_pickle, PARAMS, ensure_openai_api_key, GPT_PARAMS, IS_LOCAL_LLM
+from deepllm.params import to_pickle, from_pickle, PARAMS, ensure_openai_api_key, GPT_PARAMS, IS_LOCAL_LLM, tprint, exists_file
 import torch
 from sentence_transformers import SentenceTransformer
 from vecstore.vecstore import VecStore
@@ -11,8 +11,8 @@ from vecstore.vecstore import VecStore
 # SBERT API
 
 def sbert_embed(sents):
-    device='cuda' if torch.cuda.is_available() else 'cpu'
-    model = SentenceTransformer("all-MiniLM-L6-v2",device=device)
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    model = SentenceTransformer("all-MiniLM-L6-v2", device=device)
     embeddings = model.encode(sents)
     return embeddings
 
@@ -62,9 +62,9 @@ class Embedder:
     and store them into a vector store
     """
 
-    def __init__(self, cache_name, FORCE_SBERT=True):
+    def __init__(self, cache_name, FORCE_SBERT=0):
         assert cache_name is not None
-        self.FORCE_SBERT=FORCE_SBERT
+        self.FORCE_SBERT = FORCE_SBERT
         self.total_toks = 0
         self.cache_name = cache_name
         self.CACHES = None
@@ -75,20 +75,32 @@ class Embedder:
         PARAMS()(self)
 
     def cache(self, ending='.pickle'):
-        loc = ""
+        loc = "_outside"
         if self.LOCAL_LLM:
             loc = "_local"
 
         return self.CACHES + self.cache_name + loc + ending
 
-    def embed(self, sents):
+    def embed(self, sents, max_split=1024):
         t1 = time()
-        if self.LOCAL_LLM or self.FORCE_SBERT:
+        if True or self.LOCAL_LLM or self.FORCE_SBERT:
             embeddings = sbert_embed(sents)
             kind = 'sbert'
         else:
             llm_embed = get_llm_embed_method()
-            embeddings, toks = llm_embed(self.emebedding_model, sents)
+            embeddings, toks = [], 0
+            split = 0
+            while split < len(sents):
+                xs = sents[split:split + max_split]
+
+                es, ts = llm_embed(self.emebedding_model, xs)
+                tprint('LLM ENBED CHUNK at:', split, 'len:', len(es[0]))
+                split += max_split
+                embeddings.extend(es)
+                toks += ts
+            # embeddings, toks = llm_embed(self.emebedding_model, sents)
+            embeddings = np.array(embeddings)
+            print('EMB SHAPE:', embeddings.shape)
             self.total_toks += toks
             kind = 'llm'
         t2 = time()
@@ -99,12 +111,16 @@ class Embedder:
     def get_times(self):
         return self.times | self.vstore.times
 
-    def store(self, sents):
+    def store(self, sents, force=False):
         """
         embeds and caches the sentences and their embeddings
+        unleass this is already done or force=True
         """
         f = self.cache()
         fb = self.cache(ending='.bin')
+        if not force and exists_file(f) and exists_file(fb):
+            self.load()
+            return
         embeddings = self.embed(sents)
         dim = embeddings.shape[1]
         if self.vstore is None:

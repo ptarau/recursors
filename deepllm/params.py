@@ -13,8 +13,10 @@ IS_LOCAL_LLM = [False]
 LOCAL_MODEL = "mistralai/Mistral-7B-Instruct-v0.2"
 LOCAL_URL = "http://u.local:8000/v1"  # replace with where the server is
 
+FORCE_TRACE=1
+
 GPT_PARAMS = dict(
-    TRACE=0,
+    TRACE=FORCE_TRACE,
     TO_SVOS=False,
     ROOT_="./STATE/",
     ROOT="./STATE_SMARTER/",
@@ -35,7 +37,7 @@ GPT_PARAMS = dict(
 )
 
 LOCAL_PARAMS = dict(
-    TRACE=0,
+    TRACE=FORCE_TRACE,
     TO_SVOS=False,
     ROOT="./STATE_LOCAL/",
     CACHES="caches/",
