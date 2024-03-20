@@ -2,7 +2,11 @@ from time import time
 import numpy as np
 from collections import Counter
 import openai
-from deepllm.params import to_pickle, from_pickle, PARAMS, ensure_openai_api_key, GPT_PARAMS, IS_LOCAL_LLM, tprint, exists_file
+from deepllm.params import (
+    to_pickle, from_pickle, PARAMS, ensure_openai_api_key,
+    GPT_PARAMS, IS_LOCAL_LLM, tprint, exists_file,
+    FORCE_SBERT
+)
 import torch
 from sentence_transformers import SentenceTransformer
 from vecstore.vecstore import VecStore
@@ -62,9 +66,8 @@ class Embedder:
     and store them into a vector store
     """
 
-    def __init__(self, cache_name, FORCE_SBERT=0):
+    def __init__(self, cache_name):
         assert cache_name is not None
-        self.FORCE_SBERT = FORCE_SBERT
         self.total_toks = 0
         self.cache_name = cache_name
         self.CACHES = None
@@ -83,7 +86,7 @@ class Embedder:
 
     def embed(self, sents, max_split=1024):
         t1 = time()
-        if True or self.LOCAL_LLM or self.FORCE_SBERT:
+        if self.LOCAL_LLM or FORCE_SBERT:
             embeddings = sbert_embed(sents)
             kind = 'sbert'
         else:
