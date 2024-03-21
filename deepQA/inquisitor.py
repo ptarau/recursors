@@ -98,7 +98,7 @@ class QuestExplorer:
             if d >= self.lim:
                 self.opens[g] += 1
                 yield gs
-            elif not self.apprise(g,gs):
+            elif not self.apprise(g, gs):
                 self.rejects[g] += 1
                 yield gs
             else:

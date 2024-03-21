@@ -1,5 +1,3 @@
-torch
-scipy
 sentify
 deepllm
 streamlit

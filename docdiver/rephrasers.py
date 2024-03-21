@@ -1,26 +1,11 @@
 import json
-from scipy.spatial.distance import cdist
-import numpy as np
-import torch
+# from scipy.spatial.distance import cdist
+# import torch
 from sentify.main import sentify, text2file
 from deepllm.interactors import Agent, PARAMS, to_json
 from deepllm.api import local_model, smarter_model, cheaper_model
 from deepllm.embedders import Embedder
 from deepllm.vis import visualize_rels
-
-witt_prompter_txt = dict(
-    name="tractatus_style",
-    target=".txt",
-    prompt="""
- In the style of Wittgenstein's Tractatus summarize the essential
- atomic facts that he would state about the following text. 
- Return the result as tree representing details following 
- the numerotation scheme of the Tractatus.
- Here is the text to work on: 
- 
- "$text".
-    """
-)
 
 svos_prompter = dict(
     name="fact_to_svos",
@@ -30,7 +15,8 @@ svos_prompter = dict(
     When it is clear form the context, replace pronouns with what they refer to.
     Trim down the subject and object parts to their essential noun phrases.
     Return your result as JSON list of ("S:","V:","O:") JSON triplets.
-    Here is the text:     
+    Here is the text:
+      
     "$text"
     """
 )
@@ -41,46 +27,19 @@ hypernym_prompter = dict(
     prompt="""
     For each of the noun phrases separated by ";" in the folowing text
     extract, when possible, its one or two words key concept. 
-    Then, using it, generate triplets connecting the concept with an "kind of" link to
+    Then, using it, generate triplets connecting the concept with a "kind of" link to
     a salient more general concept or hypernym when available.
     Return your result as JSON list of ("S:","V:","O:") JSON triplets.
-    Here is the text:     
+    Here is the text:
+    
     "$text"
     """
 )
 
 
-class Factualizer(Agent):
-    # def __init__(self, name, **kwargs):
-    #    super().__init__(name, **kwargs)
-
-    def factify(self, prompter, kind, source, save=True):
-        CF = PARAMS()
-        self.set_pattern(prompter['prompt'])
-        self.outf = CF.OUT + self.name + "_" + prompter['name'] + prompter['target']
-        sents = sentify(kind, source)
-        text = "\n".join(sents)
-        text = self.ask(text=text)  # text is the
-        if save:
-            text2file(text, self.outf)
-        return text
-
-    def post_process(self, _quest, text):
-        lines = text.split('\n')
-        keepers = []
-        for line in lines:
-            line = line.strip()
-            if not line:
-                continue
-            if not line[0].isdigit():
-                continue
-            keepers.append(line)
-        return "\n".join(keepers)
-
-
 class Generalizer(Agent):
     def generalize(self, nouns):
-        CF = PARAMS()
+
         self.set_pattern(hypernym_prompter['prompt'])
         text = "; ".join(nouns)
         text = self.ask(text=text)
@@ -98,40 +57,30 @@ class Generalizer(Agent):
 
 
 def plain_sent(s):
-    if isinstance(s,list):
-        s=" ".join(map(str,s))
+    if isinstance(s, list):
+        s = " ".join(map(str, s))
     else:
-        s=str(s)
-    #print("PLAIN:",s)
+        s = str(s)
+    # print("PLAIN:",s)
     s = s.strip()
     if not s.endswith("."):
         return False
     return s[0:-1].replace("'", "").replace(',', '').replace(';', '').replace('-', '').replace(' ', '').isalpha()
 
 
-def knn_edges(encs, k=2):
-    assert k + 1 < len(encs), (k + 1, '<', len(encs))
-    cos_scores = torch.from_numpy(cdist(encs, encs, metric='cosine'))
-    top_results = torch.topk(cos_scores, largest=False, k=k + 1)
-    m = top_results[1]  # indices
-    r = top_results[0]  # similarity ranks
-    s = m.size()
-
+def knn_edges(emb, k=3):
+    assert isinstance(emb, Embedder), emb
     es = []
-    rs = []
     ws = []
-    for i in range(s[0]):
-        for j in range(1, s[1] - 1):
-            rs.append(r[i, j])
-            w = r[i, j]
-            ws.append(float(w))
-            e = i, w, int(m[i, j]),
+    for i, ns in enumerate(emb.knns(k,as_weights=True)):
+        for (n, r) in ns:
+            ws.append(r)
+            e = i, r, n
             es.append(e)
     avg = sum(ws) / len(ws)
     ws_ = [w for w in ws if w < avg]
     avg_ = sum(ws_) / len(ws_)
-    es = [(s, w, o) for (s, w, o) in es if w < avg_]
-
+    es = [(s, w, o) for (s, w, o) in es if w > avg_]
     return es
 
 
@@ -169,7 +118,7 @@ def move_prep(x):
 
 def as_json(jtext):
     print('LLM ANSWER:', jtext)
-    jtext=jtext.replace("```json",'').replace("```",'')
+    jtext = jtext.replace("```json", '').replace("```", '')
     jterm = json.loads(jtext)
     assert jterm
     return jterm
@@ -214,9 +163,13 @@ class RelationBuilder(Agent):
 
             if so_links:
                 so_set = sorted(set(x for (s, _, o) in svos for x in (s, o)))
-                so_embedder = Embedder('so_embedder_'+self.name)
-                so_embeddings = so_embedder.embed(so_set)
-                so_knn_links = [(so_set[s], '~', so_set[o]) for (s, r, o) in knn_edges(so_embeddings, k=4)]
+                assert so_set, svos
+                so_embedder = Embedder('so_embedder_' + self.name)
+                so_embedder.store(so_set)
+
+                es = knn_edges(so_embedder, k=2)
+                print('!!! KNN EDGES:', es)
+                so_knn_links = [(so_set[s], '~', so_set[o]) for (s, r, o) in es]
                 svos.extend(so_knn_links)
                 if hypernyms:
                     g = Generalizer(self.name)
@@ -229,9 +182,9 @@ class RelationBuilder(Agent):
                 # ilinks = [(str(i), '', str(i + 1)) for i in range(len(svos) - 1)]
                 # ilinks.append((str(len(svos) - 1), '', str(0)))
 
-                embedder = Embedder('rel_builder_embedder_'+self.name)
-                embeddings = embedder.embed(sents)
-                knn_links = [(str(s), '', str(o)) for (s, _, o) in knn_edges(embeddings, k=2)]
+                embedder = Embedder('rel_builder_embedder_' + self.name)
+                embedder.store(sents)
+                knn_links = [(str(s), '', str(o)) for (s, _, o) in knn_edges(embedder, k=2)]
 
                 slinks = [(str(i), 'S:', s[0]) for (i, s) in enumerate(svos)]
                 olinks = [(str(i), 'O:', s[2]) for (i, s) in enumerate(svos)]
@@ -262,49 +215,13 @@ def to_prolog(svos, fname):
             print(line, file=g)
 
 
-def test_factualizer1(page='logic_programming'):
-    agent = Factualizer(page)
-    text = agent.factify(witt_prompter_txt, 'wikipage', page)
-    print(text)
-    text2file(text, agent.outf)
-    print('COST:', agent.dollar_cost())
-
-
-def test_factualizer2():
-    page = 'logic_programming'
-    agent = Factualizer(page)
-    text = agent.factify(witt_prompter_txt, 'wikipage', page)
-    print(text)
-    text2file(text, agent.outf)
-    print('COST:', agent.dollar_cost())
-
-
-def test_factualizer3():
-    # url = 'https://arxiv.org/pdf/1904.11694.pdf'
-    url = 'https://arxiv.org/pdf/1912.10824.pdf'
-    agent = Factualizer('url_dif')
-    text = agent.factify(witt_prompter_txt, 'url', url)
-    print(text)
-    text2file(text, agent.outf)
-    print(agent.dollar_cost())
-
-
-def test_factualizer():
-    txt = './data/gpl.txt'
-    agent = Factualizer('txt_gpl')
-    text = agent.factify(witt_prompter_txt, 'txt', txt)
-    print(text)
-    text2file(text, agent.outf)
-    print(agent.dollar_cost())
-
-
 def test_relationizer():
-    #smarter_model() # only GPT4 works? GPT3.5 seems ok!
-    #page = 'open world assumption'
-    #page = 'logic_programming'
+    # smarter_model() # only GPT4 works? GPT3.5 seems ok!
+    # page = 'open world assumption'
+    # page = 'logic_programming'
     # page = 'enshittification'
     # page = "Generative artificial intelligence"
-    page='Artificial general intelligence'
+    page = 'Artificial general intelligence'
     agent = RelationBuilder(page)
     text = agent.run('wikipage', page)
     # print(text)
@@ -313,9 +230,7 @@ def test_relationizer():
 
 
 if __name__ == "__main__":
-    #local_model()
-    cheaper_model()
-    #smarter_model()
+    # local_model()
+    # cheaper_model()
+    smarter_model()
     test_relationizer()
-    #test_rephraser()
-    #test_factualizer()

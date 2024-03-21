@@ -59,7 +59,7 @@ class SourceDoc:
         return res
 
     def get_knns(self):
-        res = self.emb.knns(self.top_k)
+        res = self.emb.knns(self.top_k,as_weights=True)
         return res
 
     def extract_summary(self, best_k=10):

@@ -16,8 +16,8 @@ from vecstore.vecstore import VecStore
 
 def sbert_embed(sents):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    model = SentenceTransformer("all-MiniLM-L6-v2", device=device)
-    embeddings = model.encode(sents)
+    model = SentenceTransformer("multi-qa-MiniLM-L6-cos-v1",device=device)
+    embeddings = model.encode(sents,show_progress_bar=True)
     return embeddings
 
 
@@ -153,11 +153,11 @@ class Embedder:
         answers = [(sents[i], r) for (i, r) in knn_pairs]
         return answers
 
-    def knns(self, top_k):
+    def knns(self, top_k,as_weights=True):
         assert top_k > 0, top_k
         self.load()
         assert self.vstore is not None
-        knn_pairs = self.vstore.all_knns(k=top_k)
+        knn_pairs = self.vstore.all_knns(k=top_k,as_weights=as_weights)
 
         return knn_pairs
 
