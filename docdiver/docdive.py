@@ -1,9 +1,9 @@
 import streamlit as st
 from time import time
 from deepllm.api import *
-from main import SourceDoc,SENT_CACHE
+from main import SourceDoc, SENT_CACHE
 
-UPLOAD_DIR='./UPLOAD_DIR/'
+UPLOAD_DIR = './UPLOAD_DIR/'
 
 if 'history' in st.session_state:
     history = st.session_state.history
@@ -38,7 +38,7 @@ def save_uploaded_file():
 
 with st.sidebar:
     st.write('**DocDiver is a DeepLLM application**')
-    doc_type = st.radio('Document type?', ('local pdf or txt file','url'), index=0, horizontal=True)
+    doc_type = st.radio('Document type?', ('local pdf or txt file', 'url'), index=0, horizontal=True)
 
     if doc_type == 'local pdf or txt file':
         st.session_state.uploaded_file = st.file_uploader(
@@ -76,10 +76,10 @@ with st.sidebar:
 
     processing = st.sidebar.radio('What to do?',
                                   ['Summary',
-                                   'Extract salient sentences',
                                    'Review',
-                                   'Talk about the document',
-                                   'Show history'
+                                   'Salient sentences',
+                                   'Chat about it',
+                                   'History'
                                    ],
                                   horizontal=True
                                   )
@@ -115,7 +115,7 @@ def clear_it():
         st.session_state.history = history
         st.write('Cleared history')
     elif clearing == 'Caches':
-        dirs = clear_caches()+[SENT_CACHE,UPLOAD_DIR]
+        dirs = clear_caches() + [SENT_CACHE, UPLOAD_DIR]
         remove_dir(SENT_CACHE)
         remove_dir(UPLOAD_DIR)
         st.cache_data.clear()
@@ -126,7 +126,15 @@ def clear_it():
 
 
 def process_it():
-    t1=time()
+    """
+    DO:
+           ['Summary',
+            'Review',
+            'Salient sentences',
+            'Chat about it',
+            'History'
+    """
+    t1 = time()
     global history
     if not doc_name:
         if doc_type == 'url':
@@ -147,7 +155,7 @@ def process_it():
     elif processing == 'Summary':
         result = sd.summarize(best_k=sent_count)
         history[processing] = result
-    elif processing == 'Extract salient sentences':
+    elif processing == 'Salient sentences':
         result = dict(
             (i, s.strip()) for (i, s) in sd.extract_summary(best_k=sent_count)
         )
@@ -156,7 +164,7 @@ def process_it():
         result = sd.review(best_k=sent_count)
         history[processing] = result
     else:
-        assert processing == 'Talk about the document', processing
+        assert processing == 'Chat about it', processing
         st.write('Question:', quest)
         result, follow_up = sd.ask(quest)
         st.session_state.quest = follow_up
@@ -170,10 +178,10 @@ def process_it():
     st.write(result)
     st.write(f'COSTS: ${round(sd.dollar_cost(), 4)}')
     st.write('TIMES:', sd.get_times())
-    total_time=sum(sd.get_times().values())
-    st.write('TOTAL API TIME:', round(total_time,2), 'seconds')
-    t2=time()
-    st.write('TOTAL APP TIME:', round(t2-t1, 2), 'seconds')
+    total_time = sum(sd.get_times().values())
+    st.write('TOTAL API TIME:', round(total_time, 2), 'seconds')
+    t2 = time()
+    st.write('TOTAL APP TIME:', round(t2 - t1, 2), 'seconds')
 
 
 st.sidebar.button('Proceed!', on_click=process_it)
