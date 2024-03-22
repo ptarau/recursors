@@ -147,7 +147,7 @@ def process_it():
     sd = SourceDoc(doc_type=doc_type, doc_name=doc_name, threshold=0.5, top_k=3)
     result = ""
 
-    if processing == 'Show history':
+    if processing == 'History':
         for k, v in history.items():
             st.write(k)
             st.write(v)
