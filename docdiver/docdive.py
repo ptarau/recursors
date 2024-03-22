@@ -1,7 +1,7 @@
 import streamlit as st
 from time import time
 from deepllm.api import *
-from main import SourceDoc, SENT_CACHE
+from main import *
 
 UPLOAD_DIR = './UPLOAD_DIR/'
 
