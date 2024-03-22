@@ -1,9 +1,10 @@
 from time import time
 from collections import Counter
 import networkx as nx
-from deepllm.embedders import Embedder
-from deepllm.api import *
+from sentence_store.main import Embedder
 from sentify.main import sentify
+from deepllm.api import *
+
 
 SENT_CACHE = './SENT_CACHE/'
 
@@ -148,7 +149,7 @@ class SourceDoc:
         return self.times | self.emb.get_times()
 
     def dollar_cost(self):
-        self.costs += self.emb.dollar_cost()
+        #self.costs += self.emb.dollar_cost()
         return self.costs
 
 
