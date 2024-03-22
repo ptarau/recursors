@@ -7,7 +7,7 @@ from deepllm.api import *
 
 
 SENT_CACHE = './SENT_CACHE/'
-
+SENT_STORE_CACHE = './SENT_STORE_CACHE/'
 
 def as_local_file_name(doc_type, doc_name, saved_file_name):
     if not saved_file_name:

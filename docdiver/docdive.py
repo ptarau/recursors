@@ -115,7 +115,7 @@ def clear_it():
         st.session_state.history = history
         st.write('Cleared history')
     elif clearing == 'Caches':
-        dirs = clear_caches() + [SENT_CACHE, UPLOAD_DIR]
+        dirs = clear_caches() + [SENT_CACHE, SENT_STORE_CACHE, UPLOAD_DIR]
         remove_dir(SENT_CACHE)
         remove_dir(UPLOAD_DIR)
         st.cache_data.clear()
