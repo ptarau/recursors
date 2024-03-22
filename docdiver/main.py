@@ -134,7 +134,7 @@ class SourceDoc:
         t1 = time()
         sents = self.retrieve(quest, top_k=top_k)
         text = " ".join(sents)
-        agent = Retrievalrefiner(text, quest, tname=self.saved_file_name)
+        agent = RetrievalRefiner(text, quest, tname=self.saved_file_name)
         answer_plus = agent.run()
         answer, follow_up = answer_plus.split('==>')
         answer = answer.strip()

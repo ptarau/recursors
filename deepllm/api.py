@@ -2,7 +2,7 @@ from deepllm.prompters import *
 from deepllm.params import *
 from deepllm.recursors import AndOrExplorer, show_clauses, show_model, show_svos,vis_svos
 from deepllm.vis import browse
-from deepllm.refiners import Advisor, Rater, TruthRater, AbstractMaker, SummaryMaker, PaperReviewer,Retrievalrefiner
+from deepllm.refiners import Advisor, Rater, TruthRater, AbstractMaker, SummaryMaker, PaperReviewer,RetrievalRefiner
 
 
 def activate_svos():

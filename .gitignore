@@ -162,5 +162,6 @@ scratch/
 deepllm/apps/*.html
 deepQA/OUT/
 docdiver/docs
+SENT_STORE_CACHE/
 
 

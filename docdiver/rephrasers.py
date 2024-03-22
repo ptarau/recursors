@@ -2,7 +2,8 @@ import json
 from sentify.main import sentify, text2file
 from deepllm.interactors import Agent, PARAMS, to_json
 from deepllm.api import local_model, smarter_model, cheaper_model
-from deepllm.embedders import Embedder
+#from deepllm.embedders import Embedder
+from sentence_store.main import Embedder
 from deepllm.vis import visualize_rels
 
 svos_prompter = dict(
@@ -175,9 +176,12 @@ class RelationBuilder(Agent):
             so_embedder = Embedder('so_embedder_' + self.name)
             so_embedder.store(so_set)
 
-            es = knn_edges(so_embedder, k=3, as_weights=True)
+            es = knn_edges(so_embedder, k=3, as_weights=False)
             # print('!!! KNN EDGES:', es)
-            so_knn_links = [(so_set[s], '~', so_set[o]) for (s, r, o) in es]
+            so_knn_links = [(so_set[s], int(100*round(r,2)), so_set[o]) for (s, r, o) in es]
+            so_knn_links = sorted(so_knn_links,key=lambda x:x[1])
+            so_knn_links = [(x,str(r),o) for (x,r,o) in so_knn_links]
+            so_knn_links = so_knn_links[0:min(len(so_set),len(svos))]
 
             svos.extend(so_knn_links)
             if hypernyms:
@@ -199,7 +203,7 @@ class RelationBuilder(Agent):
 
 def to_prolog(svos, fname):
     def q(x):
-        x = x.replace("'", ' ')
+        x = str(x).replace("'", ' ')
         return f"'{x}'"
 
     with open(fname, 'w') as g:

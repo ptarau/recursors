@@ -1,4 +1,4 @@
-from deepllm.embedders import Embedder
+from sentence_store.main import Embedder
 from deepllm.prompters import *
 from deepllm.recursors import *
 
@@ -194,7 +194,7 @@ class PaperReviewer:
         if self.cache: self.agent.persist()
         return str(answer)
 
-class Retrievalrefiner:
+class RetrievalRefiner:
     def __init__(self, text, quest, tname=None, cache=True):
         self.text = text
         self.quest=quest

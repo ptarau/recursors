@@ -1,5 +1,4 @@
 streamlit
 deepllm
 sentify
-vecstore
 

@@ -1,7 +1,4 @@
-numpy
 openai
 tiktoken
 pyvis
-sentence-transformers
-torch
-vecstore
+sentence_store
