@@ -3,7 +3,7 @@ import numpy as np
 from collections import Counter
 import openai
 from deepllm.params import (
-    to_pickle, from_pickle, PARAMS, ensure_openai_api_key,
+    to_json, from_json, PARAMS, ensure_openai_api_key,
     GPT_PARAMS, IS_LOCAL_LLM, tprint, exists_file,
     FORCE_SBERT
 )
@@ -77,7 +77,7 @@ class Embedder:
         self.times = Counter()
         PARAMS()(self)
 
-    def cache(self, ending='.pickle'):
+    def cache(self, ending='.json'):
         loc = "_outside"
         if self.LOCAL_LLM:
             loc = "_local"
@@ -130,13 +130,13 @@ class Embedder:
             self.vstore = VecStore(fb, dim=dim)
         self.vstore.add(embeddings)
 
-        to_pickle((dim, sents), f)
+        to_json((dim, sents), f)
         self.vstore.save()
 
     def load(self):
         f = self.cache()
         fb = self.cache(ending='.bin')
-        dim, sents = from_pickle(f)
+        dim, sents = from_json(f)
         self.vstore = VecStore(fb, dim=dim)
         self.vstore.load()
 
@@ -162,7 +162,7 @@ class Embedder:
         return knn_pairs
 
     def get_sents(self):
-        return from_pickle(self.cache())[1]
+        return from_json(self.cache())[1]
 
     def __call__(self, quest, top_k):
         return self.query(quest, top_k)

@@ -14,7 +14,7 @@ LOCAL_MODEL = "mistralai/Mistral-7B-Instruct-v0.2"
 LOCAL_URL = "http://u.local:8000/v1"  # replace with where the server is
 
 FORCE_TRACE=1
-FORCE_SBERT=1
+FORCE_SBERT=0
 
 GPT_PARAMS = dict(
     TRACE=FORCE_TRACE,

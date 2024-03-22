@@ -1,6 +1,4 @@
 import json
-# from scipy.spatial.distance import cdist
-# import torch
 from sentify.main import sentify, text2file
 from deepllm.interactors import Agent, PARAMS, to_json
 from deepllm.api import local_model, smarter_model, cheaper_model
@@ -68,19 +66,23 @@ def plain_sent(s):
     return s[0:-1].replace("'", "").replace(',', '').replace(';', '').replace('-', '').replace(' ', '').isalpha()
 
 
-def knn_edges(emb, k=3):
+def knn_edges(emb, k=3, as_weights=True):
     assert isinstance(emb, Embedder), emb
     es = []
     ws = []
-    for i, ns in enumerate(emb.knns(k,as_weights=True)):
+    for i, ns in enumerate(emb.knns(k, as_weights=as_weights)):
         for (n, r) in ns:
             ws.append(r)
             e = i, r, n
             es.append(e)
     avg = sum(ws) / len(ws)
-    ws_ = [w for w in ws if w < avg]
-    avg_ = sum(ws_) / len(ws_)
-    es = [(s, w, o) for (s, w, o) in es if w > avg_]
+
+    if as_weights:  # larger are better
+        max_ = max(ws)
+        es = [(s, w, o) for (s, w, o) in es if w > (avg + max_) / 2]
+    else:  # smaller are better
+        min_ = min(ws)
+        es = [(s, w, o) for (s, w, o) in es if w < (avg + min_ / 2)]
     return es
 
 
@@ -137,7 +139,20 @@ def jterm2svos(jterm):
 
 class RelationBuilder(Agent):
 
-    def run(self, kind, source, so_links=True, hypernyms=True, save=True, show=True, max_sents=20):
+    def from_source(self, kind, source, hypernyms=True, save=True, show=True, max_sents=80):
+        sents = sentify(kind, source)
+        sents = [s.strip() for s in sents if plain_sent(s)]
+
+        if max_sents:
+            sents = sents[0:max_sents]
+
+        return self.from_sents(sents, hypernyms=hypernyms, save=save, show=show)
+
+    def from_sents(self, sents, hypernyms=True, save=True, show=True):
+        text = "\n".join(sents)
+        return self.from_canonical_text(text, hypernyms=hypernyms, save=save, show=show)
+
+    def from_canonical_text(self, text, hypernyms=True, save=True, show=True):
         prompter = svos_prompter
         self.spill()
         self.set_pattern(prompter['prompt'])
@@ -145,54 +160,33 @@ class RelationBuilder(Agent):
         self.pname = CF.OUT + self.name + "_" + prompter['name']
         self.jname = self.pname + prompter['target']
         self.pname = self.pname + ".pl"
-        sents = sentify(kind, source)
-        sents = [s.strip() for s in sents if plain_sent(s)]
-        if max_sents:
-            sents = sents[0:max_sents]
 
-        text = "\n".join(sents)
-        if save:
-            text2file(text, CF.OUT + self.name + "_sents.txt")
         jtext = self.ask(text=text)
         jterm = as_json(jtext)
 
         if save:
+            text2file(text, CF.OUT + self.name + "_sents.txt")
 
             svos = jterm2svos(jterm)
             svos = [move_prep(x) for x in svos]
 
-            if so_links:
-                so_set = sorted(set(x for (s, _, o) in svos for x in (s, o)))
-                assert so_set, svos
-                so_embedder = Embedder('so_embedder_' + self.name)
-                so_embedder.store(so_set)
+            so_set = sorted(set(x for (s, _, o) in svos for x in (s, o)))
+            assert so_set, svos
+            so_embedder = Embedder('so_embedder_' + self.name)
+            so_embedder.store(so_set)
 
-                es = knn_edges(so_embedder, k=2)
-                print('!!! KNN EDGES:', es)
-                so_knn_links = [(so_set[s], '~', so_set[o]) for (s, r, o) in es]
-                svos.extend(so_knn_links)
-                if hypernyms:
-                    g = Generalizer(self.name)
-                    hjtext = g.generalize(so_set)
-                    hjterm = as_json(hjtext)
-                    # print('HYPERS:\n', json.dumps(jterm))
-                    hsvos = jterm2svos(hjterm)
-                    svos.extend(hsvos)
-            else:
-                # ilinks = [(str(i), '', str(i + 1)) for i in range(len(svos) - 1)]
-                # ilinks.append((str(len(svos) - 1), '', str(0)))
+            es = knn_edges(so_embedder, k=3, as_weights=True)
+            # print('!!! KNN EDGES:', es)
+            so_knn_links = [(so_set[s], '~', so_set[o]) for (s, r, o) in es]
 
-                embedder = Embedder('rel_builder_embedder_' + self.name)
-                embedder.store(sents)
-                knn_links = [(str(s), '', str(o)) for (s, _, o) in knn_edges(embedder, k=2)]
-
-                slinks = [(str(i), 'S:', s[0]) for (i, s) in enumerate(svos)]
-                olinks = [(str(i), 'O:', s[2]) for (i, s) in enumerate(svos)]
-
-                svos.extend(knn_links)
-                # svos.extend(ilinks)
-                svos.extend(slinks)
-                svos.extend(olinks)
+            svos.extend(so_knn_links)
+            if hypernyms:
+                g = Generalizer(self.name)
+                hjtext = g.generalize(so_set)
+                hjterm = as_json(hjtext)
+                # print('HYPERS:\n', json.dumps(jterm))
+                hsvos = jterm2svos(hjterm)
+                svos.extend(hsvos)
 
             to_json(svos, self.jname)
             to_prolog(svos, self.pname)
@@ -217,13 +211,13 @@ def to_prolog(svos, fname):
 
 def test_relationizer():
     # smarter_model() # only GPT4 works? GPT3.5 seems ok!
-    # page = 'open world assumption'
-    # page = 'logic_programming'
-    # page = 'enshittification'
-    # page = "Generative artificial intelligence"
-    page = 'Artificial general intelligence'
-    agent = RelationBuilder(page)
-    text = agent.run('wikipage', page)
+    # page_name = 'open world assumption'
+    page_name = 'logic_programming'
+    # page_name = 'enshittification'
+    # page_name = "Generative artificial intelligence"
+    # page_name = 'Artificial general intelligence'
+    agent = RelationBuilder(page_name)
+    text = agent.from_source('wikipage', page_name)
     # print(text)
     # text2file(text, agent.jname)
     print(agent.dollar_cost())
