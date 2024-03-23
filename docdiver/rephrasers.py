@@ -2,7 +2,7 @@ import json
 from sentify.main import sentify, text2file
 from deepllm.interactors import Agent, PARAMS, to_json
 from deepllm.api import local_model, smarter_model, cheaper_model
-#from deepllm.embedders import Embedder
+# from deepllm.embedders import Embedder
 from sentence_store.main import Embedder
 from deepllm.vis import visualize_rels
 
@@ -94,13 +94,13 @@ def standardize(x):
     return x
 
 
-def good_noun_phrase(x):
-    x = x.lower().replace(' ', '').replace("'", '').replace('-', '').replace('.', '')
+def good_noun_phrase(x0):
+    x = x0.lower().replace(' ', '').replace("'", '').replace('-', '').replace('.', '')
     ok = x.isalpha() and x not in {
         'it', 'they', 'he', 'she',
         'someone', 'some', 'all', 'any', 'one'
     }
-    if not ok: print('NO GOOD:', x)
+    if not ok: print('NOT AGOOD NOUNPHRASE:', x0)
     return ok
 
 
@@ -122,7 +122,11 @@ def move_prep(x):
 def as_json(jtext):
     print('LLM ANSWER:', jtext)
     jtext = jtext.replace("```json", '').replace("```", '')
-    jterm = json.loads(jtext)
+    try:
+        jterm = json.loads(jtext)
+    except Exception:
+        print('*** json exception on LLM answer')
+        return None
     assert jterm
     return jterm
 
@@ -165,40 +169,49 @@ class RelationBuilder(Agent):
         jtext = self.ask(text=text)
         jterm = as_json(jtext)
 
+        if jterm is None:
+            return None,None,None
+
         if save:
             text2file(text, CF.OUT + self.name + "_sents.txt")
 
-            svos = jterm2svos(jterm)
-            svos = [move_prep(x) for x in svos]
+            if jterm is None:
+                svos = []
+            else:
+                svos = jterm2svos(jterm)
+                svos = [move_prep(x) for x in svos]
 
-            so_set = sorted(set(x for (s, _, o) in svos for x in (s, o)))
-            assert so_set, svos
-            so_embedder = Embedder('so_embedder_' + self.name)
-            so_embedder.store(so_set)
+                so_set = sorted(set(x for (s, _, o) in svos for x in (s, o)))
+                assert so_set, svos
+                so_embedder = Embedder('so_embedder_' + self.name)
+                so_embedder.store(so_set)
 
-            es = knn_edges(so_embedder, k=3, as_weights=False)
-            # print('!!! KNN EDGES:', es)
-            so_knn_links = [(so_set[s], int(100*round(r,2)), so_set[o]) for (s, r, o) in es]
-            so_knn_links = sorted(so_knn_links,key=lambda x:x[1])
-            so_knn_links = [(x,str(r),o) for (x,r,o) in so_knn_links]
-            so_knn_links = so_knn_links[0:min(len(so_set),len(svos))]
+                es = knn_edges(so_embedder, k=3, as_weights=False)
+                # print('!!! KNN EDGES:', len(so_set), es)
+                so_knn_links = [(so_set[s], int(100 * round(r, 2)), so_set[o]) for (s, r, o) in es]
+                so_knn_links = sorted(so_knn_links, key=lambda x: x[1])
+                so_knn_links = [(x, str(r), o) for (x, r, o) in so_knn_links]
+                so_knn_links = so_knn_links[0:min(len(so_set), len(svos))]
 
-            svos.extend(so_knn_links)
+                svos.extend(so_knn_links)
+
             if hypernyms:
                 g = Generalizer(self.name)
                 hjtext = g.generalize(so_set)
                 hjterm = as_json(hjtext)
-                # print('HYPERS:\n', json.dumps(jterm))
-                hsvos = jterm2svos(hjterm)
-                svos.extend(hsvos)
+                if hjterm is not None:
+                    # print('HYPERS:\n', json.dumps(jterm))
+                    hsvos = jterm2svos(hjterm)
+                    svos.extend(hsvos)
 
             to_json(svos, self.jname)
             to_prolog(svos, self.pname)
 
             fname = CF.OUT + self.name + "_" + prompter['name']
-            visualize_rels(svos, fname=fname, show=show)
+            url, hfile = visualize_rels(svos, fname=fname, show=show)
+            return jterm, url, hfile
 
-        return jterm
+        return jterm,None,None
 
 
 def to_prolog(svos, fname):
@@ -216,8 +229,8 @@ def to_prolog(svos, fname):
 def test_relationizer():
     # smarter_model() # only GPT4 works? GPT3.5 seems ok!
     # page_name = 'open world assumption'
-    page_name = 'logic_programming'
-    # page_name = 'enshittification'
+    # page_name = 'logic_programming'
+    page_name = 'enshittification'
     # page_name = "Generative artificial intelligence"
     # page_name = 'Artificial general intelligence'
     agent = RelationBuilder(page_name)

@@ -13,7 +13,7 @@ def visualize_rels(svos, fname='rel_graph', show=True):
     ns = set(x for (s,_,o) in svos for x in (s,o))
 
     for n in ns:
-        net.add_node(n, shape=shape,mass=4,color='red')
+        net.add_node(n, shape=shape,mass=4,color='green')
 
     def add(x, v, y):
         if (x, v, y) not in es:

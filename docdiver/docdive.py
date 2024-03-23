@@ -1,6 +1,4 @@
 import streamlit as st
-from time import time
-from deepllm.api import *
 from main import *
 
 UPLOAD_DIR = './UPLOAD_DIR/'
@@ -78,6 +76,7 @@ with st.sidebar:
                                   ['Summary',
                                    'Review',
                                    'Salient sentences',
+                                   'Relation graph',
                                    'Chat about it',
                                    'History'
                                    ],
@@ -131,6 +130,7 @@ def process_it():
            ['Summary',
             'Review',
             'Salient sentences',
+            'Relation graph',
             'Chat about it',
             'History'
     """
@@ -144,15 +144,22 @@ def process_it():
         st.write(mes)
         return
 
-    sd = SourceDoc(doc_type=doc_type, doc_name=doc_name, threshold=0.5, top_k=3)
-    result = ""
-
     if processing == 'History':
         for k, v in history.items():
             st.write(k)
             st.write(v)
             st.write()
-    elif processing == 'Summary':
+        return
+
+    sd = SourceDoc(
+        doc_type=doc_type,
+        doc_name=doc_name,
+        threshold=0.5,
+        top_k=3
+    )
+    result = ""
+
+    if processing == 'Summary':
         result = sd.summarize(best_k=sent_count)
         history[processing] = result
     elif processing == 'Salient sentences':
@@ -163,6 +170,14 @@ def process_it():
     elif processing == 'Review':
         result = sd.review(best_k=sent_count)
         history[processing] = result
+    elif processing == 'Relation graph':
+        hfile = sd.show_relation_graph(min(50, sent_count))
+        if hfile is None:
+            st.write('Relation graph generation failed for:',doc_name)
+            return
+        html_code = open(hfile, 'r', encoding='utf-8').read()
+        st.components.v1.html(html_code, height=960, width=960, scrolling=True)
+
     else:
         assert processing == 'Chat about it', processing
         st.write('Question:', quest)

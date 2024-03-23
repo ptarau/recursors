@@ -4,10 +4,11 @@ import networkx as nx
 from sentence_store.main import Embedder
 from sentify.main import sentify
 from deepllm.api import *
-
+from rephrasers import RelationBuilder
 
 SENT_CACHE = './SENT_CACHE/'
 SENT_STORE_CACHE = './SENT_STORE_CACHE/'
+
 
 def as_local_file_name(doc_type, doc_name, saved_file_name):
     if not saved_file_name:
@@ -60,7 +61,7 @@ class SourceDoc:
         return res
 
     def get_knns(self):
-        res = self.emb.knns(self.top_k,as_weights=True)
+        res = self.emb.knns(self.top_k, as_weights=True)
         return res
 
     def extract_summary(self, best_k=10):
@@ -99,15 +100,33 @@ class SourceDoc:
         text = sm.run()
         self.costs += sm.dollar_cost()
         self.times['llm_summary_maker_agent'] += sm.agent.processing_time
-        source_words = set(w.lower() for s in sents for w in s.split())
-        target_words = text.split()
+
         if mark:
+            source_words = set(w.lower() for s in sents for w in s.split())
+            target_words = text.split()
             target_words = [emphasize(w, source_words) for w in target_words]
             text = " ".join(target_words)
             # text = text.replace(' .', '. ').replace(' ?', '? ')
             text = text.replace('Keyphrases:', '\n\nKeyphrases:')
+
         if text.startswith('Summary'): return text
         return 'Summary: ' + text
+
+    def show_relation_graph(self, best_k, abstractive=False):
+        if abstractive: # more testing needed
+            text = self.summarize(best_k=best_k, mark=0)
+            text = text.replace('Summary:', '').replace('Keyphrases:', '')
+            sents = text.split('. ')
+            sents = [s.strip() + '.' for s in sents if s and s != '\n']
+        else:
+            id_sents = self.extract_summary(best_k=best_k)
+            sents = [s for (_, s) in id_sents]
+
+        kind=['_abstr','_extr'][int(abstractive)]
+
+        rel_agent = RelationBuilder(self.doc_name + kind+ "_rels")
+        _jterm,_url,hfile=rel_agent.from_sents(sents,show=False)
+        return hfile
 
     def review(self, best_k=200):
         id_sents = self.extract_summary(best_k)
@@ -149,7 +168,7 @@ class SourceDoc:
         return self.times | self.emb.get_times()
 
     def dollar_cost(self):
-        #self.costs += self.emb.dollar_cost()
+        # self.costs += self.emb.dollar_cost()
         return self.costs
 
 
