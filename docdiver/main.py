@@ -64,30 +64,45 @@ class SourceDoc:
         res = self.emb.knns(self.top_k, as_weights=True)
         return res
 
-    def extract_summary(self, best_k=10):
+    def extract_summary(self, best_k=10, center=None):
         knns = self.get_knns()
-        g = nx.DiGraph()
         t1 = time()
+        sents = self.get_sents()
+        max_sents = min(80, max(2 * best_k, len(sents) // 2))
+        g = nx.DiGraph()
+
+        if center:
+            qknns, _ = self.emb.knn_query(center, max_sents)
+            ids = set(i for (i, _) in qknns)
+        else:
+            ids = set(range(len(sents)))
+
+        print('!!! SELECTED SENTS:', len(ids))
+        # for i in ids: print('---',i,sents[i])
+
         for i, ns in enumerate(knns):
-            for (n, r) in ns:
-                g.add_edge(i, n, weight=r)
+            if i in ids:
+                for (n, r) in ns:
+                    if n in ids:
+                        g.add_edge(i, n, weight=r)
+
         ranked = nx.pagerank(g)
         ranked = sorted(ranked.items(), key=lambda x: x[1], reverse=True)
         ranked = ranked[0:best_k]
         best_ids = sorted(i for (i, _) in ranked)
-        sents = self.get_sents()
+
         res = [(i, sents[i]) for i in best_ids]
         t2 = time()
         self.times['extract_summary'] += t2 - t1
         print('SALIENT SENTENCES:', len(res), 'out of:', len(sents))
         return res
 
-    def summarize(self, best_k=8, mark=1):
+    def summarize(self, best_k=8, mark=1, center=None):
         def emphasize(w, important):
             if w.lower() not in important: return w
             return f":green[{w}]"
 
-        id_sents = self.extract_summary(best_k=best_k)
+        id_sents = self.extract_summary(best_k=best_k, center=center)
 
         if self.trace:
             for x in id_sents:
@@ -112,24 +127,27 @@ class SourceDoc:
         if text.startswith('Summary'): return text
         return 'Summary: ' + text
 
-    def show_relation_graph(self, best_k, abstractive=False):
-        if abstractive: # more testing needed
+    def show_relation_graph(self, best_k, abstractive=False, show=False, center=None):
+        if abstractive:  # more testing needed
             text = self.summarize(best_k=best_k, mark=0)
             text = text.replace('Summary:', '').replace('Keyphrases:', '')
             sents = text.split('. ')
             sents = [s.strip() + '.' for s in sents if s and s != '\n']
         else:
-            id_sents = self.extract_summary(best_k=best_k)
+            id_sents = self.extract_summary(best_k=best_k, center=center)
             sents = [s for (_, s) in id_sents]
 
-        kind=['_abstr','_extr'][int(abstractive)]
+        kind = ['_extr', '_abstr'][int(abstractive)]
 
-        rel_agent = RelationBuilder(self.doc_name + kind+ "_rels")
-        _jterm,_url,hfile=rel_agent.from_sents(sents,show=False)
+        cent=""
+        if center: cent="_"+center[0:10]
+
+        rel_agent = RelationBuilder(self.saved_file_name + kind +cent+ "_rels")
+        _jterm, _url, hfile = rel_agent.from_sents(sents, show=show)
         return hfile
 
-    def review(self, best_k=200):
-        id_sents = self.extract_summary(best_k)
+    def review(self, best_k=200, center=None):
+        id_sents = self.extract_summary(best_k, center=center)
 
         if self.trace:
             for x in id_sents:
@@ -191,8 +209,8 @@ def test_main(
 
     print("DOC:", doc)
     print('QUEST:', quest)
-    # smarter_model()
-    cheaper_model()
+    smarter_model()
+    # cheaper_model()
     # local_model()
     sd = SourceDoc(doc_type='url', doc_name=doc, threshold=0.5, top_k=3)
     sents = sd.retrieve(quest, top_k=20)
@@ -209,6 +227,7 @@ def test_main(
     print("TIMES:")
     for k, v in sd.get_times().items():
         print(k, '=', v)
+    sd.show_relation_graph(60, show=True, center='llm')
 
 
 if __name__ == "__main__":

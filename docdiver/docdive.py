@@ -72,6 +72,8 @@ with st.sidebar:
         local_model()
         sent_count = min(80, sent_count)
 
+    center = st.text_input('Center of attention?', value="", help="Results with be centered on these key concepts")
+
     processing = st.sidebar.radio('What to do?',
                                   ['Summary',
                                    'Review',
@@ -114,9 +116,10 @@ def clear_it():
         st.session_state.history = history
         st.write('Cleared history')
     elif clearing == 'Caches':
-        dirs = clear_caches() + [SENT_CACHE, SENT_STORE_CACHE, UPLOAD_DIR]
-        remove_dir(SENT_CACHE)
-        remove_dir(UPLOAD_DIR)
+        extradirs = [SENT_CACHE, SENT_STORE_CACHE, UPLOAD_DIR, 'lib']
+        dirs = clear_caches() + extradirs
+        for x in extradirs:
+            remove_dir(x)
         st.cache_data.clear()
         st.write('REMOVED:', dirs)
     elif clearing == 'Openai key':
@@ -160,7 +163,7 @@ def process_it():
     result = ""
 
     if processing == 'Summary':
-        result = sd.summarize(best_k=sent_count)
+        result = sd.summarize(best_k=sent_count, center=center)
         history[processing] = result
     elif processing == 'Salient sentences':
         result = dict(
@@ -168,12 +171,12 @@ def process_it():
         )
         history[processing] = result
     elif processing == 'Review':
-        result = sd.review(best_k=sent_count)
+        result = sd.review(best_k=sent_count, center=center)
         history[processing] = result
     elif processing == 'Relation graph':
-        hfile = sd.show_relation_graph(min(50, sent_count))
+        hfile = sd.show_relation_graph(min(50, sent_count), center=center)
         if hfile is None:
-            st.write('Relation graph generation failed for:',doc_name)
+            st.write('Relation graph generation failed for:', doc_name)
             return
         html_code = open(hfile, 'r', encoding='utf-8').read()
         st.components.v1.html(html_code, height=960, width=960, scrolling=True)
