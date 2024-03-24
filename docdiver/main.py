@@ -51,7 +51,7 @@ class SourceDoc:
             return_timings=True
         )
 
-        self.emb = Embedder(doc_name)
+        self.emb = Embedder(self.saved_file_name)
         self.emb.store(sents)
         self.times['sentify_conversion'] = t_convert
         self.times['sentify_segmentation'] = t_segment
