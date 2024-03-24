@@ -144,6 +144,9 @@ class SourceDoc:
 
         rel_agent = RelationBuilder(self.saved_file_name + kind +cent+ "_rels")
         _jterm, _url, hfile = rel_agent.from_sents(sents, show=show)
+        self.times=self.times | rel_agent.times
+        self.costs += rel_agent.dollar_cost()
+
         return hfile
 
     def review(self, best_k=200, center=None):

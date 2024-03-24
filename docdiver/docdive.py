@@ -179,7 +179,7 @@ def process_it():
             st.write('Relation graph generation failed for:', doc_name)
             return
         html_code = open(hfile, 'r', encoding='utf-8').read()
-        st.components.v1.html(html_code, height=960, width=960, scrolling=True)
+        st.components.v1.html(html_code, height=1000, scrolling=True)
 
     else:
         assert processing == 'Chat about it', processing

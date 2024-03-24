@@ -1,7 +1,10 @@
+from time import time
+import os
+from collections import Counter
 import json
 from sentify.main import sentify, text2file
 from deepllm.interactors import Agent, PARAMS, to_json
-from deepllm.api import local_model, smarter_model, cheaper_model
+from deepllm.api import local_model, smarter_model, cheaper_model,exists_file
 # from deepllm.embedders import Embedder
 from sentence_store.main import Embedder
 from deepllm.vis import visualize_rels
@@ -167,6 +170,10 @@ def as_json(jtext):
 
 class RelationBuilder(Agent):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.times = Counter()
+
     def from_source(self, kind, source, hypernyms=True, save=True, show=True, max_sents=80, weights=False):
         sents = sentify(kind, source)
         sents = [s.strip() for s in sents if plain_sent(s)]
@@ -181,18 +188,32 @@ class RelationBuilder(Agent):
         return self.from_canonical_text(text, hypernyms=hypernyms, save=save, show=show, weights=weights)
 
     def from_canonical_text(self, text, hypernyms=True, save=True, show=True, weights=False):
+        t1 = time()
         prompter = svos_prompter
+        CF = PARAMS()
+        self.fname = CF.OUT + self.name + "_" + prompter['name']
+        hfile = self.fname + '.html'
+        if exists_file(hfile):
+            url = "file://" + os.path.abspath(hfile)
+            return None, url, hfile
+        t2=time()
+        self.times['existing html']+=t2-t1
+
+
         self.spill()
         self.set_pattern(prompter['prompt'])
-        CF = PARAMS()
+
         self.pname = CF.OUT + self.name + "_" + prompter['name']
         self.jname = self.pname + prompter['target']
         self.pname = self.pname + ".pl"
+
 
         jtext = self.ask(text=text)
         jterm = as_json(jtext)
 
         if jterm is None:
+            t2 = time()
+            self.times['relation_builder'] += t2 - t1
             return None, None, None
 
         if save:
@@ -208,7 +229,7 @@ class RelationBuilder(Agent):
                 so_set = sorted(set(x for (s, _, o) in svos for x in (s, o)))
                 assert so_set, svos
 
-                so_embedder = Embedder('so_embedder_' + self.name)
+                so_embedder = Embedder(self.name + '_so_embedder')
                 so_embedder.store(so_set)
 
                 es = knn_edges(so_embedder, k=3, as_weights=False)
@@ -254,11 +275,13 @@ class RelationBuilder(Agent):
             to_json(svos, self.jname)
             to_prolog(svos, self.pname)
 
-            fname = CF.OUT + self.name + "_" + prompter['name']
-            url, hfile = visualize_rels(svos, fname=fname, show=show)
-            return jterm, url, hfile
-
-        return jterm, None, None
+            url, hfile = visualize_rels(svos, fname=self.fname, show=show)
+            res = jterm, url, hfile
+        else:
+            res = jterm, None, None
+        t2 = time()
+        self.times['relation_builder'] += t2 - t1
+        return res
 
 
 def to_prolog(svos, fname):
