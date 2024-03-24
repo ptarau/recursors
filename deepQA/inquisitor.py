@@ -244,9 +244,7 @@ def test_inquisitor(prompter=quest_prompter, lim=5, local=1):
     # initiator = "Why do some people think that we live in a simulation?"
     # initiator = "How does finetuning an LLM work?"
     # initiator = "How to teach grammars with Prolog?"
-
     # initiator = "Where the idea that subject and object are inseparable leads in Heidegger's Zein und Zeit?"
-    # initiator="How would you integrate planning elements into the chains of transformer blocks that make up the neural network of an LLM?"
     # initiator = "How to prove that NP and P are distinct?"
     # initiator = "How to repair a flat tire?"
     initiator = "How to recognize quickly that someone is talking bs?"

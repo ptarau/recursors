@@ -1,5 +1,6 @@
 import streamlit as st
 from main import *
+from deepllm.tools import file2string
 
 UPLOAD_DIR = './UPLOAD_DIR/'
 
@@ -126,6 +127,9 @@ def clear_it():
         clear_key()
         st.write('Cleared key')
 
+def refresh_graph(*args):
+    for f in args:
+        remove_file(f)
 
 def process_it():
     """
@@ -174,12 +178,21 @@ def process_it():
         result = sd.review(best_k=sent_count, center=center)
         history[processing] = result
     elif processing == 'Relation graph':
-        hfile = sd.show_relation_graph(min(50, sent_count), center=center)
+        hfile, pfile, jfile = sd.show_relation_graph(min(50, sent_count), center=center)
         if hfile is None:
             st.write('Relation graph generation failed for:', doc_name)
             return
         html_code = open(hfile, 'r', encoding='utf-8').read()
-        st.components.v1.html(html_code, height=1000, scrolling=True)
+        with st.expander('Visualize relation graph'):
+            st.components.v1.html(html_code, height=1000, scrolling=True)
+        pl_code = file2string(pfile)
+        js_code = from_json(jfile)
+        with st.expander('Relations as Prolog code'):
+            for clause in pl_code.split('\n'):
+                st.write(clause)
+        with st.expander('Relations as Json code'):
+            st.write(js_code)
+        st.button('Refresh graph!', on_click=refresh_graph,args=(hfile, pfile, jfile))
 
     else:
         assert processing == 'Chat about it', processing

@@ -139,15 +139,18 @@ class SourceDoc:
 
         kind = ['_extr', '_abstr'][int(abstractive)]
 
-        cent=""
-        if center: cent="_"+center[0:10]
+        cent = ""
+        if center: cent = "_" + center[0:10]
 
-        rel_agent = RelationBuilder(self.saved_file_name + kind +cent+ "_rels")
+        rel_agent = RelationBuilder(self.saved_file_name + kind + cent + "_rels")
         _jterm, _url, hfile = rel_agent.from_sents(sents, show=show)
-        self.times=self.times | rel_agent.times
+
+        self.times = self.times | rel_agent.times
         self.costs += rel_agent.dollar_cost()
 
-        return hfile
+        assert None not in (rel_agent.pname, rel_agent.jname)
+
+        return hfile, rel_agent.pname, rel_agent.jname
 
     def review(self, best_k=200, center=None):
         id_sents = self.extract_summary(best_k, center=center)

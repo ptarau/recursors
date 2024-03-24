@@ -4,7 +4,7 @@ from collections import Counter
 import json
 from sentify.main import sentify, text2file
 from deepllm.interactors import Agent, PARAMS, to_json
-from deepllm.api import local_model, smarter_model, cheaper_model,exists_file
+from deepllm.api import local_model, smarter_model, cheaper_model, exists_file
 # from deepllm.embedders import Embedder
 from sentence_store.main import Embedder
 from deepllm.vis import visualize_rels
@@ -173,6 +173,12 @@ class RelationBuilder(Agent):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.times = Counter()
+        prompter = svos_prompter
+        self.CF = PARAMS()
+        self.fname = self.CF.OUT + self.name + "_" + prompter['name']
+        self.pname = self.CF.OUT + self.name + "_" + prompter['name']
+        self.jname = self.pname + prompter['target']
+        self.pname = self.pname + ".pl"
 
     def from_source(self, kind, source, hypernyms=True, save=True, show=True, max_sents=80, weights=False):
         sents = sentify(kind, source)
@@ -189,24 +195,17 @@ class RelationBuilder(Agent):
 
     def from_canonical_text(self, text, hypernyms=True, save=True, show=True, weights=False):
         t1 = time()
-        prompter = svos_prompter
-        CF = PARAMS()
-        self.fname = CF.OUT + self.name + "_" + prompter['name']
+
         hfile = self.fname + '.html'
         if exists_file(hfile):
             url = "file://" + os.path.abspath(hfile)
             return None, url, hfile
-        t2=time()
-        self.times['existing html']+=t2-t1
-
+        t2 = time()
+        self.times['existing html'] += t2 - t1
 
         self.spill()
+        prompter = svos_prompter
         self.set_pattern(prompter['prompt'])
-
-        self.pname = CF.OUT + self.name + "_" + prompter['name']
-        self.jname = self.pname + prompter['target']
-        self.pname = self.pname + ".pl"
-
 
         jtext = self.ask(text=text)
         jterm = as_json(jtext)
@@ -217,7 +216,7 @@ class RelationBuilder(Agent):
             return None, None, None
 
         if save:
-            text2file(text, CF.OUT + self.name + "_sents.txt")
+            text2file(text, self.CF.OUT + self.name + "_sents.txt")
 
             if jterm is None:
                 svos = []
@@ -257,6 +256,8 @@ class RelationBuilder(Agent):
 
                 so_knn_links = [(x, str(r), o) for (x, r, o) in so_knn_links]
                 so_knn_links = so_knn_links[0:min(len(so_set), len(svos)) // 3]
+
+                so_embedder.clear()
 
                 svos.extend(so_knn_links)
 

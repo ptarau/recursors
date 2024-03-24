@@ -103,10 +103,13 @@ class TruthRater(AndOrExplorer):
         self.threshold = threshold
         self.store = Embedder(truth_file)
         self.truth_file = truth_file
-        if not exists_file(self.store.cache()):
+        if not exists_file(self.store.cache('.bin')):
             sents = load_ground_truth(truth_file=truth_file)
             self.store.store(sents)
         self.top_k = PARAMS().TOP_K
+
+    def clear(self):
+        self.store.clear()
 
     def appraise(self, g, _trace):
         sents_rs = self.store.query(g, self.top_k)
@@ -137,6 +140,9 @@ class AbstractMaker:
         self.agent.set_pattern(prompter['writer_p'])
         PARAMS()(self)
 
+    def clear(self):
+        self.agent.clear()
+
     def dollar_cost(self):
         return self.agent.dollar_cost()
 
@@ -159,6 +165,9 @@ class SummaryMaker:
         PARAMS()(self)
         if self.cache: self.agent.resume()
 
+    def clear(self):
+        self.agent.clear()
+
     def dollar_cost(self):
         return self.agent.dollar_cost()
 
@@ -170,6 +179,7 @@ class SummaryMaker:
         )
         if self.cache: self.agent.persist()
         return str(answer)
+
 
 class PaperReviewer:
     def __init__(self, text, tname=None, cache=True):
@@ -184,6 +194,9 @@ class PaperReviewer:
         PARAMS()(self)
         if self.cache: self.agent.resume()
 
+    def clear(self):
+        self.agent.clear()
+
     def dollar_cost(self):
         return self.agent.dollar_cost()
 
@@ -194,11 +207,12 @@ class PaperReviewer:
         if self.cache: self.agent.persist()
         return str(answer)
 
+
 class RetrievalRefiner:
     def __init__(self, text, quest, tname=None, cache=True):
         self.text = text
-        self.quest=quest
-        self.cache=cache
+        self.quest = quest
+        self.cache = cache
         prompter = retrieval_refiner
         pname = prompter['name']
         if tname is None:
@@ -207,6 +221,9 @@ class RetrievalRefiner:
         self.agent.set_pattern(prompter['rev_p'])
         PARAMS()(self)
         if self.cache: self.agent.resume()
+
+    def clear(self):
+        self.agent.clear()
 
     def dollar_cost(self):
         return self.agent.dollar_cost()
