@@ -257,35 +257,20 @@ def show_clauses(clauses):
 
 class SvoMaker:
     def __init__(self, topic, min_words=2):
-        prompter = to_svo_prompter
+        prompter = hyper_prompter
         pname = prompter['name']
         tname = topic.replace(' ', '_').lower()
+        self.topic=topic
         self.agent = Agent(f'{tname}_{pname}')
-        self.agent.set_pattern(prompter['svo_p'])
+        self.agent.set_pattern(prompter['hyper_p'])
         self.min_words = min_words
         PARAMS()(self)
 
     def to_svo(self, sentence):
         # print('<<<',sentence)
-        sentence = sentence.strip()
-        if sentence.count(' ') < self.min_words:
-            return ['this', 'is about', sentence.lower()]
-        sentence = " ".join(sentence.strip().split())
-        answer = self.agent.ask(sentence=sentence.lower())
-        # print('!!!------------:', answer)
-        try:
-            answer = json.loads(answer)
-            answer = [x.lower() for x in answer.values()]
-        except Exception:
-            # print(ex)
-            answer = None
-        # print('>>>', answer)
-        if not answer or (answer and len(answer) != 3):
-            answer = ['this', 'is about', sentence.lower()]
-        s, v, o = answer
-        if not s or not v or not o:
-            answer = ['this', 'is about', sentence.lower()]
-        return answer
+        answer = self.agent.ask(g=sentence, context=self.topic)
+
+        return sentence,'is',answer
 
     def to_svos(self, facts, clauses):
 
@@ -294,21 +279,19 @@ class SvoMaker:
         self.resume()
         for fact in facts:
             svo = self.to_svo(fact)
-            if svo is None and fact:
-                svos.append(('this', 'is mentioned', fact))
+            if not svo and fact:
+                svos.append(('it', 'is assumed', fact))
                 continue
             svos.append(svo)
             # print("SVO:", svo)
             self.agent.spill()
             s, v, o = svo
-            svos.append((fact, 'is about', s))
-            # svos.append((fact, 'has predicate', v))
-            svos.append((fact, 'discusses', o))
+
             body = clauses[fact]
             for ors in body:
                 assert isinstance(ors, list), ors
                 for and_ in ors:
-                    svos.append((fact, 'depends on', and_))
+                    svos.append((fact, ':', and_))
 
         self.persist()
         # jpp(svos)

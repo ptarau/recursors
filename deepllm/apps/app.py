@@ -71,7 +71,7 @@ def visualize(data, new_tab=False):
         browse(url)
     else:
         html_code = open(hfile, 'r', encoding='utf-8').read()
-        st.components.v1.html(html_code, height=960, width=960, scrolling=True)
+        st.components.v1.html(html_code, height=1024, scrolling=True)
 
 
 def do_query():

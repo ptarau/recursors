@@ -180,6 +180,16 @@ retrieval_refiner = dict(
     """
 )
 
+hyper_prompter = dict(
+    name="concept_generalizer",
+    hyper_p="""   
+    With the following $context in mind, extract a salient more general concept or hypernym related to the noun group in the following text.
+    No explanations needed, return just the hypernym as a string.
+    Here is the text:
+
+    "$g"
+    """
+)
 
 
 sci_abstract_maker = dict(
