@@ -12,6 +12,8 @@ else:
 
 
 def handle_uploaded():
+    if 'uploaded_file' not in st.session_state:
+        return None
     if st.session_state.uploaded_file is None:
         return None
     fpath = save_uploaded_file()
@@ -127,9 +129,11 @@ def clear_it():
         clear_key()
         st.write('Cleared key')
 
+
 def refresh_graph(*args):
     for f in args:
         remove_file(f)
+
 
 def process_it():
     """
@@ -192,7 +196,7 @@ def process_it():
                 st.write(clause)
         with st.expander('Relations as Json code'):
             st.write(js_code)
-        st.button('Refresh graph!', on_click=refresh_graph,args=(hfile, pfile, jfile))
+        st.button('Refresh graph!', on_click=refresh_graph, args=(hfile, pfile, jfile))
 
     else:
         assert processing == 'Chat about it', processing
