@@ -147,9 +147,12 @@ summary_maker = dict(
     name='summary_maker',
     sum_p="""
     You are an expert in understanding documents and summarizing them.
-    Make a summary of $sum_size sentences and extract $kwd_count keyphrases from the following text.
+    First, make a summary of $sum_size sentences. Start the summary with "Summary:". 
+    Next, extract $kwd_count keywords separated by ";".
+    
+    Here is the text to work with:
        
-    $text 
+    $text   
     """
 )
 
@@ -163,7 +166,6 @@ paper_reviewer = dict(
     $text 
     """
 )
-
 
 retrieval_refiner = dict(
     name='retrieval_refiner',
@@ -190,7 +192,6 @@ hyper_prompter = dict(
     "$g"
     """
 )
-
 
 sci_abstract_maker = dict(
     name='title_and_abstract_maker',
@@ -220,6 +221,7 @@ prompter_vars = [
     thesis_support_prompter,
     cons_and_pros_prompter
 ]
+
 
 def prompter_dict():
     d = dict()

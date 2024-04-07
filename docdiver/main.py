@@ -113,6 +113,7 @@ class SourceDoc:
         text = " ".join(sents)
         sm = SummaryMaker(text, sum_size=best_k, kwd_count=8)
         text = sm.run()
+        text = text.replace(';', ' ; ')
         self.costs += sm.dollar_cost()
         self.times['llm_summary_maker_agent'] += sm.agent.processing_time
 
@@ -122,7 +123,7 @@ class SourceDoc:
             target_words = [emphasize(w, source_words) for w in target_words]
             text = " ".join(target_words)
             # text = text.replace(' .', '. ').replace(' ?', '? ')
-            text = text.replace('Keyphrases:', '\n\nKeyphrases:')
+            text = text.replace('Keywords:', '\n\n*Keywords*:')
 
         if text.startswith('Summary'): return text
         return 'Summary: ' + text
@@ -130,7 +131,7 @@ class SourceDoc:
     def show_relation_graph(self, best_k, abstractive=False, show=False, center=None):
         if abstractive:  # more testing needed
             text = self.summarize(best_k=best_k, mark=0)
-            text = text.replace('Summary:', '').replace('Keyphrases:', '')
+            text = text.replace('Summary:', '').replace('Keywords:', '')
             sents = text.split('. ')
             sents = [s.strip() + '.' for s in sents if s and s != '\n']
         else:
@@ -201,7 +202,7 @@ def test_main1(doc='https://arxiv.org/pdf/2306.14077.pdf'):
     cheaper_model()
     # local_model()
     sd = SourceDoc(doc_type='url', doc_name=doc, threshold=0.5, top_k=3)
-    sents = sd.summarize(best_k=20)
+    sents = sd.summarize(best_k=10)
     print(sents)
 
 

@@ -178,6 +178,9 @@ class SummaryMaker:
             kwd_count=self.kwd_count
         )
         if self.cache: self.agent.persist()
+        print("\n\nANSWER:----------\n")
+        print(answer)
+        print('------\n\n')
         return str(answer)
 
 
