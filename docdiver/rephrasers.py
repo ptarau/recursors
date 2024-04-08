@@ -105,7 +105,8 @@ def standardize_triplet(x):
     """When the object starts with an preposition like
     "to" or "in" move it to the end of the verb."""
 
-    if not x : return x
+    if not x: return None
+    if any(not isinstance(t, str) for t in x): return None
     s, v, o = tuple(t.lower() for t in x)
     (a, sp, b) = str.partition(o, ' ')
     if a in {
@@ -130,18 +131,60 @@ def good_noun_phrase(x0):
     return ok
 
 
+def old_jterm2svos(jterm):
+    if isinstance(jterm[0], list):
+        svos = [tuple(x) for x in jterm if len(x) == 3 and x[0] != x[2]][1:]
+    else:
+        svos = [tuple(x.values()) for x in jterm if len(x) == 3]
+
+    print('\n\nLLM SVO jterm:')
+    print(json.dumps(jterm, indent=2))
+    print('----------\n')
+
+    svos = [standardize_triplet(x) for x in svos if x]
+
+    svos = [x for x in svos if x]
+
+    svos = [(s, v, o) for (s, v, o) in svos if
+            good_noun_phrase(s) and good_noun_phrase(o)]
+
+    return svos
+
+
 def jterm2svos(jterm):
     if isinstance(jterm[0], list):
         svos = [tuple(x) for x in jterm if len(x) == 3 and x[0] != x[2]][1:]
     else:
         svos = [tuple(x.values()) for x in jterm if len(x) == 3]
 
-    svos = [standardize_triplet(x) for x in svos if x]
+    if not svos: return None
+    #assert svos, jterm
 
-    svos = [(s, v, o) for (s, v, o) in svos if
-            good_noun_phrase(s) and good_noun_phrase(o)]
+    good_svos = []
+    for svo in svos:
+        bad = not svo
+        if not bad:
+            bad = not isinstance(svo, tuple) and len(svo) == 3
+        if not bad:
+            bad = any(not t for t in svo)
+        if bad:
+            print('!!! BAD SVO:', svo)
+            continue
+        newsvo = []
+        for t in svo:
+            if isinstance(t, list):
+                t = t[0]
+            t=str(t)
+            newsvo.append(t)
+        s, v, o = newsvo
+        if not (good_noun_phrase(s) and good_noun_phrase(o)):
+            continue
+        good_svos.append((s, v, o))
 
-    return svos
+    if not good_svos: return None
+    #assert good_svos, svos
+
+    return good_svos
 
 
 def collapse_similars(svos):
@@ -226,6 +269,7 @@ class RelationBuilder(Agent):
             else:
 
                 svos = jterm2svos(jterm)
+                if not svos: return None
 
                 so_set = sorted(set(x for (s, _, o) in svos for x in (s, o)))
                 assert so_set, svos

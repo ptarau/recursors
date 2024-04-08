@@ -183,7 +183,11 @@ def process_it():
         result = sd.review(best_k=sent_count, center=center)
         history[processing] = result
     elif processing == 'Relation graph':
-        hfile, pfile, jfile = sd.show_relation_graph(min(50, sent_count), center=center)
+        res = sd.show_relation_graph(min(50, sent_count), center=center)
+        if not res:
+            st.write('Relation graph generation failed for:', doc_name)
+
+        hfile, pfile, jfile = res
         if hfile is None:
             st.write('Relation graph generation failed for:', doc_name)
             return

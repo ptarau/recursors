@@ -144,7 +144,9 @@ class SourceDoc:
         if center: cent = "_" + center[0:10]
 
         rel_agent = RelationBuilder(self.saved_file_name + kind + cent + "_rels")
-        _jterm, _url, hfile = rel_agent.from_sents(sents, show=show)
+        res=rel_agent.from_sents(sents, show=show)
+        if not res: return None
+        _jterm, _url, hfile = res
 
         self.times = self.times | rel_agent.times
         self.costs += rel_agent.dollar_cost()
