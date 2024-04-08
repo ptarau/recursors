@@ -104,6 +104,8 @@ def standardize_word(w):
 def standardize_triplet(x):
     """When the object starts with an preposition like
     "to" or "in" move it to the end of the verb."""
+
+    if not x : return x
     s, v, o = tuple(t.lower() for t in x)
     (a, sp, b) = str.partition(o, ' ')
     if a in {
@@ -134,7 +136,7 @@ def jterm2svos(jterm):
     else:
         svos = [tuple(x.values()) for x in jterm if len(x) == 3]
 
-    svos = [standardize_triplet(x) for x in svos]
+    svos = [standardize_triplet(x) for x in svos if x]
 
     svos = [(s, v, o) for (s, v, o) in svos if
             good_noun_phrase(s) and good_noun_phrase(o)]

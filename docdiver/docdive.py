@@ -1,5 +1,6 @@
 import streamlit as st
 from main import *
+from deepllm import __version__
 from deepllm.tools import file2string
 
 UPLOAD_DIR = './UPLOAD_DIR/'
@@ -38,7 +39,7 @@ def save_uploaded_file():
 
 
 with st.sidebar:
-    st.write('**DocDiver is a DeepLLM application**')
+    st.write(f'**DocDiver is a DeepLLM {__version__} application**')
     doc_type = st.radio('Document type?', ('local pdf or txt file', 'url'), index=0, horizontal=True)
 
     if doc_type == 'local pdf or txt file':
