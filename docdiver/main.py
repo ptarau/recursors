@@ -183,7 +183,12 @@ class SourceDoc:
         text = " ".join(sents)
         agent = RetrievalRefiner(text, quest, tname=self.saved_file_name)
         answer_plus = agent.run()
-        answer, follow_up = answer_plus.split('==>')
+        if '==>' in answer_plus:
+            answer, follow_up = answer_plus.split('==>')
+        elif 'Follow-up question:' in answer_plus:
+            answer, follow_up = answer_plus.split('Follow-up question:')
+        else:
+            answer,follow_up=answer_plus,""
         answer = answer.strip()
         follow_up = follow_up.strip().replace('Follow-up question:', '')
         self.costs += agent.dollar_cost()
