@@ -7,14 +7,25 @@ from deepllm.configurator import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-IS_LOCAL_LLM = [False]
+FORCE_TRACE = 1
+FORCE_SBERT = 0
 
-# LOCAL_MODEL="vicuna-7b-v1.5"
-LOCAL_MODEL = "mistralai/Mistral-7B-Instruct-v0.2"
 LOCAL_URL = "http://u.local:8000/v1"  # replace with where the server is
 
-FORCE_TRACE=1
-FORCE_SBERT=0
+IS_LOCAL_LLM = [False]
+
+mistral = "mistralai/Mistral-7B-Instruct-v0.2"
+llama = "meta-llama/Meta-Llama-3-8B-Instruct"
+vicuna = "vicuna-7b-v1.5"
+
+LOCAL_MODEL = [mistral]
+
+
+def fix_eos():
+    if IS_LOCAL_LLM[0] and LOCAL_MODEL[0] == llama:
+        return {"stop_token_ids": [128009]}
+    return None
+
 
 GPT_PARAMS = dict(
     TRACE=FORCE_TRACE,
@@ -45,7 +56,7 @@ LOCAL_PARAMS = dict(
     OUT='out/',
     DATA='data/',
 
-    model=LOCAL_MODEL,
+    model=LOCAL_MODEL[0],
     API_BASE=LOCAL_URL,
 
     # emebedding_model="vicuna-7b-v1.5",
@@ -129,9 +140,11 @@ def remove_dir(dname):
 def copy_file(src, dst):
     return shutil.copyfile(src, dst)
 
+def clear_local():
+    remove_dir(LOCAL_PARAMS['ROOT'])
 
 def clear_caches():
-    dirs=[
+    dirs = [
         GPT_PARAMS['ROOT'],
         GPT_PARAMS['ROOT_'],
         LOCAL_PARAMS['ROOT']

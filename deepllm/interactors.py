@@ -21,12 +21,24 @@ def ask_llm_new(model=None, mes=None, temperature=None, n=None):
         base_url=CF.API_BASE
     )
 
-    r = client.chat.completions.create(
-        messages=mes,
-        model=model,
-        temperature=temperature,
-        n=n
-    )
+    extra_body = fix_eos()
+
+    if extra_body is not None:
+        r = client.chat.completions.create(
+            messages=mes,
+            model=model,
+            temperature=temperature,
+            n=n,
+            extra_body=extra_body
+        )
+    else:
+        r = client.chat.completions.create(
+            messages=mes,
+            model=model,
+            temperature=temperature,
+            n=n
+        )
+
     # print('!!!!>>> OPENAI RESULT:',r)
 
     results = r.choices
@@ -111,7 +123,7 @@ class Agent:
         self.CACHES = None
         self.TRACE = None
         self.initiator = None
-        PARAMS()(self) # overrides defaults from global params
+        PARAMS()(self)  # overrides defaults from global params
         # print('AGENT !!!!',self.__dict__)
 
     def tuner(self,
@@ -196,7 +208,7 @@ class Agent:
         self.long_mem = dict()
         self.prompt_toks = 0
         self.compl_toks = 0
-        self.processing_time=0
+        self.processing_time = 0
 
     def to_message(self, quest):
         """
@@ -297,7 +309,7 @@ class Agent:
         while memoizing the prompt-answer pair and
         computing the token costs
         """
-        t1=time.time()
+        t1 = time.time()
         h = tuple(kwargs.items())
         if not h:
             assert len(args) == 1, ('BAD args', args)
@@ -328,15 +340,15 @@ class Agent:
                     n=self.n
                 )
                 break
-            except Exception:
+            except Exception as ex:
                 if attempt >= max_attempts - 1:
-                          print('\n\n ***GPT exception:')
-                          print("LOCAL:",IS_LOCAL_LLM[0])
-                          print('API_BASE:', PARAMS().API_BASE)
-                          print('MODEL:',self.model)
+                    print('\n\n ***GPT exception:', ex)
+                    print("LOCAL:", IS_LOCAL_LLM[0])
+                    print('API_BASE:', PARAMS().API_BASE)
+                    print('MODEL:', self.model)
 
-                          #raise Exception('LLM exception')
-                          exit(1)
+                    # raise Exception('LLM exception')
+                    exit(1)
                 else:
                     print('retrying: ', attempt)
                     time.sleep(0.5)
@@ -360,8 +372,8 @@ class Agent:
 
         self.short_mem[quest] = answer
         assert isinstance(answer, str), answer
-        t2=time.time()
-        self.processing_time=round(t2-t1,2)
+        t2 = time.time()
+        self.processing_time = round(t2 - t1, 2)
         return answer
 
     def post_process(self, _quest0, answer):

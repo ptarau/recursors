@@ -62,7 +62,7 @@ with st.sidebar:
     sent_count = st.slider('Number of salient sentences to work with?',
                            min_value=3, max_value=300, value=100)
 
-    choice = st.sidebar.radio('LLM?', ['GPT-4', 'GPT-3.5', 'Local LLM'], horizontal=True)
+    choice = st.sidebar.radio('LLM?', ['GPT-4', 'GPT-3.5', 'Local Llama-3', 'Local Mistral'], horizontal=True)
 
     if choice == 'GPT-4':
         smarter_model()
@@ -70,6 +70,19 @@ with st.sidebar:
         cheaper_model()
         sent_count = min(80, sent_count)
     else:
+
+        if choice == 'Local Llama-3':
+            if LOCAL_MODEL[0]!=llama:
+                clear_local()
+            LOCAL_MODEL[0] = llama
+        else:
+            assert choice == 'Local Mistral', 'BAD CHOICE: ' + choice
+            if LOCAL_MODEL[0] != mistral:
+                clear_local()
+            LOCAL_MODEL[0] = mistral
+
+        LOCAL_PARAMS['model'] = LOCAL_MODEL[0]
+
         LOCAL_PARAMS['API_BASE'] = st.sidebar.text_input(
             'Local LLM server:', value=LOCAL_PARAMS['API_BASE']
         )
@@ -113,6 +126,14 @@ def collect_key():
 collect_key()
 
 
+def clear_all_caches():
+    extradirs = [SENT_CACHE, SENT_STORE_CACHE, UPLOAD_DIR, 'lib']
+    dirs = clear_caches() + extradirs
+    for x in extradirs:
+        remove_dir(x)
+    st.cache_data.clear()
+    st.write('REMOVED:', dirs)
+
 def clear_it():
     global history
     if clearing == 'History':
@@ -120,16 +141,10 @@ def clear_it():
         st.session_state.history = history
         st.write('Cleared history')
     elif clearing == 'Caches':
-        extradirs = [SENT_CACHE, SENT_STORE_CACHE, UPLOAD_DIR, 'lib']
-        dirs = clear_caches() + extradirs
-        for x in extradirs:
-            remove_dir(x)
-        st.cache_data.clear()
-        st.write('REMOVED:', dirs)
+        clear_all_caches()
     elif clearing == 'Openai key':
         clear_key()
         st.write('Cleared key')
-
 
 def refresh_graph(*args):
     for f in args:
