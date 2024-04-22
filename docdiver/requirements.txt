@@ -1,5 +1,0 @@
-streamlit
-sentence_transformers
-deepllm
-sentify
-
