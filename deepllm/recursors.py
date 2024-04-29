@@ -223,7 +223,7 @@ def run_explorer(goal=None, prompter=None, lim=None):
 
 
 def quote(x):
-    x=x.replace('\\','')
+    x=x.replace('\\','').replace("'","_")
     return "'" + x + "'"
 
 
@@ -340,18 +340,23 @@ def to_prolog(clauses, fname, neck=":-", suf='.pro'):
     ensure_path(path)
     with open(path, 'w') as f:
         print('% CLAUSES:', file=f)
+        rule_heads=set()
         for h, bss in clauses.items():
             for bs in bss:
                 if bs == [] or bs == ['fail']: continue
                 body = ',\n    '.join(map(quote, bs)) + "."
                 print(quote(h), neck + '\n    ' + body, file=f)
+                rule_heads.add(h)
         for h, bss in clauses.items():
             if bss == []:
+                if h in rule_heads: continue
                 print(quote(h) + ".", file=f)
             for bs in bss:
                 if bs == []:
+                    if h in rule_heads: continue
                     print(quote(h) + ".", file=f)
                 elif bs == ['fail']:
+                    if h in rule_heads: continue
                     print(quote(h), neck + ' ' + 'fail.', file=f)
 
 

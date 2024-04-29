@@ -17,7 +17,7 @@ def deactivate_svos():
 def smarter_model():
     IS_LOCAL_LLM[0] = False
     #GPT_PARAMS['model'] = "gpt-4"
-    GPT_PARAMS['model'] ='gpt-4-turbo-preview'
+    GPT_PARAMS['model'] ='gpt-4-turbo'
     openai.api_base = GPT_PARAMS['API_BASE']
     GPT_PARAMS['ROOT'] = "./STATE_SMARTER/"
     PARAMS()

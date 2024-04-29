@@ -71,7 +71,7 @@ sci_prompter = dict(
     name='scientific_concept_explorer',
     and_p="""The task we are exploring is: "$context"
         Generate 3-5 noun phrases of 2-4 words each that occur as keyphrases only
-        in scientific papers bout "$g".
+        in scientific papers about "$g".
         Itemize your answer, one noun phrase per line.
         No explanations needed, just the noun phrase, nothing else.
         """,
