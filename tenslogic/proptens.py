@@ -168,6 +168,7 @@ if __name__ == "__main__":
     #test_propvecs()
     #test_json(jname='use_of_tactical_nukes_in_ukraine_war_causal_inference_2.json')
     #test_json(jname='benchmark_qa_on_document_colections_scientific_concept_explorer_2.json')
-    test_json(
-        path='../deepllm/tests/STATE_LOCAL/out/',
-        jname='logic_programming_scientific_concept_explorer_3.json')
+    #test_json(
+    #    path='../deepllm/tests/STATE_LOCAL/out/',
+    #    jname='logic_programming_scientific_concept_explorer_3.json')
+    test_propvecs()
