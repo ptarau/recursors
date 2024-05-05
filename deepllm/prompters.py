@@ -67,6 +67,25 @@ conseq_prompter = dict(
         Your answer should not contain ":"."""
 )
 
+
+falsifier_prompter = dict(
+    name='explorer_of_negative_consequences',
+    and_p="""We strongly disaprove and need to refute that: "$context".
+        To help with this task, generate 1-2 noun phrases of 2-4 words 
+        with each alternative detailing undesirable consequences of "$g".
+        Itemize your answer, one consequence of "$g" per line.
+        No explanations needed, just the noun phrase, nothing else.
+        Avoid using the words "Noun phrases" in your answer.
+        Your answer should not contain ":".""",
+    or_p="""We strongly disaprove and need to refute that: "$context".
+        Generate 1-2 noun phrases of 2-4 words that together are undesirable consequences "$g".
+        Itemize your answer, one noun phrase per line.
+         No explanations are needed, just the noun phrase, nothing else.
+        Avoid starting your sentence with the word "Alternative".
+        Your answer should not contain ":"."""
+)
+
+
 sci_prompter = dict(
     name='scientific_concept_explorer',
     and_p="""The task we are exploring is: "$context"
@@ -219,7 +238,8 @@ prompter_vars = [
     task_planning_prompter,
     recommendation_prompter,
     thesis_support_prompter,
-    cons_and_pros_prompter
+    cons_and_pros_prompter,
+    falsifier_prompter
 ]
 
 
