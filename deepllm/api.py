@@ -1,10 +1,12 @@
+from deepllm import __version__
 from deepllm.prompters import *
 from deepllm.params import *
 from deepllm.recursors import AndOrExplorer, show_clauses, show_model, show_svos,vis_svos
 from deepllm.vis import browse
 from deepllm.refiners import Advisor, Rater, TruthRater, AbstractMaker, SummaryMaker, PaperReviewer,RetrievalRefiner
 
-
+def get_version():
+    return __version__
 def activate_svos():
     GPT_PARAMS['TO_SVOS']=True
     LOCAL_PARAMS['TO_SVOS'] = True
