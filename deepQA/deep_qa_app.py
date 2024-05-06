@@ -6,7 +6,7 @@ print('Running DeepQA as a streamlit app!')
 
 st.set_page_config(layout="wide")
 
-st.sidebar.title('[DeepQA](https://github.com/ptarau/recursors/tree/main/deepQA): a DeepLLM App exploring self-generated follow-up questions')
+st.sidebar.title('[DeepQA](https://github.com/ptarau/recursors/tree/main/deepQA): a DeepLLM App exploring self-generated follow-up questions, version  '+get_version())
 
 prompters = prompter_dict()
 
