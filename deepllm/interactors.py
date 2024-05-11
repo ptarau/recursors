@@ -159,7 +159,7 @@ class Agent:
         if self.name is None: return
         if not self.short_mem and not self.long_mem: return
 
-        print('PERSISTING:', self.cache_name())
+        #tprint('PERSISTING:', self.cache_name())
 
         kvs = []
         d = self.__dict__
@@ -396,6 +396,6 @@ class Agent:
             return (self.prompt_toks * 0.03 + self.compl_toks * 0.06) / 1000
         if self.model == 'gpt-4-32k':
             return (self.prompt_toks * 0.06 + self.compl_toks * 0.12) / 1000
-        if self.model == 'gpt-4-turbo-preview':
+        if self.model == 'gpt-4-turbo':
             return (self.prompt_toks * 0.01 + self.compl_toks * 0.03) / 1000
         return 0.0  # case of local LLM

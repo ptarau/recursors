@@ -51,5 +51,13 @@ def run_all():
     test_abstract_maker2()
 
 
+def small_test():
+    CF.DATA = PARAMS().DATA
+    run_wikifetch()
+    #test_rater(prompter=causal_prompter, goal='The Fermi paradox', threshold=0.10, lim=1)
+    test_truth_rater(prompter=sci_prompter, goal='Unification algorithm', truth_file='logic_programming',
+                     threshold=0.10, lim=1)
+
 if __name__ == "__main__":
-    run_all()
+    # run_all()
+    small_test()
