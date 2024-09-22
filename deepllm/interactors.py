@@ -127,7 +127,7 @@ class Agent:
         # print('AGENT !!!!',self.__dict__)
 
     def tuner(self,
-              model="gpt-3.5-turbo",
+              model="gpt-4o-mini",
               temperature=0.2,
               n=1,
               max_toks=4000):
@@ -387,15 +387,10 @@ class Agent:
         """
         computes API costs for several models
         to be extended as new models appear
+        costs in $ per million in/out toks
         """
-        if self.model == 'gpt-3.5-turbo':
-            return (self.prompt_toks * 0.0010 + self.compl_toks * 0.0020) / 1000
-        if self.model == 'gpt-3.5-turbo-instruct':
-            return (self.prompt_toks * 0.0015 + self.compl_toks * 0.0020) / 1000
-        if self.model == 'gpt-4':
-            return (self.prompt_toks * 0.03 + self.compl_toks * 0.06) / 1000
-        if self.model == 'gpt-4-32k':
-            return (self.prompt_toks * 0.06 + self.compl_toks * 0.12) / 1000
-        if self.model == 'gpt-4-turbo':
-            return (self.prompt_toks * 0.01 + self.compl_toks * 0.03) / 1000
+        if self.model == 'gpt-4o':
+            return (self.prompt_toks * 5.0 + self.compl_toks * 15.0) / 1000000
+        if self.model == 'gpt-4o-mini':
+            return (self.prompt_toks * 0.15 + self.compl_toks * 0.60) / 1000000
         return 0.0  # case of local LLM

@@ -32,8 +32,8 @@ if local:
     LOCAL_PARAMS['API_BASE'] = st.sidebar.text_input('Local LLM server:', value=LOCAL_PARAMS['API_BASE'])
     local_model()
 else:
-    choice = st.sidebar.radio('OpenAI LLM', ['GPT-4', 'GPT-3.5'])
-    if choice == 'GPT-4':
+    choice = st.sidebar.radio('OpenAI LLM', ['GPT-4o', 'GPT-4o-mini'])
+    if choice == 'GPT-4o':
         smarter_model()
     else:
         cheaper_model()

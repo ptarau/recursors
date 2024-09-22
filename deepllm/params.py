@@ -35,9 +35,7 @@ GPT_PARAMS = dict(
     CACHES="caches/",
     DATA="data/",
     OUT='out/',
-    # model="gpt-3.5-turbo",
-    # model="gpt-4",
-    #model='gpt-4-turbo',
+
     model='gpt-4o',
     emebedding_model="text-embedding-3-large",
     temperature=0.2,
