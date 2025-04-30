@@ -3,8 +3,13 @@ from deepllm.recursors import run_explorer
 
 
 def run_all():
-    run_explorer(prompter=sci_prompter, goal='Logic programming', lim=3)
+   
+    #run_explorer(prompter=falsifier_prompter, goal='add high tarifs on imports', lim=2)
+    #run_explorer(prompter=verifier_prompter, goal='add high tarifs on imports', lim=2)
+    #run_explorer(prompter=falsifier_prompter, goal='reaction of the stock market to high tarifs on imports', lim=2)
+    run_explorer(prompter=verifier_prompter, goal='reaction of the stock market to high tarifs on imports', lim=2)
     return
+    run_explorer(prompter=sci_prompter, goal='Logic programming', lim=3)
     run_explorer(prompter=sci_prompter, goal='Generative AI', lim=2)
     run_explorer(prompter=recommendation_prompter, goal='Apocalypse now', lim=2)
     run_explorer(prompter=recommendation_prompter, goal='1Q84, by Haruki Murakami', lim=2)

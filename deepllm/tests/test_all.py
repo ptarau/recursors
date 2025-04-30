@@ -22,4 +22,5 @@ if __name__ == "__main__":
     #smarter_model()
     cheaper_model()
     #local_model()
+    #test_recursors()
     run_all()

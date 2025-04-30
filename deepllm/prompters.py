@@ -85,6 +85,23 @@ falsifier_prompter = dict(
         Your answer should not contain ":"."""
 )
 
+verifier_prompter = dict(
+    name='explorer_of_results_to_achieve',
+    and_p="""We strongly support and want to achieve the positive results of: "$context".
+        To help with this task, generate 1-2 noun phrases of 2-4 words 
+        with each alternative detailing the steps  needed to achieve the results of "$g".
+        Itemize your answer, one result step of "$g" per line.
+        No explanations needed, just the noun phrase, nothing else.
+        Avoid using the words "Noun phrases" in your answer.
+        Your answer should not contain ":".""",
+    or_p="""We strongly support and want to achieve the positive results of: "$context".
+        Generate 1-2 noun phrases of 2-4 words that describe alternative ways to achieve "$g".
+        Itemize your answer, one noun phrase per line.
+         No explanations are needed, just the noun phrase, nothing else.
+        Avoid starting your sentence with the word "Alternative".
+        Your answer should not contain ":"."""
+)
+
 
 sci_prompter = dict(
     name='scientific_concept_explorer',
@@ -239,6 +256,7 @@ prompter_vars = [
     recommendation_prompter,
     thesis_support_prompter,
     cons_and_pros_prompter,
+    verifier_prompter,
     falsifier_prompter
 ]
 
