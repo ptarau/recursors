@@ -193,6 +193,7 @@ class AndOrExplorer:
             clauses = defaultdict(list)
             for (h, bss) in self.clauses.items():
                 for bs in bss:
+                    if bs==[] and len(bss)==2: continue # fix [] in bss resulting in wrong ';'
                     ok = all(b in model for b in bs)
                     if ok: clauses[h].append(bs)
         self.clauses = clauses

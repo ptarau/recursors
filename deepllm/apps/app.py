@@ -100,6 +100,7 @@ def do_query():
         else:
             st.write(kind)
             if kind == 'CLAUSES':
+                # st.write(show_clauses(data)
                 st.code(show_clauses(data), language='prolog')
             elif kind == 'MODEL':
                 st.code(show_model(data))
