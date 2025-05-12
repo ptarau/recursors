@@ -7,13 +7,6 @@ from deepllm.recursors import *
 class SymPlanner(AndOrExplorer):
     def __init__(self, initiator=None, prompter=None, lim=1, strict=False, plan=[]):
         super().__init__(initiator=initiator, prompter=prompter, lim=lim, strict=False)
-        if not plan:
-            plan = [
-                ("buying an ev", ["ev_lower_maintenence"]),
-                ("buying an ev", ["ev_cheaper_over_time", "ev_is_fun_to_drive"]),
-                ("buying an ev", ["ev_good_for_environment"]),
-                ("ev_lower_maintenence", ["ev_no_oil_change"]),
-            ]
         self.set_human_plan(plan)
 
     def set_human_plan(self, css):

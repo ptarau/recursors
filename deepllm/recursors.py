@@ -216,6 +216,10 @@ class AndOrExplorer:
 def run_explorer(explorer=AndOrExplorer, goal=None, prompter=None, lim=None):
     assert None not in (explorer, prompter, goal, lim)
     r = explorer(initiator=goal, prompter=prompter, lim=lim)
+    return explore(r)
+
+
+def explore(r):
     seen = dict()
     for a in r.solve():
         print("\nTRACE:")
@@ -236,6 +240,11 @@ def run_explorer(explorer=AndOrExplorer, goal=None, prompter=None, lim=None):
     c2 = r.unf.and_.dollar_cost()
     print("COSTS in $:", {"and": c1, "or": c2, "total": c1 + c2})
     return True
+
+
+def run_symplanner(explorer=None, goal=None, prompter=None, lim=None, plan=[]):
+    r = explorer(initiator=goal, prompter=prompter, lim=lim, plan=plan)
+    return explore(r)
 
 
 def quote(x):

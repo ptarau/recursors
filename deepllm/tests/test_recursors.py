@@ -1,6 +1,28 @@
 from deepllm.prompters import *
-from deepllm.recursors import run_explorer
+from deepllm.recursors import run_explorer, run_symplanner
 from deepllm.refiners import SymPlanner
+
+
+def test_symplanner():
+    plan1 = [
+        ("vote for a party", ["vote republican"]),
+        ("vote for a party", ["vote democrat"]),
+    ]
+
+    plan2 = [
+        ("buying an ev", ["ev_lower_maintenence"]),
+        ("buying an ev", ["ev_cheaper_over_time", "ev_is_fun_to_drive"]),
+        ("buying an ev", ["ev_good_for_environment"]),
+        ("ev_lower_maintenence", ["ev_no_oil_change"]),
+    ]
+
+    run_symplanner(
+        explorer=SymPlanner,
+        prompter=verifier_prompter,
+        goal="buy_an_ev",
+        lim=1,
+        plan=plan2,
+    )
 
 
 def run_all():
@@ -9,9 +31,7 @@ def run_all():
     # run_explorer(prompter=verifier_prompter, goal='add high tarifs on imports', lim=2)
     # run_explorer(prompter=falsifier_prompter, goal='reaction of the stock market to high tarifs on imports', lim=2)
     # run_explorer(prompter=verifier_prompter, goal='reaction of the stock market to high tarifs on imports', lim=2)
-    run_explorer(
-        explorer=SymPlanner, prompter=verifier_prompter, goal="buy_an_ev", lim=1
-    )
+    test_symplanner()
     return
     run_explorer(prompter=sci_prompter, goal="Logic programming", lim=3)
     run_explorer(prompter=sci_prompter, goal="Generative AI", lim=2)
