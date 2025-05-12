@@ -1,5 +1,7 @@
+numpy==1.26.4
 openai
 tiktoken
 pyvis
 sentence_transformers
 sentence_store
+natlog

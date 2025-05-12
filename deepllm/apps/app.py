@@ -41,7 +41,8 @@ with st.sidebar:
             cheaper_model()
         collect_key()
 
-    recursor = st.select_slider('LLM Agent', options=('Advisor', 'Recursor', 'Rater'), value='Recursor')
+    recursor = st.select_slider('LLM Agent',
+                                options=('SymPlanner', 'Advisor', 'Recursor', 'Rater'), value='Recursor')
 
     threshold = st.slider('Threshold:', 0, 100, 50) / 100
 
@@ -83,6 +84,8 @@ def do_query():
 
     if recursor == 'Recursor':
         g = run_recursor(initiator=initiator, prompter=prompter, lim=lim)
+    elif recursor == 'SymPlanner':
+        g = run_symplanner(initiator=initiator, prompter=prompter, lim=lim)
     elif recursor == 'Advisor':
         g = run_advisor(initiator=initiator, prompter=prompter, lim=lim)
     else:

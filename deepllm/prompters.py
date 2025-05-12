@@ -86,7 +86,7 @@ falsifier_prompter = dict(
 )
 
 verifier_prompter = dict(
-    name='verifcation_of_a_decison_via_supporting_reasons',
+    name='verification_of_a_decison_via_supporting_reasons',
     and_p="""We strongly support and want to achieve the positive results of: "$context".
         To help with this task, generate 1-2 noun phrases of 2-4 words 
         with each alternative detailing the steps  needed to achieve the results of "$g".

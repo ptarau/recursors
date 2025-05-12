@@ -3,7 +3,7 @@ from deepllm.prompters import *
 from deepllm.params import *
 from deepllm.recursors import AndOrExplorer, show_clauses, show_model, show_svos,vis_svos
 from deepllm.vis import browse
-from deepllm.refiners import Advisor, Rater, TruthRater, AbstractMaker, SummaryMaker, PaperReviewer,RetrievalRefiner
+from deepllm.refiners import Advisor, Rater, TruthRater, AbstractMaker, SummaryMaker, PaperReviewer,RetrievalRefiner,SymPlanner
 
 def get_version():
     return __version__
@@ -41,6 +41,12 @@ def run_recursor(initiator=None, prompter=None, lim=None):
     assert None not in (prompter, initiator, lim)
     recursor = AndOrExplorer(initiator=initiator, prompter=prompter, lim=lim)
     yield from recursor.run()
+
+
+def run_symplanner(initiator=None, prompter=None, lim=None):
+    assert None not in (prompter, initiator, lim)
+    sp = SymPlanner(initiator=initiator, prompter=prompter, lim=lim)
+    yield from sp.run()
 
 
 def run_advisor(initiator=None, prompter=None, lim=None):

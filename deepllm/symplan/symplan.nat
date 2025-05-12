@@ -1,0 +1,34 @@
+initialize:
+   #print 'Welcome' to 'Natlog' based 'refiner' for DeepLLM!,
+   #print 'Please' obtain and set the environment variable 'OPENAI_API_KEY' !,
+   #print.
+
+limit 2.
+
+verify X :  limit L, #verify X L.
+
+falsify X : limit L, #falsify X L.
+
+buy_ev : % decision on buying an EV
+  verify 'EVs_are_ecological', 
+  verify 'EVS_are_low_maintance', 
+  verify 'EVs_cost_less_over_time'.
+
+avoid_ev:  
+  falsify 'EVs_are_ecological',
+  falsify 'EVS_are_low_maintance',
+  falsify 'EVs_cost_less_over_time'.
+
+decide_on_EVs: buy_ev, avoid_ev.
+
+tariffs_are_good : % decision on evaluating the use of tariffs
+   verify 'tariffs_add_jobs', 
+   verify 'tariffs_balance_budget'.
+
+tariffs_are_bad : 
+  falsify 'tariffs_add_jobs',
+  falsify 'tariffs_balance_budget'.
+
+decide_on_tariffs:
+  tariffs_are_good,
+  tariffs_are_bad.
