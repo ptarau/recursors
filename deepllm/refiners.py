@@ -4,8 +4,36 @@ from deepllm.prompters import *
 from deepllm.recursors import *
 
 
+def parse_plan(text_plan):
+    from natlog.parser import parse
+
+    def fix(cs):
+        h, bs = cs
+        h = h[0]
+        bs = [b[0] for b in bs]
+        return h, bs
+
+    css = [fix(cs) for (cs, r) in parse(text_plan, rule=True)]
+    for cs in css:
+        print("@@@@@")
+        print(cs)
+
+    return css
+
+
 class SymPlanner(AndOrExplorer):
-    def __init__(self, initiator=None, prompter=None, lim=1, strict=False, plan=[]):
+    def __init__(self, initiator=None, prompter=None, lim=1, strict=False):
+        if isinstance(initiator, tuple):
+            initator = "using a Python plan"
+            plan = initiator
+        elif isinstance(initiator, str):
+            if ":" in initiator and "." in initiator and "'" in initiator:
+                initator = "using a Natlog plan"
+                plan = parse_plan(initiator)
+            else:
+                #  initator unchanged, not a plan
+                plan = []
+
         super().__init__(initiator=initiator, prompter=prompter, lim=lim, strict=False)
         self.set_human_plan(plan)
 

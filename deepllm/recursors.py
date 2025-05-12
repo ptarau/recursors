@@ -242,11 +242,6 @@ def explore(r):
     return True
 
 
-def run_symplanner(explorer=None, goal=None, prompter=None, lim=None, plan=[]):
-    r = explorer(initiator=goal, prompter=prompter, lim=lim, plan=plan)
-    return explore(r)
-
-
 def quote(x):
     x = x.replace("\\", "").replace("'", "_")
     return "'" + x + "'"

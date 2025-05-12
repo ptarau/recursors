@@ -1,5 +1,5 @@
 from deepllm.prompters import *
-from deepllm.recursors import run_explorer, run_symplanner
+from deepllm.recursors import run_explorer
 from deepllm.refiners import SymPlanner
 
 
@@ -16,13 +16,14 @@ def test_symplanner():
         ("ev_lower_maintenence", ["ev_no_oil_change"]),
     ]
 
-    run_symplanner(
-        explorer=SymPlanner,
-        prompter=verifier_prompter,
-        goal="buy_an_ev",
-        lim=1,
-        plan=plan2,
-    )
+    nat_plan = """
+  buy an ev : % decision on buying an EV
+    'EVs are ecological', 
+    'EVS are low_maintance', 
+    'EVs_cost less over time'.
+  """
+
+    run_explorer(explorer=SymPlanner, goal=nat_plan, prompter=verifier_prompter, lim=1)
 
 
 def run_all():
