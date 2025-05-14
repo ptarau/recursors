@@ -1,0 +1,9 @@
+'negation as failure':
+     'negation as failure can be avoided by thinking constructively',
+     'good Prolog programmers do not really need negation as failure'.
+'negation as failure':
+     'negation as failure is logically questionable'.
+     
+'negation as failure is logically questionable':    
+     'negation as failure conflates provability wih truth'.
+    

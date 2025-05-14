@@ -10,17 +10,17 @@ def test_symplanner():
     ]
 
     plan2 = [
-        ("buying an ev", ["ev_lower_maintenence"]),
-        ("buying an ev", ["ev_cheaper_over_time", "ev_is_fun_to_drive"]),
-        ("buying an ev", ["ev_good_for_environment"]),
-        ("ev_lower_maintenence", ["ev_no_oil_change"]),
+        ("buying an ev", ["ev is lower maintenence"]),
+        ("buying an ev", ["ev is cheaper over time", "ev_is_fun_to_drive"]),
+        ("buying an ev", ["ev is good for environment"]),
+        ("ev lower maintenence", ["ev no oil change"]),
     ]
 
     nat_plan = """
-  buy an ev : % decision on buying an EV
+  'buy an EV' : % decision on buying an EV
     'EVs are ecological', 
     'EVS are low_maintance', 
-    'EVs_cost less over time'.
+    'EVs cost less over time'.
   """
 
     run_explorer(explorer=SymPlanner, goal=nat_plan, prompter=verifier_prompter, lim=1)

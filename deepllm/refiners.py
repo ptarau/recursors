@@ -24,15 +24,23 @@ def parse_plan(text_plan):
 class SymPlanner(AndOrExplorer):
     def __init__(self, initiator=None, prompter=None, lim=1, strict=False):
         if isinstance(initiator, tuple):
-            initator = "using a Python plan"
+            initiator = "using a Python plan"
             plan = initiator
+            assert 0
         elif isinstance(initiator, str):
             if ":" in initiator and "." in initiator and "'" in initiator:
-                initator = "using a Natlog plan"
+
                 plan = parse_plan(initiator)
+                h, bs = plan[0]
+                initiator = h
+                print("#### PLAN:", plan)
+
             else:
                 #  initator unchanged, not a plan
                 plan = []
+                assert 0
+
+        print("@@@@ initiator", initiator)
 
         super().__init__(initiator=initiator, prompter=prompter, lim=lim, strict=False)
         self.set_human_plan(plan)

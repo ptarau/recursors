@@ -69,11 +69,12 @@ class AndOrExplorer:
     explored with logic programming tools.
     """
 
-    def __init__(self, initiator=None, prompter=None, lim=1, strict=False):
+    def __init__(self, initiator=None, prompter=None, lim=1, strict=False, name=None):
         assert initiator is not None
         assert prompter is not None
         self.initiator = " ".join(initiator.replace(".", " ").strip().split())
-        self.name = self.initiator.lower().strip().replace(" ", "_")
+        if name is None:
+            self.name = self.initiator.lower().strip().replace(" ", "_")
         self.prompter = prompter
         self.pname = prompter["name"]
         self.lim = lim
