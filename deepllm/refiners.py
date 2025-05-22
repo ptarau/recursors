@@ -21,12 +21,58 @@ def parse_plan(text_plan):
     return css
 
 
+def to_paths(css):
+    clauses = defaultdict(list)
+    for cs in css:
+        print("! cs=", cs)
+        h, bs = cs
+        clauses[h].append(bs)
+
+    def build(h):
+        bss = clauses[h]
+        if not bss:
+            yield (h, ())
+        else:
+            for bs in bss:
+                for b in bs:
+                    for ps in build(b):
+                        yield (h, ps)
+
+    def to_context(ps):
+        ls = []
+        while ps != ():
+            p, qs = ps
+            ls.append(p)
+            ps = qs
+        leaf = ls[-1]
+        ls = list((ls[0:-1]))
+        ls = ". ".join(ls) + "."
+        return leaf, ls
+
+    def trim_last(ps):
+        print(">>>>>>>>>>> ps:", ps)
+        qs = ()
+        last = ()
+        while ps:
+            g, ps = ps
+            if ps:
+                qs = g, qs
+            last = g
+        print(">>>>>>>>>>>>>>> last,qs:", last, qs)
+        return last, qs
+
+    h0 = css[0][0]
+    pss = list(build(h0))
+    # lss = [to_context(ps) for ps in pss]
+    lss = [trim_last(ps) for ps in pss]
+    return clauses, lss
+
+
 class SymPlanner(AndOrExplorer):
     def __init__(self, initiator=None, prompter=None, lim=1, strict=False):
         if isinstance(initiator, tuple):
             initiator = "using a Python plan"
             plan = initiator
-            assert 0
         elif isinstance(initiator, str):
             if ":" in initiator and "." in initiator and "'" in initiator:
 
@@ -34,11 +80,9 @@ class SymPlanner(AndOrExplorer):
                 h, bs = plan[0]
                 initiator = h
                 print("#### PLAN:", plan)
-
             else:
                 #  initator unchanged, not a plan
                 plan = []
-                assert 0
 
         print("@@@@ initiator", initiator)
 
@@ -46,29 +90,22 @@ class SymPlanner(AndOrExplorer):
         self.set_human_plan(plan)
 
     def set_human_plan(self, css):
-        clauses = defaultdict(list)
-        for cs in css:
-            h, bs = cs
-            clauses[h].append(bs)
-
-        leaves = []
-        for bss in clauses.values():
-            for bs in bss:
-                for b in bs:
-                    if b not in clauses and b not in leaves:
-                        leaves.append(b)
-
-        self.clauses = clauses
-        self.leaves = leaves
+        if not css:
+            self.clauses = []
+            self.paths = []
+        else:
+            self.clauses, self.paths = to_paths(css)
 
     def proceed(self):
-        if not self.leaves:
+        if not self.paths:
             self.leaves = [self.initiator]
-        for leaf in self.leaves:
-            self.initiator = leaf
-            print("@@@ leaf", leaf)
-            for gs in self.step(leaf, (), 0):
-                yield list(reversed(to_list(gs)))
+            context = ()
+        else:
+            for leaf, ps in self.paths:
+                self.initiator = leaf
+
+                for gs in self.step(leaf, ps, 0):
+                    yield list(reversed(to_list(gs)))
 
 
 class Advisor(AndOrExplorer):

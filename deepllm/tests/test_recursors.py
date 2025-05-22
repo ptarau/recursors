@@ -21,6 +21,8 @@ def test_symplanner():
     'EVs are ecological', 
     'EVS are low_maintance', 
     'EVs cost less over time'.
+  'buy an EV' :
+     'EVs are fun to drive'.
   """
 
     run_explorer(explorer=SymPlanner, goal=nat_plan, prompter=verifier_prompter, lim=1)
