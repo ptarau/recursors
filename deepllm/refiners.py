@@ -14,9 +14,6 @@ def parse_plan(text_plan):
         return h, bs
 
     css = [fix(cs) for (cs, r) in parse(text_plan, rule=True)]
-    for cs in css:
-        print("@@@@@")
-        print(cs)
 
     return css
 
@@ -24,7 +21,7 @@ def parse_plan(text_plan):
 def to_paths(css):
     clauses = defaultdict(list)
     for cs in css:
-        print("! cs=", cs)
+        # print("! cs=", cs)
         h, bs = cs
         clauses[h].append(bs)
 
@@ -50,7 +47,7 @@ def to_paths(css):
         return leaf, ls
 
     def trim_last(ps):
-        print(">>>>>>>>>>> ps:", ps)
+
         qs = ()
         last = ()
         while ps:
@@ -58,7 +55,7 @@ def to_paths(css):
             if ps:
                 qs = g, qs
             last = g
-        print(">>>>>>>>>>>>>>> last,qs:", last, qs)
+
         return last, qs
 
     h0 = css[0][0]
@@ -79,12 +76,12 @@ class SymPlanner(AndOrExplorer):
                 plan = parse_plan(initiator)
                 h, bs = plan[0]
                 initiator = h
-                print("#### PLAN:", plan)
+                # print("#### PLAN:", plan)
             else:
                 #  initator unchanged, not a plan
                 plan = []
 
-        print("@@@@ initiator", initiator)
+        # print("@@@@ initiator", initiator)
 
         super().__init__(initiator=initiator, prompter=prompter, lim=lim, strict=False)
         self.set_human_plan(plan)

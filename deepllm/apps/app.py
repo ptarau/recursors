@@ -6,10 +6,7 @@ print("Running DeepLLM as a streamlit app!")
 
 st.set_page_config(layout="wide")
 
-st.title(
-    "Streamlit-based [DeepLLM](https://github.com/ptarau/recursors) Client "
-    + get_version()
-)
+st.title("Streamlit-based [DeepLLM](https://github.com/ptarau/recursors) Client 1.0.1")
 
 prompters = prompter_dict()
 
