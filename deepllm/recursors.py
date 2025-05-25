@@ -1,4 +1,5 @@
 from collections import defaultdict
+from deepllm import __version__
 from deepllm.params import *
 from deepllm.interactors import Agent, clean_up, to_list, from_text
 from deepllm.horn_prover import qprove
@@ -399,6 +400,42 @@ def test_svo(sent="The black cat sits on the shiny white mat"):
     print(sent)
     print(m.to_svo(sent))
     print()
+
+
+def smarter_model():
+    IS_LOCAL_LLM[0] = False
+    GPT_PARAMS["model"] = "gpt-4o"
+    openai.api_base = GPT_PARAMS["API_BASE"]
+    GPT_PARAMS["ROOT"] = "./STATE_SMARTER/"
+    PARAMS()
+
+
+def cheaper_model():
+    IS_LOCAL_LLM[0] = False
+    GPT_PARAMS["model"] = "gpt-4o-mini"
+    openai.api_base = GPT_PARAMS["API_BASE"]
+    GPT_PARAMS["ROOT"] = "./STATE/"
+    PARAMS()
+
+
+def local_model():
+    IS_LOCAL_LLM[0] = True
+    openai.api_base = LOCAL_PARAMS["API_BASE"]
+    PARAMS()
+
+
+def get_version():
+    return __version__
+
+
+def activate_svos():
+    GPT_PARAMS["TO_SVOS"] = True
+    LOCAL_PARAMS["TO_SVOS"] = True
+
+
+def deactivate_svos():
+    GPT_PARAMS["TO_SVOS"] = False
+    LOCAL_PARAMS["TO_SVOS"] = False
 
 
 if __name__ == "__main__":

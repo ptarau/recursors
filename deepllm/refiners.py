@@ -64,6 +64,12 @@ def to_paths(css):
     return clauses, lss
 
 
+def run_symplanner(initiator=None, prompter=None, lim=None):
+    assert None not in (prompter, initiator, lim)
+    sp = SymPlanner(initiator=initiator, prompter=prompter, lim=lim)
+    yield from sp.run()
+
+
 class SymPlanner(AndOrExplorer):
     def __init__(self, initiator=None, prompter=None, lim=1, strict=False):
         if isinstance(initiator, tuple):

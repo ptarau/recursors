@@ -1,4 +1,3 @@
-from deepllm import __version__
 from deepllm.prompters import *
 from deepllm.params import *
 from deepllm.recursors import (
@@ -7,7 +6,14 @@ from deepllm.recursors import (
     show_model,
     show_svos,
     vis_svos,
+    smarter_model,
+    cheaper_model,
+    local_model,
+    get_version,
+    activate_svos,
+    deactivate_svos,
 )
+
 from deepllm.vis import browse
 from deepllm.refiners import (
     Advisor,
@@ -17,21 +23,8 @@ from deepllm.refiners import (
     PaperReviewer,
     RetrievalRefiner,
     SymPlanner,
+    run_symplanner,
 )
-
-
-def get_version():
-    return __version__
-
-
-def activate_svos():
-    GPT_PARAMS["TO_SVOS"] = True
-    LOCAL_PARAMS["TO_SVOS"] = True
-
-
-def deactivate_svos():
-    GPT_PARAMS["TO_SVOS"] = False
-    LOCAL_PARAMS["TO_SVOS"] = False
 
 
 def smarter_model():
@@ -60,12 +53,6 @@ def run_recursor(initiator=None, prompter=None, lim=None):
     assert None not in (prompter, initiator, lim)
     recursor = AndOrExplorer(initiator=initiator, prompter=prompter, lim=lim)
     yield from recursor.run()
-
-
-def run_symplanner(initiator=None, prompter=None, lim=None):
-    assert None not in (prompter, initiator, lim)
-    sp = SymPlanner(initiator=initiator, prompter=prompter, lim=lim)
-    yield from sp.run()
 
 
 def run_advisor(initiator=None, prompter=None, lim=None):

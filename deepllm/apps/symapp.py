@@ -1,14 +1,17 @@
 import streamlit as st
 
-from deepllm.api import *
+from deepllm.recursors import *
+from deepllm.prompters import *
+
+from deepllm.refiners import run_symplanner
+from deepllm.vis import browse
 
 print("Running DeepLLM as a streamlit app!")
-
 st.set_page_config(layout="wide")
 
 st.title(
     "Streamlit-based [SymPlan](https://github.com/ptarau/recursors) Client "
-    + "Client 1.1.0"
+    + "Client 1.1.1"
 )
 
 prompters = prompter_dict()
