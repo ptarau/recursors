@@ -11,7 +11,7 @@ st.set_page_config(layout="wide")
 
 st.title(
     "Streamlit-based [SymPlan](https://github.com/ptarau/recursors) Client "
-    + "Client 1.1.1"
+    + "Client 1.1.2"
 )
 
 prompters = prompter_dict()
