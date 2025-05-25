@@ -79,24 +79,26 @@ class SymPlanner(AndOrExplorer):
                 # print("#### PLAN:", plan)
             else:
                 #  initator unchanged, not a plan
-                plan = []
+
+                plan = None
 
         # print("@@@@ initiator", initiator)
 
         super().__init__(initiator=initiator, prompter=prompter, lim=lim, strict=False)
+
         self.set_human_plan(plan)
 
     def set_human_plan(self, css):
         if not css:
-            self.clauses = []
             self.paths = []
         else:
             self.clauses, self.paths = to_paths(css)
 
     def proceed(self):
         if not self.paths:
-            self.leaves = [self.initiator]
-            context = ()
+            # for gs in self.step(self.initiator, (), 0):
+            #    yield list(reversed(to_list(gs)))
+            yield from super().proceed()
         else:
             for leaf, ps in self.paths:
                 self.initiator = leaf
