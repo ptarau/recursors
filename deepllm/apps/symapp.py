@@ -3,7 +3,7 @@ import streamlit as st
 from deepllm.recursors import *
 from deepllm.prompters import *
 
-from deepllm.refiners import run_symplanner
+from deepllm.symplaners import run_symplanner
 from deepllm.vis import browse
 
 print("Running DeepLLM as a streamlit app!")
