@@ -12,7 +12,6 @@ from deepllm.vis import browse
 from deepllm.refiners import (
     Advisor,
     Rater,
-    TruthRater,
     AbstractMaker,
     SummaryMaker,
     PaperReviewer,
