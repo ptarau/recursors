@@ -1,7 +1,6 @@
 import streamlit as st
 
 from deepllm.recursors import *
-from deepllm.prompters import *
 
 from deepllm.vis import browse
 

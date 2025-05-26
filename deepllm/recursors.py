@@ -161,6 +161,7 @@ class AndOrExplorer:
         json_name = pro_name + ".json"
 
         to_prolog(self.clauses, pro_name)
+        to_natlog(self.clauses, pro_name)
         to_json(self.clauses, json_name)
 
         if self.logic_model is None:
@@ -354,6 +355,10 @@ def save_model(goal, facts, fname, suf=".pro"):
             if fact == goal:
                 line = line + "%" + (10 * " ") + "<==== initiator !"
             print(line, file=f)
+
+
+def to_natlog(clauses, fname):
+    to_prolog(clauses, fname, neck=":")
 
 
 def to_prolog(clauses, fname, neck=":-", suf=".pro"):
