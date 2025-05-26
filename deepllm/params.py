@@ -13,7 +13,6 @@ FORCE_SBERT = 0
 # LOCAL_URL = "http://u.local:8000/v1"  # replace with where the server is
 
 LOCAL_URL = "http://localhost:11434/v1"  # replace with where the server is
-s
 
 IS_LOCAL_LLM = [False]
 
