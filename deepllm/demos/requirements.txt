@@ -1,4 +1,5 @@
 sentify
+sentence_store
 Wikipedia-API
 matplotlib
 pygraphviz
