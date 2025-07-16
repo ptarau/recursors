@@ -16,10 +16,9 @@ LOCAL_URL = "http://localhost:11434/v1"  # replace with where the server is
 
 IS_LOCAL_LLM = [False]
 
-# mistral = "mistralai/Mistral-7B-Instruct-v0.2"
+mistral = "mistral-nemo:12b"
 # llama = "meta-llama/Meta-Llama-3-8B-Instruct"
 llama = "llama3.2"
-# vicuna = "vicuna-7b-v1.5"
 
 # LOCAL_MODEL = [mistral]
 
