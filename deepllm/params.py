@@ -31,6 +31,9 @@ def fix_eos():
     return None
 
 
+SMARTER = ["gpt-5"]
+CHEAPER = ["gpt-5-nano"]
+
 GPT_PARAMS = dict(
     TRACE=FORCE_TRACE,
     TO_SVOS=False,
@@ -39,9 +42,9 @@ GPT_PARAMS = dict(
     CACHES="caches/",
     DATA="data/",
     OUT="out/",
-    model="gpt-4o",
+    model=SMARTER[0],
     emebedding_model="text-embedding-3-large",
-    temperature=0.2,
+    temperature=1,
     n=1,
     max_toks=12000,
     TOP_K=3,
@@ -60,7 +63,7 @@ LOCAL_PARAMS = dict(
     API_BASE=LOCAL_URL,
     # emebedding_model="vicuna-7b-v1.5",
     emebedding_model="text-embedding-3-large",
-    temperature=0.2,
+    temperature=1,
     n=1,
     max_toks=12000,
     TOP_K=3,

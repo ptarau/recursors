@@ -19,7 +19,7 @@ def ask_ollama(query, model=None):
                 "content": query,
             },
         ],
-        options={"seed": 42, "temperature": 0},
+        options={"seed": 42},
     )
     t2 = time.time()
     # print(response)

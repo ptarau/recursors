@@ -43,8 +43,8 @@ with st.sidebar:
         )
         local_model()
     else:
-        choice = st.sidebar.radio("OpenAI LLM", ["GPT-4o", "GPT-4o-mini"])
-        if choice == "GPT-4o":
+        choice = st.sidebar.radio("OpenAI LLM", [SMARTER[0], CHEAPER[0]])
+        if choice == SMARTER[0]:
             smarter_model()
         else:
             cheaper_model()

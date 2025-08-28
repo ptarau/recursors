@@ -8,18 +8,16 @@ from deepllm.tools import *
 
 # LLM interface
 
+
 def ask_llm_new(model=None, mes=None, temperature=None, n=None):
-    assert None not in (model, mes, temperature, n), (model, mes, temperature, n)
+    assert None not in (model, mes, n), (model, mes, n)
 
     CF = PARAMS()
 
     def llm_res(r, i):
         return r.choices[i].message.content.strip()
 
-    client = openai.OpenAI(
-        api_key=ensure_openai_api_key(),
-        base_url=CF.API_BASE
-    )
+    client = openai.OpenAI(api_key=ensure_openai_api_key(), base_url=CF.API_BASE)
 
     extra_body = fix_eos()
 
@@ -27,17 +25,11 @@ def ask_llm_new(model=None, mes=None, temperature=None, n=None):
         r = client.chat.completions.create(
             messages=mes,
             model=model,
-            temperature=temperature,
             n=n,
-            extra_body=extra_body
+            extra_body=extra_body,
         )
     else:
-        r = client.chat.completions.create(
-            messages=mes,
-            model=model,
-            temperature=temperature,
-            n=n
-        )
+        r = client.chat.completions.create(messages=mes, model=model, n=n)
 
     # print('!!!!>>> OPENAI RESULT:',r)
 
@@ -54,18 +46,12 @@ def ask_llm_old(model=None, mes=None, temperature=None, n=None):
     assert None not in (model, mes, temperature, n), (model, mes, temperature, n)
 
     def llm_res(r, i):
-        return r['choices'][i]['message']['content'].strip()
+        return r["choices"][i]["message"]["content"].strip()
 
-    r = openai.ChatCompletion.create(
-        model=model,
-        messages=mes,
-        temperature=temperature,
-        seed=42,
-        n=n
-    )
+    r = openai.ChatCompletion.create(model=model, messages=mes, seed=42, n=n)
 
-    pt = r['usage']['prompt_tokens']
-    ct = r['usage']['completion_tokens']
+    pt = r["usage"]["prompt_tokens"]
+    ct = r["usage"]["completion_tokens"]
 
     answers = [llm_res(r, i) for i in range(n)]
 
@@ -86,6 +72,7 @@ ask_llm = get_ask_llm_method()
 
 # tools
 
+
 def count_toks(text):
     enc = tiktoken.get_encoding("gpt2")
     toks = enc.encode(text)
@@ -100,11 +87,13 @@ def dict_trim(d):
 
 # basic building blocks
 
+
 def clean_pattern(p):
-    if p is None: return p
-    ps = p.split('\n')
+    if p is None:
+        return p
+    ps = p.split("\n")
     ps = [p.strip() for p in ps]
-    return ' '.join(ps)  # +"\n\n"
+    return " ".join(ps)  # +"\n\n"
 
 
 class Agent:
@@ -126,26 +115,24 @@ class Agent:
         PARAMS()(self)  # overrides defaults from global params
         # print('AGENT !!!!',self.__dict__)
 
-    def tuner(self,
-              model="gpt-4o-mini",
-              temperature=0.2,
-              n=1,
-              max_toks=4000):
+    def tuner(self, model=None, n=1, max_toks=4000):
         """
-          GPT parameter tuners
+        GPT parameter tuners
         """
+        if model is None:
+            model = SMARTER[0]
         self.model = model
-        self.temperature = temperature
+
         self.n = n
         self.max_toks = max_toks
 
     def cacher(self):
         """
-           caching mechanisms for
-           interaction state, including all inherited attributed
+        caching mechanisms for
+        interaction state, including all inherited attributed
 
-           we are saving things to readable .json files but
-           overriders might pickle, compress or persist to a database
+        we are saving things to readable .json files but
+        overriders might pickle, compress or persist to a database
         """
         pass
 
@@ -156,15 +143,19 @@ class Agent:
         """
         collects and persits all appropriate attributs
         """
-        if self.name is None: return
-        if not self.short_mem and not self.long_mem: return
+        if self.name is None:
+            return
+        if not self.short_mem and not self.long_mem:
+            return
 
-        #tprint('PERSISTING:', self.cache_name())
+        # tprint('PERSISTING:', self.cache_name())
 
         kvs = []
         d = self.__dict__
         for k, v in d.items():
-            if any(map(lambda t: isinstance(v, t), [int, float, str, list, tuple, dict])):
+            if any(
+                map(lambda t: isinstance(v, t), [int, float, str, list, tuple, dict])
+            ):
                 kvs.append((k, v))
 
         ensure_path(self.cache_name())
@@ -179,16 +170,19 @@ class Agent:
 
         if needed, use clear to clear all stored states
         """
-        if self.name is None: return
+        if self.name is None:
+            return
 
-        if not exists_file(self.cache_name()): return
+        if not exists_file(self.cache_name()):
+            return
         kvs = from_json(self.cache_name())
         for k, v in kvs:
             setattr(self, k, v)
 
     def clear(self):
         self.forget()
-        if self.name is None: return
+        if self.name is None:
+            return
         # print('DELETING:',(self.cache_name())
         if exists_file(self.cache_name()):
             remove_file(self.cache_name())
@@ -199,11 +193,11 @@ class Agent:
 
     def tracker(self):
         """
-           manages the API's parameters, collects an cleans-up answers
-           remembers past interactions in short and long-term emmory and
-           avoids calling the API twice on the same quary that it retrives
-           from its memory
-           """
+        manages the API's parameters, collects an cleans-up answers
+        remembers past interactions in short and long-term emmory and
+        avoids calling the API twice on the same quary that it retrives
+        from its memory
+        """
         self.short_mem = dict()
         self.long_mem = dict()
         self.prompt_toks = 0
@@ -216,12 +210,12 @@ class Agent:
         as context to build the message to be sent to the API
         """
         mes = []
-        for (q, a) in self.short_mem.items():
+        for q, a in self.short_mem.items():
             assert isinstance(q, str), q
-            qd = dict(role='user', content=q)
-            ad = dict(role='assistant', content=a)
+            qd = dict(role="user", content=q)
+            ad = dict(role="assistant", content=a)
             mes.extend([qd, ad])
-        mes.append(dict(role='user', content=quest))
+        mes.append(dict(role="user", content=quest))
         return mes
 
     def already_answered(self, quest):
@@ -229,7 +223,8 @@ class Agent:
         retrieves already answred questions from its memory
         """
         answer = self.short_mem.get(quest, None)
-        if answer is not None: return answer
+        if answer is not None:
+            return answer
         answer = self.long_mem.get(quest, None)
         return answer
 
@@ -247,7 +242,8 @@ class Agent:
 
         for i in range(len(toks)):
             tok_estimate = sum(toks[i:]) + p_toks
-            if tok_estimate < max_toks: break
+            if tok_estimate < max_toks:
+                break
 
             k, v = dict_trim(self.short_mem)
             self.long_mem[k] = v
@@ -289,10 +285,10 @@ class Agent:
 
     def talker(self):
         """
-           talking to the LLM:
-           assumes all other components
-           initialized
-           """
+        talking to the LLM:
+        assumes all other components
+        initialized
+        """
         pass
 
     def set_initiator(self, initiator):
@@ -312,7 +308,7 @@ class Agent:
         t1 = time.time()
         h = tuple(kwargs.items())
         if not h:
-            assert len(args) == 1, ('BAD args', args)
+            assert len(args) == 1, ("BAD args", args)
             quest0 = args[0]
             assert isinstance(quest0, str)
         else:
@@ -333,24 +329,19 @@ class Agent:
 
         for attempt in range(max_attempts):
             try:
-                answers, pt, ct = ask_llm(
-                    model=self.model,
-                    mes=mes,
-                    temperature=self.temperature,
-                    n=self.n
-                )
+                answers, pt, ct = ask_llm(model=self.model, mes=mes, n=self.n)
                 break
             except Exception as ex:
                 if attempt >= max_attempts - 1:
-                    print('\n\n ***GPT exception:', ex)
+                    print("\n\n ***GPT exception:", ex)
                     print("LOCAL:", IS_LOCAL_LLM[0])
-                    print('API_BASE:', PARAMS().API_BASE)
-                    print('MODEL:', self.model)
+                    print("API_BASE:", PARAMS().API_BASE)
+                    print("MODEL:", self.model)
 
-                    # raise Exception('LLM exception')
-                    exit(1)
+                    raise Exception("LLM exception")
+                    # exit(1)
                 else:
-                    print('retrying: ', attempt)
+                    print("retrying: ", attempt)
                     time.sleep(0.5)
 
         # def res(i):
@@ -389,8 +380,8 @@ class Agent:
         to be extended as new models appear
         costs in $ per million in/out toks
         """
-        if self.model == 'gpt-4o':
-            return (self.prompt_toks * 5.0 + self.compl_toks * 15.0) / 1000000
-        if self.model == 'gpt-4o-mini':
-            return (self.prompt_toks * 0.15 + self.compl_toks * 0.60) / 1000000
+        if self.model == SMARTER[0]:
+            return (self.prompt_toks * 1.25 + self.compl_toks * 10.0) / 1000000
+        if self.model == CHEAPER[0]:
+            return (self.prompt_toks * 0.05 + self.compl_toks * 0.40) / 1000000
         return 0.0  # case of local LLM

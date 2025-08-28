@@ -29,7 +29,7 @@ from deepllm.refiners import (
 
 def smarter_model():
     IS_LOCAL_LLM[0] = False
-    GPT_PARAMS["model"] = "gpt-4o"
+    GPT_PARAMS["model"] = SMARTER[0]
     openai.api_base = GPT_PARAMS["API_BASE"]
     GPT_PARAMS["ROOT"] = "./STATE_SMARTER/"
     PARAMS()
@@ -37,7 +37,7 @@ def smarter_model():
 
 def cheaper_model():
     IS_LOCAL_LLM[0] = False
-    GPT_PARAMS["model"] = "gpt-4o-mini"
+    GPT_PARAMS["model"] = CHEAPER[0]
     openai.api_base = GPT_PARAMS["API_BASE"]
     GPT_PARAMS["ROOT"] = "./STATE/"
     PARAMS()
@@ -69,6 +69,7 @@ def run_rater(initiator=None, prompter=None, lim=None, threshold=None):
     yield from recursor.run()
 
 
+"""
 def run_truth_rater(
     initiator=None, prompter=None, truth_file=None, threshold=None, lim=None
 ):
@@ -81,6 +82,7 @@ def run_truth_rater(
         lim=lim,
     )
     yield from rater.run()
+"""
 
 
 def run_abstract_maker(topic=None, keywords=None):

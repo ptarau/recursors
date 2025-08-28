@@ -409,7 +409,7 @@ def test_svo(sent="The black cat sits on the shiny white mat"):
 
 def smarter_model():
     IS_LOCAL_LLM[0] = False
-    GPT_PARAMS["model"] = "gpt-4o"
+    GPT_PARAMS["model"] = SMARTER[0]
     openai.api_base = GPT_PARAMS["API_BASE"]
     GPT_PARAMS["ROOT"] = "./STATE_SMARTER/"
     PARAMS()
@@ -417,7 +417,7 @@ def smarter_model():
 
 def cheaper_model():
     IS_LOCAL_LLM[0] = False
-    GPT_PARAMS["model"] = "gpt-4o-mini"
+    GPT_PARAMS["model"] = CHEAPER[0]
     openai.api_base = GPT_PARAMS["API_BASE"]
     GPT_PARAMS["ROOT"] = "./STATE/"
     PARAMS()
