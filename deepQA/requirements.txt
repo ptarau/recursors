@@ -1,3 +1,4 @@
 sentify
 deepllm
 streamlit
+watchdog

@@ -5,12 +5,14 @@ from deepllm.recursors import *
 from deepllm.vis import browse
 
 print("Running DeepLLM as a streamlit app!")
-st.set_page_config(layout="wide")
 
-st.title(
-    "Streamlit-based [SymPlan](https://github.com/ptarau/recursors) Client "
-    + "Client 1.1.2"
+st.set_page_config(
+    page_title="SymPl",
+    page_icon=":last_quarter_moon:",  # Optional: set a page icon
+    layout="wide",  # Optional: set page layout
 )
+
+st.title("[SymPlan](https://github.com/ptarau/recursors) with DeepLLM " + get_version())
 
 prompters = prompter_dict()
 

@@ -4,11 +4,14 @@ from deepllm.api import *
 
 print("Running DeepLLM as a streamlit app!")
 
-st.set_page_config(layout="wide")
 
-st.title(
-    "Streamlit-based [DeepLLM](https://github.com/ptarau/recursors) " + get_version()
+st.set_page_config(
+    page_title="DeepLLM",
+    page_icon=":alien:",  # Optional: set a page icon
+    layout="wide",  # Optional: set page layout
 )
+
+st.title("[DeepLLM](https://github.com/ptarau/recursors) app " + get_version())
 
 prompters = prompter_dict()
 

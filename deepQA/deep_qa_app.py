@@ -4,10 +4,15 @@ from inquisitor import *
 
 print("Running DeepQA as a streamlit app!")
 
-st.set_page_config(layout="wide")
+st.set_page_config(
+    page_title="DeepQA",
+    page_icon=":roller_coaster:",  # Optional: set a page icon
+    layout="wide",  # Optional: set page layout
+)
+
 
 st.sidebar.title(
-    "[DeepQA](https://github.com/ptarau/recursors/tree/main/deepQA): a DeepLLM App exploring self-generated follow-up questions, version  "
+    "[DeepQA](https://github.com/ptarau/recursors/tree/main/deepQA): self-generated follow-up questions with DeepLLM "
     + get_version()
 )
 
