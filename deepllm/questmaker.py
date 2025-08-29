@@ -152,7 +152,10 @@ def one_quest(agent, quest, context, trim_size=3):
     res = quest2quests(agent, quest, context, k=1)
     agent.trim_at(trim_size)
     agent.persist()
-    a, q = res[0]
+    if not res:
+        a, q = "", ""
+    else:
+        a, q = res[0]
     return a, q
 
 
