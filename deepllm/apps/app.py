@@ -1,6 +1,12 @@
 import streamlit as st
 
+from deepllm.params import set_local_model, LOCAL_PARAMS, mistral
+
+set_local_model(mistral)
+
+
 from deepllm.api import *
+
 
 print("Running DeepLLM as a streamlit app!")
 

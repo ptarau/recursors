@@ -20,13 +20,19 @@ mistral = "mistral-nemo:12b"
 # llama = "meta-llama/Meta-Llama-3-8B-Instruct"
 llama = "llama3.2"
 
-# LOCAL_MODEL = [mistral]
+# LOCAL_MODEL - deprecated
 
-LOCAL_MODEL = [llama]
+
+def set_local_model(model):
+    LOCAL_PARAMS["model"] = model
+
+
+def get_local_model():
+    return LOCAL_PARAMS["model"]
 
 
 def fix_eos():
-    if IS_LOCAL_LLM[0] and LOCAL_MODEL[0] == llama:
+    if IS_LOCAL_LLM[0] and get_local_model() == llama:
         return {"stop_token_ids": [128009]}
     return None
 
@@ -59,7 +65,7 @@ LOCAL_PARAMS = dict(
     CACHES="caches/",
     OUT="out/",
     DATA="data/",
-    model=LOCAL_MODEL[0],
+    model="lamma3.2",
     API_BASE=LOCAL_URL,
     # emebedding_model="vicuna-7b-v1.5",
     emebedding_model="text-embedding-3-large",
