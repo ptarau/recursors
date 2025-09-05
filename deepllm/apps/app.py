@@ -2,8 +2,6 @@ import streamlit as st
 
 from deepllm.params import set_local_model, LOCAL_PARAMS, mistral
 
-set_local_model(mistral)
-
 
 from deepllm.api import *
 
@@ -44,6 +42,7 @@ with st.sidebar:
     local = st.sidebar.checkbox("Local LLM?", value=False)
 
     if local:
+        set_local_model(mistral)
 
         LOCAL_PARAMS["API_BASE"] = st.sidebar.text_input(
             "Local LLM server:", value=LOCAL_PARAMS["API_BASE"]
